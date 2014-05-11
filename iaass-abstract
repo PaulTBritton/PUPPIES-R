@@ -1,0 +1,40 @@
+Papers will be selected on the basis of one page abstract. Abstracts should contain the following information
+
+Proposed topic for the paper
+        Introduction of a novel PRA tool written in R: PUPPIES (Programmable
+        Uncertain Parameter Propagation Into Equations Software)
+
+Title of the paper
+        PUPPIES Unleashed
+
+Full name of the Author(s)
+        Paul Britton, Frank Hark, Machael Sommers
+
+Addresses, e-mail, telephone and fax numbers
+        Paul Britton, paul.t.britton@nasa.gov, 256.544.8301
+        Frank Hark, frank.hark@nasa.gov, 256.961.0392
+	Michael Sommers, msommski@gmail.com, 217-721-1863
+
+Name of contact person
+        Paul Britton
+
+Summary of the paper
+        PUPPIES (Programmable Uncertain Parameter Propagation Into
+        Equations Software) is an open source, R language based, suite
+        of scripts for building Monte Carlo Simulations and plotting
+	uncertainty results. It is the brainchild of the vision that,
+	in the year 2014, analysts across the globe ought to have a
+	common open source Monte Carlo Simulation tool that is feature-rich
+	with a flexible user interface and yet is still easily programmable
+	with the capability of being extensively automated.  To achieve this
+	vision we adopt a philosophy analogous to the Unix philosophy. The
+	emphasis is on building short, simple, clear code objects that can be
+	easily repurposed by the end user. Herein, will describe the current
+	state of PUPPIES in terms of its capabilities, strengths,
+	limitations, forward work, and advantages over other tools.
+
+Proposed type of presentation (oral or poster)
+        oral
+
+The abstract shall clearly outline the major interests and novelties of the paper.
+

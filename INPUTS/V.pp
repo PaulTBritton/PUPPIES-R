@@ -1,0 +1,16 @@
+index;dist;calc;f;a;b;c;t
+Abortability;tD;I;;.1;.6;.9;0
+V_Total_ICPS;bD;I;;2;10;0;0
+B_Motor;lD;I;;3e-4;3;0;0
+B_SEP;lD;I;;1e-5;5;0;0
+B_TVC;gD;e;;1;19;0;.02
+B_TPS;bD;I;;2;100;0;0
+B_AVI;gD;e;;1;50;0;.05
+B_STR;lD;I;;1e-7;7;0;0
+CS_MPS;gD;e;;1;10000;0;.05
+CS_TVC;gD;e;;1;1900;0;.02
+CS_TPS;bD;I;;2;100;0;0
+CS_AVI;gD;e;;1;5000;0;.05
+CS_RCS;gD;e;;2;20000;0;.05
+CS_STR;lD;I;;1e-5;5;0;0
+CS_SEP;lD;I;;1e-5;5;0;0

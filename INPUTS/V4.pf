@@ -1,0 +1,50 @@
+V4_LOC;AND;
+	V4_LOM,
+	NOT Abortability
+$
+V4_LOM;OR;
+	V_Total_Booster,
+	V_Total_CS,
+	V4_Total_Engine,
+	V_Total_ICPS
+$
+V_Total_Booster;OR;
+	1/2 V_5segBooster
+$
+V_5segBooster;TRAN;
+	INPUTS/V_5segBooster.pf
+$
+V_Total_CS;OR;
+	CS_MPS, CS_TVC, CS_TPS,
+	2/2 CS_AVI,
+	2/2 CS_RCS,
+	CS_STR, CS_SEP
+$
+V4_Total_Engine;OR;
+	IND_V4_RS25,
+	CC_V4_RS25
+$
+IND_V4_RS25;OR;
+	2/3 V4_RS25
+$
+CC_V4_RS25;EXPR;
+	GAD_2_3_Rate*V4_RS25
+$
+GAD_2_3_Rate;EXPR;
+	GlobalAlpha(2,A1_3_R,A2_3_R,A3_3_R)
+$
+V4_RS25;OR;
+	V4_RS25_Cont,
+	V4_RS25_Uncont
+$
+V4_RS25_Cont;EXPR;
+	CERisk(V4_BT,beta,RS25_eta)
+$
+V4_RS25_Uncont;EXPR;
+	UERisk(V4_BT,RS25_lambdaTI,RS25_lambdaTS,V4_PL,RS25_RF)
+$
+V4_BT;EXPR;600
+$
+beta;EXPR;.5
+$
+V4_PL;EXPR;1.09

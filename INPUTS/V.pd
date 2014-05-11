@@ -1,0 +1,8 @@
+index;description
+CS_MPS;Core Stage MPS
+CS_TVC;Core Stage TVC
+CS_TPS;Core Stage TPS
+CS_AVI;Core Stage Avionics
+CS_RCS;Core Stage RCS
+CS_STR;Core Stage Structures
+CS_SEP;Core Stage Separation

@@ -1,0 +1,102 @@
+Date,Time: 5-1-2014, 12pm
+KEY: - = todo, * = done, -* = partially done, -? = under consideration
+-------------------------------------
+-fix CallFunc(Z[1:(j-1)],P)
+-evolve PUPPIES into an R package or library
+	-leverage object oriented features of R
+		-public class simur or puppie (or PUPS, PIES)
+		-simur: .datadump, .loaddata, .filter, .plotorder
+		-simur.montecarlo,simur.X (X or PUPS)
+		-simur.propagate,simur.Y (Y or PIES)
+	-develop standardized documentation
+	-develop intro and tutorial
+		-directory/folder layout
+		-key inputs: N,seed,*.pp,*.pe,*.pf,*.pd,VerboseLevel
+		-basic R syntax: vectors,matrices,lists,arrays,for-loop,
+		 if-statement,assignment, etc.
+			-get from online sources
+		-key built-in R data structures & functions:
+			source(),data.frame (indexing),'regex',print(),
+			paste(),cbind(),ls(),rm()
+		-key PUPPIES functions: montecarlo(),propagate(),
+			filterdata(),dumpdata(),loaddata(),scatterbars()
+		-special PUPPIES functions: ft2eqn()
+		-key outputs formats: *.dat, *.tiff
+-*combine propagate and montecarlo into a single recursive quantify routine
+ (quantify equations and/or trees).
+	*completed for ft2eqns(): this might be sufficent
+-*FileIO: add plot order-list as data input option
+	*loaddata returns data in the order it was written according to ctime
+	 (change time)
+	-?integrate this with loaddata ctime order, revorder() and
+	 rowrevorder()
+	-?develop a re-order() routine
+	-integrate plot order with descriptions
+-scatterbars:
+	-*add position and orientation of text override options
+		*test for relative position of mean and median and
+		 automatically adjust left/right justifications
+	-add font size override
+-*datadump and loaddata:
+	*develop a way to retain the order of the data vectors
+		*file.info sort list.file by ctime
+			-? use order() or sort() plus re-write revorder()
+			 and revroworder()
+-develop GUI features using TCL/TK
+-research methods of correlating random variables
+	*norm and lognorm: use cholesky matrix
+	-other dist types? generate correlated uniform dists then propagate
+		through inverse CDFs
+		-http://comisef.wikidot.com/tutorial:correlateduniformvariates
+		-http://www.mathworks.com/matlabcentral/newsreader/view_thread/115379
+		-http://stats.stackexchange.com/questions/66610/generate-pairs-of-random-numbers-uniformly-distributed-and-correlated
+-standardize filename extentions: args, params, eqns, fault trees, etc.
+-develop scheme to manage directories: Modules, INPUTS, OUTPUTS, etc.
+-develop scheme to manage global configuration defaults
+	*currently managable, but there is no scheme
+-convert m/n gate to boolean expression (using only and,or,not)
+	-use binomial density formula
+-create boolean expand and reduce algorithm for cutset analysis
+	-use demorgans law, distributive law, associative law
+-add extra plot routines
+	-density plots
+	-joint density plot
+	-fault tree, event tree
+	*develop a way to track transfer gates for graphical
+	 fault tree printing
+-upgrade text box to word wrap
+-complete CRAM & CommonCause modules
+	-use for-loop to loop through vehicle models
+-develop markov chain analysis tool
+-incorporate or leverage bayesian inference package
+-incorporate or leverage MCMC package
+-develop ESD & event tree tools (see PRA guide)
+	-create graphical plot for event & fault trees
+	-?use library(grid)
+-update code comments
+-investigate keeping local objects local
+-*include more robust error checking to add user in trouble shooting
+	-develop consistent scheme for messages, errors and warnings
+	*check file existence
+	-check file format?
+	*check for plotting zeros on a log scale
+	-check parameters in distributions
+	-check N in montecarlo
+-*fix in scatterbars: xmarks: ?add switch statement to handle linear case
+	*code complete
+	-needs more testing
+*generate deterministic seed vector from set seed
+*break out: FileIO.R and Number.R modules
+*create batch-mode operation and integrate w/ interactive-mode
+*create user-front-end montecarlo, propagate, and scatterbars scripts
+	*further subdivide code modules to better accommodate
+		both batch and interactive modes
+	*key arguments:
+		mode=montecarlo(N, paramfile, param suppress-filter)
+		mode=propagate(param pass-filter,eqnfile,eqn suppress-filter)
+		mode=scatterbars(plot filename,data pass-filter,descriptions)
+	*differentiate between direct simulation data use and spline fit
+	*create monte carlo mode, propagate mode, monte carlo+propagate,
+		 scatterbar, etc.
+*incorporate ft2eqns into propagate mode
+	*translate gawk script into R code

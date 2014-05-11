@@ -1,0 +1,7 @@
+V_5segBooster;OR;
+	B_Motor,
+	B_SEP,
+	1/2 B_TVC,
+	B_TPS,
+	2/2 B_AVI,
+	B_STR
