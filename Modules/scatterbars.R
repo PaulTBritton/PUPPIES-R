@@ -18,6 +18,7 @@ scatterbars <- function(pofile,Data,filter=".*",rmarg=8,
 	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
 					nrow(Data)," Samples)",sep="")
 	Ords <- paste(readLines(pofile),collapse="")
+print(Ords)
 	if (VerboseLevel >= 2) {
 		Ords <- scan(text=Ords,what="character",sep="$")
 		print(paste("scatterbars() parsing",pofile,
@@ -26,19 +27,40 @@ scatterbars <- function(pofile,Data,filter=".*",rmarg=8,
 	} else {
 		Ords <- scan(text=Ords,what="character",sep="$",quiet=TRUE)
 	}
+print(Ords)
+	# auto detect first record as description or plot params
 	size <- length(Ords)
-#	I <- array("",c(size))
-	for (i in 1:size) {
+	Y <- scan(text=Ords[1],what="character",sep=";",quiet=TRUE)
+	if (Y[1] == "Descriptions") {
+		start <- 2
+		D <- scan(text=Y[2],what="character",sep=",",quiet=TRUE)
+print(D)
+		desc2 <- read.table(text=D,sep="=",colClasses="character")
+print(desc2)
+	}
+	else start <- 1
+	for (i in start:size) {
 		Y <- scan(text=Ords[i],what="character",sep=";",quiet=TRUE)
+print(Y)
 		F <- scan(text=Y[3],what="character",sep=",",quiet=TRUE)
 		for (f in F) {
+print(f)
+			f <- glob2rx(f)
+print(f)
 			if (exists("Dindex")) Dindex <-
 				 c(Dindex,grep(f,names(Data)))
 			else Dindex <- grep(f,names(Data))
+print(Dindex)
 		}
+#		plotargs <- read.table(text=Y[1],sep="
+print(Y[1])
+		plotcommand <- paste("scatterbars2(",Y[1],")")
+print(plotcommand)
+print(parse(text=plotcommand))
 		scatterbars2(plotname=Y[1],Data=Data[Dindex],prec=prec,
 			xscale=Y[2],stats=stats,maintitle=maintitle,
-			rmarg=rmarg,desc=desc)
+			rmarg=rmarg,desc=desc,desc2=desc2)
+	# need to handle missing desc2 eventually
 		rm(Dindex)
 	}
 }
@@ -46,8 +68,9 @@ scatterbars <- function(pofile,Data,filter=".*",rmarg=8,
 # front-end to the plotting routine scatterbars3
 # more WYSIWYG than scatterbars3
 scatterbars2 <- function(plotname="plot.tiff",Data,filter=".*",rmarg=8,
-	stats=c(2,0,2,2),prec=2,desc,maintitle,legendpos,units="Probability",
-	xscale="log",xnotation=sciNotation,xmarks,range)
+	stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,legendpos,
+	units="Probability", xscale="log",xnotation=sciNotation,
+	xmarks,range)
 {
 	Data <- filterdata(filter,Data)
 	Labels <- names(Data)
@@ -64,6 +87,15 @@ scatterbars2 <- function(plotname="plot.tiff",Data,filter=".*",rmarg=8,
 		for (i in row.names(D)) {
 			j <- grep(i,tmp)
 			Labels[j] <- as.character(D[[i,1]])
+		}
+	}
+	if (!missing(desc2)) {
+print("in desc2")
+		tmp <- Labels
+print(desc2[,1])
+		for (i in desc2[,1]) {
+			j <- grep(desc2[i,1],tmp)
+			Labels[j] <- as.character(desc2[i,2])
 		}
 	}
 	T <- switch(as.character(M),"1"=1,"2"=1,"3"=1,"4"=2,"5"=2,3)
