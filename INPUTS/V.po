@@ -1,31 +1,41 @@
-OUTPUTS/po-plotalpha4.tiff;log;
-a_1_4_R,
-a_2_4_R,
-a_3_4_R,
-a_4_4_R,
+Descriptions;
+CS_MPS=Core Stage MPS,
+CS_TVC=Core Stage TVC,
+CS_TPS=Core Stage TPS,
+CS_AVI=Core Stage Avionics,
+CS_RCS=Core Stage RCS,
+CS_STR=Core Stage Structures,
+CS_SEP=Core Stage Separation
+$
+plotname="OUTPUTS/po-plotalpha4.tiff",maintitle="Alphas",xscale="log";
+a_[1234]_4_R,
 A1_4_R,
 A2_4_R,
 A3_4_R,
 A4_4_R,
-DA_1_4_R,
-DA_2_4_R,
-DA_3_4_R,
-DA_4_4_R
+DA_[1234]_4_R
 $
-OUTPUTS/po-plotV.tiff;log;
+plotname="OUTPUTS/po-plotV.tiff",xscale="log";
 V1_LOC,
 V2_LOC,
 V3_LOC,
 V4_LOC,
-V1_LOM,
-V2_LOM,
-V3_LOM,
-V4_LOM
+V[1234]_LOM
 $
-OUTPUTS/po-plotglobal.tiff;linear;
+plotname="OUTPUTS/po-plotglobal.tiff",xscale="linear";
 GAD_2_4_R,
 GAI_2_4_R,
 GA_2_4_R,
 GAD_2_3_R,
 GAI_2_3_R,
 GA_2_3_R
+$
+OUTPUTS/po-plotCS.tiff;log;
+V_Total_CS,
+CS_MPS,
+CS_TVC,
+CS_TPS,
+CS_AVI,
+CS_RCS,
+CS_STR,
+CS_SEP

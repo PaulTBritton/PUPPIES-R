@@ -1,6 +1,5 @@
 #
-# Plot Scatter Bars (Uncertainty Bars [band-aids])
-#
+# Plot Scatter Bars (Uncertainty Bars [band-aids]) #
 # Turn sample data into scatter bars
 #
 # Author: Paul Thomas Britton
@@ -16,6 +15,8 @@ scatterbars <- function(pofile,Data,filter=".*",rmarg=8,
 	stats=c(2,0,2,2),prec=2,desc,maintitle,legendpos,units="Probability",
 	xscale="log",xnotation=sciNotation,xmarks,range)
 {
+	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
+					nrow(Data)," Samples)",sep="")
 	Ords <- paste(readLines(pofile),collapse="")
 	if (VerboseLevel >= 2) {
 		Ords <- scan(text=Ords,what="character",sep="$")
@@ -29,10 +30,16 @@ scatterbars <- function(pofile,Data,filter=".*",rmarg=8,
 #	I <- array("",c(size))
 	for (i in 1:size) {
 		Y <- scan(text=Ords[i],what="character",sep=";",quiet=TRUE)
-		X <- scan(text=Y[3],what="character",sep=",",quiet=TRUE)
-		scatterbars2(plotname=Y[1],Data=Data[X],prec=prec,
+		F <- scan(text=Y[3],what="character",sep=",",quiet=TRUE)
+		for (f in F) {
+			if (exists("Dindex")) Dindex <-
+				 c(Dindex,grep(f,names(Data)))
+			else Dindex <- grep(f,names(Data))
+		}
+		scatterbars2(plotname=Y[1],Data=Data[Dindex],prec=prec,
 			xscale=Y[2],stats=stats,maintitle=maintitle,
 			rmarg=rmarg,desc=desc)
+		rm(Dindex)
 	}
 }
 

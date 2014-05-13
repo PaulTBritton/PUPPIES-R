@@ -23,15 +23,15 @@ Summary of the paper
         Equations Software) is an open source, R language based, suite
         of scripts for building Monte Carlo Simulations and plotting
 	uncertainty results. It is the brainchild of the vision that,
-	in the year 2014, analysts across the globe ought to have a
-	common open source Monte Carlo Simulation tool that is feature-rich
-	with a flexible user interface and yet is still easily programmable
-	with the capability of being extensively automated.  To achieve this
-	vision we adopt a philosophy analogous to the Unix philosophy. The
-	emphasis is on building short, simple, clear code objects that can be
-	easily repurposed by the end user. Herein, will describe the current
-	state of PUPPIES in terms of its capabilities, strengths,
-	limitations, forward work, and advantages over other tools.
+	in the year 2014, PRA analysts across the globe ought to have a
+	common open source Monte Carlo Simulation tool that is feature-rich,
+	scalable and easily programmable with the capability of being
+	extensively automated.  To achieve this vision we adopt a philosophy
+	analogous to the Unix philosophy. The emphasis is on building short,
+	simple, clear code objects that can be easily repurposed by the end
+	user. Herein, will describe the current state of PUPPIES in terms of
+	its capabilities, strengths, limitations, forward work, and
+	advantages over other tools.
 
 Proposed type of presentation (oral or poster)
         oral
