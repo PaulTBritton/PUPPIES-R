@@ -7,6 +7,7 @@
 source("PUPPIES.R")
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
+wildcardlevel <- 1	# 1 = regular expressions
 N <- 555
 print(paste("Number of Samples =",N))
 seed <- 1
@@ -14,12 +15,12 @@ seed <- 1
 # samples from Vehicle system distributions,Engine Param, Alpha Factors
 X <- montecarlo(N,"[VEA].pp")
 # propagate uncertainty into vehicle models
-Y <- propagate("V?.pf",X)
+Y <- propagate("V.[.]pf",X)
 YX <- cbind(Y,X)	# combine (column-wise) Y and X
 
 print("running summary test")
-test <-propagate("V.pe",Y)
-scatterbars(plotname="OUTPUTS/testplot.tiff",Data=test,filter="AVE*")
+test <-propagate("V[.]pe",Y)
+scatterbars(plotname="OUTPUTS/testplot.tiff",Data=test,filter="AVE")
 
 f <- c("LOM|LOC","CS","Booster","Engine")
 p <- c("plotV.tiff","plotCS.tiff","plotBooster.tiff","plotEngine.tiff")

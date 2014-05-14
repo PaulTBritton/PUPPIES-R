@@ -7,7 +7,7 @@
 
 
 # advanced glob pattern to regular expression converter
-aglob2rx <- function(pattern,trim.head=FALSE,trim.tail=TRUE) {
+aglob2rx <- function(pattern,trim.head=TRUE,trim.tail=TRUE) {
     p <- gsub("\\.", "\\\\.", paste0("^", pattern, "$"))
     p <- gsub("\\?", ".", gsub("\\*", ".*", p))
 #    p <- gsub("([^\\])\\(", "\\1\\\\(", p)
@@ -17,7 +17,7 @@ aglob2rx <- function(pattern,trim.head=FALSE,trim.tail=TRUE) {
         p <- sub("\\.\\*\\$$", "", p)
     if (trim.head) 
         p <- sub("\\^\\.\\*", "", p)
-    p
+    return(p)
 }
 
 # trim white space characters from a string

@@ -34,7 +34,7 @@ scatterbars_batch <- function(pbfile,Data)
 print(ptable)
 		for (pat in ptable) {
 			len <- length(pat)
-			pat[1] <- aglob2rx(pat[1])
+			if (wildcardlevel == 0) pat[1] <- aglob2rx(pat[1])
 			if (exists("Dindex") & exists("desc2")) {
 				Dindex <- c(Dindex,grep(pat[1],names(Data)))
 				if (len == 2) {
@@ -73,14 +73,15 @@ print(parse(text=plotcommand))
 
 # front-end to the plotting routine scatterbars2
 # more WYSIWYG than scatterbars3
-scatterbars <- function(plotname="plot.tiff",Data,filter="*",rmarg=8,
+scatterbars <- function(plotname="plot.tiff",Data,rmarg=8,filter,
 	stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,legendpos,
 	units="Probability", xscale="log",xnotation=sciNotation,
 	xmarks,range)
 {
 	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
 					nrow(Data)," Samples)",sep="")
-	filter <- aglob2rx(filter)
+	if (missing(filter)) filter <- ".*"
+	else if (wildcardlevel == 0) filter <- aglob2rx(filter)
 	Data <- filterdata(filter,Data)
 	Labels <- names(Data)
 	M <- length(Labels)

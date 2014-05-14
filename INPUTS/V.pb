@@ -14,6 +14,6 @@ $
 plotname="OUTPUTS/pb-plotglobal.tiff",xscale="linear";
 G*_2_?_R=
 $
-plotname="OUTPUTS/pb-plotCS.tiff",xscale="log";
+plotname="OUTPUTS/pb-plotCS.tiff",maintitle="",xscale="log";
 V_Total_CS=Core Stage Total,
 CS_(???)=Core Stage \1

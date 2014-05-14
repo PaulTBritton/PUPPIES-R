@@ -8,7 +8,7 @@
 # data dump procedure
 dumpdata <- function(Z,ddDir,filter="*") {
 	if (VerboseLevel > 0) print("Attempting to dumpdata")
-	filter <- aglob2rx(filter)
+	if (wildcardlevel == 0) filter <- aglob2rx(filter)
 	Z <- filterdata(filter,Z)
 	for (j in names(Z)) {
 		filename <- paste(ddDir,names(Z[j]),".dat",sep="")
@@ -21,7 +21,7 @@ dumpdata <- function(Z,ddDir,filter="*") {
 
 # load data function
 loaddata <- function(DataDir,filter="*") {
-	filter <- aglob2rx(filter)
+	if (wildcardlevel == 0) filter <- aglob2rx(filter)
 	LF <- list.files(path=DataDir,pattern=filter)
 	size <- length(LF)
 	if (VerboseLevel >= 2) print(paste("reading: ",DataDir,LF[1],sep=""))

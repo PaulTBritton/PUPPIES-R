@@ -208,7 +208,7 @@ UDist <- function(N,P) {
 
 montecarlo <- function(N,filter) {
 	if (VerboseLevel > 0) print(paste("montecarlo() matching:",filter))
-	filter <- aglob2rx(filter)
+	if (wildcardlevel == 0) filter <- aglob2rx(filter)
 	LF <- list.files(pattern=filter,recursive=TRUE,full.names=TRUE)
 	for (i in LF) {
 		if (VerboseLevel > 0) print(paste("montecarlo() found:",i))

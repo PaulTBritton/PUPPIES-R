@@ -7,6 +7,7 @@
 source("PUPPIES.R")
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
+#wildcardlevel <- 1	# default = 0, chose 0 or 1
 N <- 500
 print(paste("Number of Samples =",N))
 seed <- 1
