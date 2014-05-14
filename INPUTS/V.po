@@ -8,17 +8,17 @@ CS_STR=Core Stage Structures,
 CS_SEP=Core Stage Separation
 $
 plotname="OUTPUTS/po-plotalpha4.tiff",maintitle="Alphas",xscale="log";
-a_[1234]_4_R,
-A[1234]_4_R,
-DA_[1234]_4_R
+a_?_4_R,
+A?_4_R,
+DA_?_4_R
 $
 plotname="OUTPUTS/po-plotV.tiff",xscale="log";
-V[1234]_LOC,
-V[1234]_LOM
+V?_LOC,
+V?_LOM
 $
 plotname="OUTPUTS/po-plotglobal.tiff",xscale="linear";
-G*_2_[34]_R,
+G*_2_?_R,
 $
-OUTPUTS/po-plotCS.tiff;log;
+plotname="OUTPUTS/po-plotCS.tiff",xscale="log";
 V_Total_CS,
 CS_???

@@ -18,48 +18,41 @@ scatterbars <- function(pofile,Data,filter=".*",rmarg=8,
 	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
 					nrow(Data)," Samples)",sep="")
 	Ords <- paste(readLines(pofile),collapse="")
-print(Ords)
 	if (VerboseLevel >= 2) {
-		Ords <- scan(text=Ords,what="character",sep="$")
+		Ords <- scan(text=Ords,what="character",quote=NULL,sep="$")
 		print(paste("scatterbars() parsing",pofile,
 				"into plot orders"))
 		print(Ords)
 	} else {
-		Ords <- scan(text=Ords,what="character",sep="$",quiet=TRUE)
+		Ords <- scan(text=Ords,what="character",sep="$",quote=NULL,quiet=TRUE)
 	}
-print(Ords)
 	# auto detect first record as description or plot params
 	size <- length(Ords)
-	Y <- scan(text=Ords[1],what="character",sep=";",quiet=TRUE)
+	Y <- scan(text=Ords[1],what="character",sep=";",quote=NULL,quiet=TRUE)
 	if (Y[1] == "Descriptions") {
 		start <- 2
-		D <- scan(text=Y[2],what="character",sep=",",quiet=TRUE)
-print(D)
-		desc2 <- read.table(text=D,sep="=",colClasses="character")
+		D <- scan(text=Y[2],what="character",sep=",",quote=NULL,quiet=TRUE)
+		desc2 <- read.table(text=D,sep="=",quote=NULL,colClasses="character")
 print(desc2)
 	}
 	else start <- 1
 	for (i in start:size) {
-		Y <- scan(text=Ords[i],what="character",sep=";",quiet=TRUE)
-print(Y)
-		F <- scan(text=Y[3],what="character",sep=",",quiet=TRUE)
+		Y <- scan(text=Ords[i],what="character",sep=";",quote=NULL,quiet=TRUE)
+		F <- scan(text=Y[2],what="character",sep=",",quote=NULL,quiet=TRUE)
 		for (f in F) {
-print(f)
 			f <- glob2rx(f)
-print(f)
 			if (exists("Dindex")) Dindex <-
 				 c(Dindex,grep(f,names(Data)))
 			else Dindex <- grep(f,names(Data))
-print(Dindex)
 		}
-#		plotargs <- read.table(text=Y[1],sep="
-print(Y[1])
-		plotcommand <- paste("scatterbars2(",Y[1],")")
+		plotcommand <- paste("scatterbars2(Data=Data[Dindex],prec=prec,"
+			,Y[1],",desc2=desc2)")
 print(plotcommand)
 print(parse(text=plotcommand))
-		scatterbars2(plotname=Y[1],Data=Data[Dindex],prec=prec,
-			xscale=Y[2],stats=stats,maintitle=maintitle,
-			rmarg=rmarg,desc=desc,desc2=desc2)
+eval(parse(text=plotcommand))
+#		scatterbars2(plotname=Y[1],Data=Data[Dindex],prec=prec,
+#			xscale=Y[2],stats=stats,maintitle=maintitle,
+#			rmarg=rmarg,desc=desc,desc2=desc2)
 	# need to handle missing desc2 eventually
 		rm(Dindex)
 	}
@@ -90,10 +83,8 @@ scatterbars2 <- function(plotname="plot.tiff",Data,filter=".*",rmarg=8,
 		}
 	}
 	if (!missing(desc2)) {
-print("in desc2")
 		tmp <- Labels
-print(desc2[,1])
-		for (i in desc2[,1]) {
+		for (i in 1:nrow(desc2)) {
 			j <- grep(desc2[i,1],tmp)
 			Labels[j] <- as.character(desc2[i,2])
 		}
