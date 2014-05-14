@@ -31,7 +31,7 @@ scatterbars_batch <- function(pbfile,Data)
 		patterns <- scan(text=Y[2],what="character",sep=",",
 			quote=NULL,quiet=TRUE)
 		ptable <- strsplit(patterns,"=")
-print(ptable)
+#print(ptable)
 		for (pat in ptable) {
 			len <- length(pat)
 			if (wildcardlevel == 0) pat[1] <- aglob2rx(pat[1])
@@ -53,7 +53,7 @@ print(ptable)
 				}
 			}
 		}
-print(Dindex)
+#print(Dindex)
 		if (exists("desc2")) {
 			desc3 <- rbind(names(Data),desc2)
 			plotcommand <-
@@ -64,7 +64,7 @@ print(Dindex)
 			plotcommand <-
 			paste("scatterbars(Data=Data[Dindex],",Y[1],")")
 		}
-print(plotcommand)
+#print(plotcommand)
 print(parse(text=plotcommand))
 		eval(parse(text=plotcommand))
 		rm(Dindex)

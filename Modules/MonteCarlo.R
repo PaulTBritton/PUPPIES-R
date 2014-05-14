@@ -23,6 +23,9 @@
 # various theoretical distributions
 #
 
+# uniform distribution
+uD <- function(N,P) runif(N,as.numeric(P$a),as.numeric(P$b))
+
 # create a vector of N trianglular samples
 # a = min
 # c = mode
