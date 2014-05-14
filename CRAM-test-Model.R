@@ -14,12 +14,12 @@ seed <- 1
 # samples from Vehicle system distributions,Engine Param, Alpha Factors
 X <- montecarlo(N,"[VEA].pp")
 # propagate uncertainty into vehicle models
-Y <- propagate("V..pf",X)
+Y <- propagate("V?.pf",X)
 YX <- cbind(Y,X)	# combine (column-wise) Y and X
 
 print("running summary test")
 test <-propagate("V.pe",Y)
-scatterbars(plotname="OUTPUTS/testplot.tiff",Data=test,filter="AVE")
+scatterbars(plotname="OUTPUTS/testplot.tiff",Data=test,filter="AVE*")
 
 f <- c("LOM|LOC","CS","Booster","Engine")
 p <- c("plotV.tiff","plotCS.tiff","plotBooster.tiff","plotEngine.tiff")
@@ -35,6 +35,6 @@ J <- filterdata("Booster",YX)
 scatterbars(plotname="OUTPUTS/prop-plot.tiff",Data=cbind(I,J),stats=c(2,0,4,2))
 
 
-print("MyModel.R Complete")	# status print statement demonstration
+print("CRAM-test-Model.R Complete")	# status print statement demonstration
 #rm(list=ls())			# removes all objects from the current
 				# R workspace/environment

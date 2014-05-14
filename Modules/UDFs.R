@@ -6,6 +6,20 @@
 ###################################
 
 
+# advanced glob pattern to regular expression converter
+aglob2rx <- function(pattern,trim.head=FALSE,trim.tail=TRUE) {
+    p <- gsub("\\.", "\\\\.", paste0("^", pattern, "$"))
+    p <- gsub("\\?", ".", gsub("\\*", ".*", p))
+#    p <- gsub("([^\\])\\(", "\\1\\\\(", p)
+#    p <- gsub("([^\\])\\[", "\\1\\\\[", p)
+    p <- gsub("([^\\])\\{", "\\1\\\\{", p)
+    if (trim.tail) 
+        p <- sub("\\.\\*\\$$", "", p)
+    if (trim.head) 
+        p <- sub("\\^\\.\\*", "", p)
+    p
+}
+
 # trim white space characters from a string
 trim.leading <- function (x)  sub("^\\s+", "", x)
 trim.trailing <- function (x) sub("\\s+$", "", x)

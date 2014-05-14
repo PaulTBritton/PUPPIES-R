@@ -8,7 +8,7 @@ CS_STR=Core Stage Structures,
 CS_SEP=Core Stage Separation
 $
 plotname="OUTPUTS/po-plotalpha4.tiff",maintitle="Alphas",xscale="log";
-a_?_4_R,
+a_[1234]_4_R,
 A?_4_R,
 DA_?_4_R
 $

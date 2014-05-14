@@ -10,61 +10,77 @@
 # draw the picture
 #
 
-# front-end to the plotting routine scatterbars2
-scatterbars <- function(pofile,Data,filter=".*",rmarg=8,
-	stats=c(2,0,2,2),prec=2,desc,maintitle,legendpos,units="Probability",
-	xscale="log",xnotation=sciNotation,xmarks,range)
+# batch version front-end to the plotting routine scatterbars
+# ? consider removing desc file feature: superseeded by pbfile
+scatterbars_batch <- function(pbfile,Data)
 {
-	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
-					nrow(Data)," Samples)",sep="")
-	Ords <- paste(readLines(pofile),collapse="")
+	Ords <- paste(readLines(pbfile),collapse="")
 	if (VerboseLevel >= 2) {
 		Ords <- scan(text=Ords,what="character",quote=NULL,sep="$")
-		print(paste("scatterbars() parsing",pofile,
+		print(paste("scatterbars() parsing",pbfile,
 				"into plot orders"))
 		print(Ords)
 	} else {
-		Ords <- scan(text=Ords,what="character",sep="$",quote=NULL,quiet=TRUE)
+		Ords <- scan(text=Ords,what="character",sep="$",
+			quote=NULL,quiet=TRUE)
 	}
-	# auto detect first record as description or plot params
 	size <- length(Ords)
-	Y <- scan(text=Ords[1],what="character",sep=";",quote=NULL,quiet=TRUE)
-	if (Y[1] == "Descriptions") {
-		start <- 2
-		D <- scan(text=Y[2],what="character",sep=",",quote=NULL,quiet=TRUE)
-		desc2 <- read.table(text=D,sep="=",quote=NULL,colClasses="character")
-print(desc2)
-	}
-	else start <- 1
-	for (i in start:size) {
-		Y <- scan(text=Ords[i],what="character",sep=";",quote=NULL,quiet=TRUE)
-		F <- scan(text=Y[2],what="character",sep=",",quote=NULL,quiet=TRUE)
-		for (f in F) {
-			f <- glob2rx(f)
-			if (exists("Dindex")) Dindex <-
-				 c(Dindex,grep(f,names(Data)))
-			else Dindex <- grep(f,names(Data))
+	for (i in 1:size) {
+		Y <- scan(text=Ords[i],what="character",sep=";",
+			quote=NULL,quiet=TRUE)
+		patterns <- scan(text=Y[2],what="character",sep=",",
+			quote=NULL,quiet=TRUE)
+		ptable <- strsplit(patterns,"=")
+print(ptable)
+		for (pat in ptable) {
+			len <- length(pat)
+			pat[1] <- aglob2rx(pat[1])
+			if (exists("Dindex") & exists("desc2")) {
+				Dindex <- c(Dindex,grep(pat[1],names(Data)))
+				if (len == 2) {
+					desc2 <- sub(pat[1],pat[2],desc2)
+				}
+				
+			} else if (exists("Dindex")) {
+				Dindex <- c(Dindex,grep(pat[1],names(Data)))
+				if (len == 2) {
+					desc2 <- sub(pat[1],pat[2],names(Data))
+				}
+			} else {
+				Dindex <- grep(pat[1],names(Data))
+				if (len == 2) {
+					desc2 <- sub(pat[1],pat[2],names(Data))
+				}
+			}
 		}
-		plotcommand <- paste("scatterbars2(Data=Data[Dindex],prec=prec,"
-			,Y[1],",desc2=desc2)")
+print(Dindex)
+		if (exists("desc2")) {
+			desc3 <- rbind(names(Data),desc2)
+			plotcommand <-
+			paste("scatterbars(Data=Data[Dindex],desc2=desc3,",
+				Y[1],")")
+			rm(desc2)
+		} else {
+			plotcommand <-
+			paste("scatterbars(Data=Data[Dindex],",Y[1],")")
+		}
 print(plotcommand)
 print(parse(text=plotcommand))
-eval(parse(text=plotcommand))
-#		scatterbars2(plotname=Y[1],Data=Data[Dindex],prec=prec,
-#			xscale=Y[2],stats=stats,maintitle=maintitle,
-#			rmarg=rmarg,desc=desc,desc2=desc2)
-	# need to handle missing desc2 eventually
+		eval(parse(text=plotcommand))
 		rm(Dindex)
 	}
 }
 
-# front-end to the plotting routine scatterbars3
+# front-end to the plotting routine scatterbars2
 # more WYSIWYG than scatterbars3
-scatterbars2 <- function(plotname="plot.tiff",Data,filter=".*",rmarg=8,
+scatterbars <- function(plotname="plot.tiff",Data,filter="*",rmarg=8,
 	stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,legendpos,
 	units="Probability", xscale="log",xnotation=sciNotation,
 	xmarks,range)
 {
+	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
+					nrow(Data)," Samples)",sep="")
+	filter <- aglob2rx(filter)
 	Data <- filterdata(filter,Data)
 	Labels <- names(Data)
 	M <- length(Labels)
@@ -84,9 +100,9 @@ scatterbars2 <- function(plotname="plot.tiff",Data,filter=".*",rmarg=8,
 	}
 	if (!missing(desc2)) {
 		tmp <- Labels
-		for (i in 1:nrow(desc2)) {
-			j <- grep(desc2[i,1],tmp)
-			Labels[j] <- as.character(desc2[i,2])
+		for (i in 1:ncol(desc2)) {
+			j <- grep(desc2[1,i],tmp)
+			Labels[j] <- as.character(desc2[2,i])
 		}
 	}
 	T <- switch(as.character(M),"1"=1,"2"=1,"3"=1,"4"=2,"5"=2,3)
@@ -131,14 +147,14 @@ scatterbars2 <- function(plotname="plot.tiff",Data,filter=".*",rmarg=8,
 	logaxis <- switch(xscale,log="x",linear="")
 	if (VerboseLevel >= 2) print(paste("Creating scatterbar plot:",
 				plotname))
-	scatterbars3(plotname,M,rowrevorder(X),revorder(Labels),logaxis,
+	scatterbars2(plotname,M,rowrevorder(X),revorder(Labels),logaxis,
 		tsize,tpos,rmarg,xmarks,xnotation,stats,prec,maintitle,
 		legendpos,units,range)
 }
 
 # the scatterbars2 drawing routine
 # less WYSIWYG than the front-end scatterbars
-scatterbars3 <- function(name,M,X,L,logaxis,tsize,tpos,rmarg,xmarks,
+scatterbars2 <- function(name,M,X,L,logaxis,tsize,tpos,rmarg,xmarks,
 	xnotation,stats,prec,maintitle,lpos,units,range)
 {
 	if (VerboseLevel > 0) print(paste("scatterbars() opening:",name))

@@ -7,22 +7,25 @@
 source("PUPPIES.R")
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
-N <- 1000
+N <- 500
 print(paste("Number of Samples =",N))
 seed <- 1
 
 # samples from Vehicle system distributions,Engine Param, Alpha Factors
 X <- montecarlo(N,"[VEA].pp")
 # propagate uncertainty into vehicle models
-Y <- propagate("V..pf",X)
+Y <- propagate("V?.pf",X)
 YX <- cbind(Y,X)	# combine (column-wise) Y and X
+#dumpdata(YX,"DUMP/")
 
-scatterbars(pofile="INPUTS/V.po",YX,prec=4)
+#YX <- loaddata("DUMP/")
+#scatterbars_batch(pbfile="INPUTS/V-load.pb",Data=YX)
+scatterbars_batch(pbfile="INPUTS/V.pb",Data=YX)
 
 #print("running test")
 #test <-propagate("V.pe",Y)
-#scatterbars2(plotname="OUTPUTS/testplot.tiff",Data=test,
-#	filter="AVE|alpha")
+#scatterbars(plotname="OUTPUTS/testplot.tiff",Data=test,
+#	filter="AVE*")
 
 
 print("MyModel.R Complete")	# status print statement demonstration

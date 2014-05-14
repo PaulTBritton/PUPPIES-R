@@ -6,8 +6,9 @@
 ###################################
 
 # data dump procedure
-dumpdata <- function(Z,ddDir,filter=".*") {
+dumpdata <- function(Z,ddDir,filter="*") {
 	if (VerboseLevel > 0) print("Attempting to dumpdata")
+	filter <- aglob2rx(filter)
 	Z <- filterdata(filter,Z)
 	for (j in names(Z)) {
 		filename <- paste(ddDir,names(Z[j]),".dat",sep="")
@@ -19,8 +20,9 @@ dumpdata <- function(Z,ddDir,filter=".*") {
 }
 
 # load data function
-loaddata <- function(DataDir,filter) {
-	LF <- list.files(path=DataDir,pattern=paste(filter,".*\\.dat$",sep=""))
+loaddata <- function(DataDir,filter="*") {
+	filter <- aglob2rx(filter)
+	LF <- list.files(path=DataDir,pattern=filter)
 	size <- length(LF)
 	if (VerboseLevel >= 2) print(paste("reading: ",DataDir,LF[1],sep=""))
 	lfile <- paste(DataDir,LF[1],sep="")
@@ -32,7 +34,8 @@ loaddata <- function(DataDir,filter) {
 	Z <- as.data.frame(array(0,c(N,size)))
 	Labels <- array("",c(size))
 	Z[1] <- X
-	Labels[1] <- sub(".dat","",LF[1])
+# need to test new regex to strip extention
+	Labels[1] <- sub("[.].*$","",LF[1])
 	if (size > 1) {
 		for (i in 2:size) {
 			if (VerboseLevel >= 2) print(paste("reading: ",
@@ -43,7 +46,7 @@ loaddata <- function(DataDir,filter) {
 			}
 			X <- scan(lfile)
 			Z[i] <- X
-			Labels[i] <- sub(".dat","",LF[i])
+			Labels[i] <- sub("[.].*$","",LF[i])
 		}
 	}
 	names(Z) <- Labels
