@@ -1,6 +1,5 @@
-plotname="OUTPUTS/pb-plotalpha4.tiff",maintitle="Alphas",xscale="log",
-	rmarg=12;
-a_[1234]_4_R,
+plotname="OUTPUTS/pb-plotalpha4.tiff",maintitle="Alphas",xscale="log",rmarg=12;
+a_(?)_(?)_R=alpha \1 of \2,
 A?_4_R,
 DA_1_4_R=Alpha 1 of 4 - Dirichlet,
 DA_2_4_R=Alpha 2 of 4 - Dirichlet,
