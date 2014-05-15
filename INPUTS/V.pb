@@ -1,10 +1,8 @@
-plotname="OUTPUTS/pb-plotalpha4.tiff",maintitle="Alphas",xscale="log",rmarg=12;
-a_(?)_(?)_R=alpha \1 of \2,
-A?_4_R,
-DA_1_4_R=Alpha 1 of 4 - Dirichlet,
-DA_2_4_R=Alpha 2 of 4 - Dirichlet,
-DA_3_4_R=Alpha 3 of 4 - Dirichlet,
-DA_4_4_R=Alpha 4 of 4 - Dirichlet
+plotname="OUTPUTS/pb-plotalpha4.tiff",maintitle="Alphas",xscale="log",rmarg=10;
+([aA])*([1234])_4_R=\1lpha \2 of 4
+$
+plotname="OUTPUTS/pb-plotalpha3.tiff",maintitle="Alphas",xscale="log",rmarg=10;
+([aA])*([123])_3_R=\1lpha \2 of 3
 $
 plotname="OUTPUTS/pb-plotV.tiff",xscale="log";
 V?_LOC=,
