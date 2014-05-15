@@ -1,7 +1,7 @@
 Date,Time: 5-1-2014, 12pm
 KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -------------------------------------
--fix CallFunc(Z[1:(j-1)],P)
+*fix CallFunc(Z[1:(j-1)],P)
 -evolve PUPPIES into an R package or library
 	-leverage object oriented features of R
 		-public class simur or puppie (or PUPS, PIES)
@@ -11,15 +11,17 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 	-develop standardized documentation
 	-develop intro and tutorial
 		-directory/folder layout
-		-key inputs: N,seed,*.pp,*.pe,*.pf,*.pd,VerboseLevel
+		-key inputs: N,seed,*.pp,*.pe,*.pf,*.pd,*pb,VerboseLevel,
+				wildcardlevel
 		-basic R syntax: vectors,matrices,lists,arrays,for-loop,
 		 if-statement,assignment, etc.
 			-get from online sources
 		-key built-in R data structures & functions:
 			source(),data.frame (indexing),'regex',print(),
 			paste(),cbind(),ls(),rm()
-		-key PUPPIES functions: montecarlo(),propagate(),
-			filterdata(),dumpdata(),loaddata(),scatterbars()
+		-key PUPPIES functions: montecarlo(),propagate(),'adv glob'
+			filterdata(),dumpdata(),loaddata(),scatterbars(),
+			scatterbars_batch()
 		-special PUPPIES functions: ft2eqn()
 		-key outputs formats: *.dat, *.tiff
 -*combine propagate and montecarlo into a single recursive quantify routine
@@ -30,13 +32,16 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 	 (change time)
 	-?integrate this with loaddata ctime order, revorder() and
 	 rowrevorder()
-	-?develop a re-order() routine
-	-integrate plot order with descriptions
+	*develop a re-order() routine
+		*this issue is solved with *.pb plot batch input file
+	*integrate plot order with descriptions
+		*integrated with batch plot args instead; descriptions kept separate
 -scatterbars:
 	-*add position and orientation of text override options
 		*test for relative position of mean and median and
 		 automatically adjust left/right justifications
 	-add font size override
+	-add error factor option to stats
 -*datadump and loaddata:
 	*develop a way to retain the order of the data vectors
 		*file.info sort list.file by ctime
@@ -50,7 +55,7 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 		-http://comisef.wikidot.com/tutorial:correlateduniformvariates
 		-http://www.mathworks.com/matlabcentral/newsreader/view_thread/115379
 		-http://stats.stackexchange.com/questions/66610/generate-pairs-of-random-numbers-uniformly-distributed-and-correlated
--standardize filename extentions: args, params, eqns, fault trees, etc.
+-*standardize filename extentions: args, params, eqns, fault trees, etc.
 -develop scheme to manage directories: Modules, INPUTS, OUTPUTS, etc.
 -develop scheme to manage global configuration defaults
 	*currently managable, but there is no scheme
@@ -66,7 +71,8 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 	 fault tree printing
 -upgrade text box to word wrap
 -complete CRAM & CommonCause modules
-	-use for-loop to loop through vehicle models
+	-* most of commoncause issues are worked out
+	*use for-loop to loop through vehicle models
 -develop markov chain analysis tool
 -incorporate or leverage bayesian inference package
 -incorporate or leverage MCMC package
@@ -74,7 +80,7 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 	-create graphical plot for event & fault trees
 	-?use library(grid)
 -update code comments
--investigate keeping local objects local
+-*investigate keeping local objects local
 -*include more robust error checking to add user in trouble shooting
 	-develop consistent scheme for messages, errors and warnings
 	*check file existence
