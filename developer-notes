@@ -1,4 +1,4 @@
-Date,Time: 5-1-2014, 12pm
+Date,Time: 5-13-2014, 8:20pm
 KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -------------------------------------
 *fix CallFunc(Z[1:(j-1)],P)
@@ -59,6 +59,7 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -develop scheme to manage directories: Modules, INPUTS, OUTPUTS, etc.
 -develop scheme to manage global configuration defaults
 	*currently managable, but there is no scheme
+	-define record separator, field separator, and list separator
 -convert m/n gate to boolean expression (using only and,or,not)
 	-use binomial density formula
 -create boolean expand and reduce algorithm for cutset analysis
