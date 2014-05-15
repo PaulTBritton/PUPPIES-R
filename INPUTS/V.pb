@@ -1,7 +1,7 @@
-plotname="OUTPUTS/pb-plotalpha4.tiff",maintitle="Alphas",xscale="log",rmarg=10;
+plotname="OUTPUTS/pb-plotalpha4.tiff",maintitle="Alpha x of 4",xscale="log",rmarg=10;
 ([aA])*([1234])_4_R=\1lpha \2 of 4
 $
-plotname="OUTPUTS/pb-plotalpha3.tiff",maintitle="Alphas",xscale="log",rmarg=10;
+plotname="OUTPUTS/pb-plotalpha3.tiff",maintitle="Alpha x of 3",xscale="log",rmarg=10;
 ([aA])*([123])_3_R=\1lpha \2 of 3
 $
 plotname="OUTPUTS/pb-plotV.tiff",xscale="log";
