@@ -28,6 +28,7 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
  (quantify equations and/or trees).
 	*completed for ft2eqns(): this might be sufficent
 -*FileIO: add plot order-list as data input option
+	-make sure dumpdata() adds a '/' if there isn't one
 	*loaddata returns data in the order it was written according to ctime
 	 (change time)
 	-?integrate this with loaddata ctime order, revorder() and
@@ -35,8 +36,12 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 	*develop a re-order() routine
 		*this issue is solved with *.pb plot batch input file
 	*integrate plot order with descriptions
-		*integrated with batch plot args instead; descriptions kept separate
+		*integrated with batch plot args instead; descriptions kept
+			separate
 -scatterbars:
+	-rework the interfaces between scatterbars, scatterbars2 and
+		scatterbars_batch (for scalability) while keeping
+		a class structure in mind
 	-*add position and orientation of text override options
 		*test for relative position of mean and median and
 		 automatically adjust left/right justifications
@@ -59,7 +64,8 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -develop scheme to manage directories: Modules, INPUTS, OUTPUTS, etc.
 -develop scheme to manage global configuration defaults
 	*currently managable, but there is no scheme
-	-define record separator, field separator, and list separator
+	-define record separator, field separator, and list separator,
+		?and '=' for assignment as in *.pb descriptions
 -convert m/n gate to boolean expression (using only and,or,not)
 	-use binomial density formula
 -create boolean expand and reduce algorithm for cutset analysis
