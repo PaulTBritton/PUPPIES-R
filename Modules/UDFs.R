@@ -8,7 +8,7 @@
 
 # advanced glob pattern to regular expression converter
 aglob2rx <- function(pattern,trim.head=TRUE,trim.tail=TRUE) {
-    p <- gsub("\\.", "\\\\.", paste0("^", pattern, "$"))
+    p <- gsub("\\.", "\\\\.", paste("^", pattern, "$",sep=""))
     p <- gsub("\\?", ".", gsub("\\*", ".*", p))
 #    p <- gsub("([^\\])\\(", "\\1\\\\(", p)
 #    p <- gsub("([^\\])\\[", "\\1\\\\[", p)
