@@ -23,10 +23,8 @@ YX <- cbind(Y,X)	# combine (column-wise) Y and X
 #scatterbars_batch(pbfile="INPUTS/V-load.pb",Data=YX)
 scatterbars_batch(pbfile="INPUTS/V.pb",Data=YX)
 
-#print("running test")
-#test <-propagate("V.pe",Y)
-#scatterbars(plotname="OUTPUTS/testplot.tiff",Data=test,
-#	filter="AVE*")
+Z <-propagate("V.pe",Y)
+scatterbars(plotname="OUTPUTS/Zplot.tiff",Data=Z[c("AVE_Engine","AVE_LOC")])
 
 
 print("MyModel.R Complete")	# status print statement demonstration
