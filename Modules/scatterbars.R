@@ -17,8 +17,8 @@ scatterbars_batch <- function(pbfile,Data)
 	Ords <- paste(readLines(pbfile),collapse="")
 	if (VerboseLevel >= 2) {
 		Ords <- scan(text=Ords,what="character",quote=NULL,sep="$")
-		print(paste("scatterbars() parsing",pbfile,
-				"into plot orders"))
+		print(paste("scatterbars_batch() parsing",pbfile,
+				"into plot tasks"))
 		print(Ords)
 	} else {
 		Ords <- scan(text=Ords,what="character",sep="$",
@@ -34,25 +34,25 @@ scatterbars_batch <- function(pbfile,Data)
 #print(ptable)
 		for (pat in ptable) {
 			len <- length(pat)
-print(class(newaglob(pat[1])))
-			pat[1] <- torx(newaglob(pat[1]))
-print(class(pat[1]))
-#			if (wildcardlevel == 0) pat[1] <- aglob2rx(pat[1])
+			filter <- switch(wildcardlevel,newglob(pat[1]),
+					newaglob(pat[1]),pat[1])
+			filter <- torx(filter)
+#			if (wildcardlevel == 0) filter <- aglob2rx(filter)
 			if (exists("Dindex") & exists("desc2")) {
-				Dindex <- c(Dindex,grep(pat[1],names(Data)))
+				Dindex <- c(Dindex,grep(filter,names(Data)))
 				if (len == 2) {
-					desc2 <- sub(pat[1],pat[2],desc2)
+					desc2 <- sub(filter,pat[2],desc2)
 				}
 				
 			} else if (exists("Dindex")) {
-				Dindex <- c(Dindex,grep(pat[1],names(Data)))
+				Dindex <- c(Dindex,grep(filter,names(Data)))
 				if (len == 2) {
-					desc2 <- sub(pat[1],pat[2],names(Data))
+					desc2 <- sub(filter,pat[2],names(Data))
 				}
 			} else {
-				Dindex <- grep(pat[1],names(Data))
+				Dindex <- grep(filter,names(Data))
 				if (len == 2) {
-					desc2 <- sub(pat[1],pat[2],names(Data))
+					desc2 <- sub(filter,pat[2],names(Data))
 				}
 			}
 		}
@@ -76,7 +76,7 @@ print(plotcommand)
 
 # front-end to the plotting routine scatterbars2
 # more WYSIWYG than scatterbars3
-scatterbars <- function(plotname="plot.tiff",Data,rmarg=8,filter=".*",
+scatterbars <- function(plotname="plot.tiff",Data,rmarg=8,filter,
 	stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,legendpos,
 	units="Probability", xscale="log",xnotation=sciNotation,
 	xmarks,range)
@@ -84,8 +84,11 @@ scatterbars <- function(plotname="plot.tiff",Data,rmarg=8,filter=".*",
 	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
 					nrow(Data)," Samples)",sep="")
 # removing wildcardlevel from global config
-#	if (missing(filter)) filter <- ".*"
-#	else if (wildcardlevel == 0) filter <- aglob2rx(filter)
+	if (missing(filter)) filter <- ".*"
+	else {
+		filter <- switch(wildcardlevel,newglob(filter),
+			newaglob(filter),filter)
+	}
 	Data <- filterdata(torx(filter),Data)
 	Labels <- names(Data)
 	M <- length(Labels)

@@ -9,16 +9,16 @@ source("PUPPIES.R")
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
 
 # try removing as a global config
-#wildcardlevel <- 1	# default = 0, chose 0 or 1
+#wildcardlevel <- 1	# default = 2, chose 1-3
 
 N <- 500
 print(paste("Number of Samples =",N))
 seed <- 1
 
 # samples from Vehicle system distributions,Engine Param, Alpha Factors
-X <- montecarlo(N,newaglob("[VEA].pp"))
+X <- montecarlo(N,"[VEA].pp")
 # propagate uncertainty into vehicle models
-Y <- propagate(newaglob("V?.pf"),X)
+Y <- propagate("V?.pf",X)
 YX <- cbind(Y,X)	# combine (column-wise) Y and X
 #dumpdata(YX,"DUMP/")
 

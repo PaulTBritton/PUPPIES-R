@@ -51,12 +51,12 @@ args <- list(fieldsep=";")
 # set default VerboseLevel
 VerboseLevel <- 1
 
-# try removing as global config
 #
 # set default wildcardlevel
-# 0 = advanced glob
-# 1 = regular expression
-#wildcardlevel <- 0	# default = 0, chose 0 or 1
+# 1 = glob
+# 2 = advanced glob
+# 3 = regular expression
+wildcardlevel <- 2	# default = 2, chose 1-3
 
 # seed for random number generator
 # NULL means rely on the CPU clock for seed generation

@@ -10,6 +10,7 @@ propagate <- function(filter,psamples) {
 	if (VerboseLevel > 0) print(paste("propagate() matching:",filter))
 # removing wildcardlevel from global config
 #	if (wildcardlevel == 0) filter <- aglob2rx(filter)
+	filter <- switch(wildcardlevel,newglob(filter),newaglob(filter),filter)
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	for (i in LF) {
 		if (VerboseLevel > 0) print(paste("propagate() found:",i))

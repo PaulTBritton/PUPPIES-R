@@ -16,10 +16,10 @@ X <- montecarlo(N,"parameters.pp")
 # propagate uncertainty into vehicle models
 Y <- propagate("equations.pe",X)
 Z <- cbind(Y,X)	# combine (column-wise) Y and X
-scatterbars(plotname="OUTPUTS/Easyplot.tiff",Data=Z,filter=newaglob("*4|S*"))
+scatterbars(plotname="OUTPUTS/Easyplot.tiff",Data=Z,filter="*4|S*")
 
 scatterbars(plotname="OUTPUTS/OneEasyplot.tiff",Data=Z,
-	desc="INPUTS/Easy.pd",filter=newaglob("S4"))
+	desc="INPUTS/Easy.pd",filter="S4")
 
 print("EasyModel.R Complete")	# status print statement demonstration
 #rm(list=ls())			# removes all objects from the current
