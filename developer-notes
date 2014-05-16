@@ -1,6 +1,9 @@
 Date,Time: 5-13-2014, 8:20pm
 KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -------------------------------------
+-need to fix regex vs aglob by using the class attribute and generic functions
+-? consider using the class attibute and generic functions for reparameterization
+	of distributions
 *fix CallFunc(Z[1:(j-1)],P)
 -evolve PUPPIES into an R package or library
 	-leverage object oriented features of R
