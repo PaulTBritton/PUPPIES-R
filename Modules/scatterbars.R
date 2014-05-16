@@ -34,7 +34,10 @@ scatterbars_batch <- function(pbfile,Data)
 #print(ptable)
 		for (pat in ptable) {
 			len <- length(pat)
-			if (wildcardlevel == 0) pat[1] <- aglob2rx(pat[1])
+print(class(newaglob(pat[1])))
+			pat[1] <- torx(newaglob(pat[1]))
+print(class(pat[1]))
+#			if (wildcardlevel == 0) pat[1] <- aglob2rx(pat[1])
 			if (exists("Dindex") & exists("desc2")) {
 				Dindex <- c(Dindex,grep(pat[1],names(Data)))
 				if (len == 2) {
@@ -64,8 +67,8 @@ scatterbars_batch <- function(pbfile,Data)
 			plotcommand <-
 			paste("scatterbars(Data=Data[Dindex],",Y[1],")")
 		}
-#print(plotcommand)
-print(parse(text=plotcommand))
+print(plotcommand)
+#print(parse(text=plotcommand))
 		eval(parse(text=plotcommand))
 		rm(Dindex)
 	}
@@ -73,16 +76,17 @@ print(parse(text=plotcommand))
 
 # front-end to the plotting routine scatterbars2
 # more WYSIWYG than scatterbars3
-scatterbars <- function(plotname="plot.tiff",Data,rmarg=8,filter,
+scatterbars <- function(plotname="plot.tiff",Data,rmarg=8,filter=".*",
 	stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,legendpos,
 	units="Probability", xscale="log",xnotation=sciNotation,
 	xmarks,range)
 {
 	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
 					nrow(Data)," Samples)",sep="")
-	if (missing(filter)) filter <- ".*"
-	else if (wildcardlevel == 0) filter <- aglob2rx(filter)
-	Data <- filterdata(filter,Data)
+# removing wildcardlevel from global config
+#	if (missing(filter)) filter <- ".*"
+#	else if (wildcardlevel == 0) filter <- aglob2rx(filter)
+	Data <- filterdata(torx(filter),Data)
 	Labels <- names(Data)
 	M <- length(Labels)
 	if (!missing(desc)) {

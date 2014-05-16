@@ -8,8 +8,9 @@
 
 propagate <- function(filter,psamples) {
 	if (VerboseLevel > 0) print(paste("propagate() matching:",filter))
-	if (wildcardlevel == 0) filter <- aglob2rx(filter)
-	LF <- list.files(pattern=filter,recursive=TRUE,full.names=TRUE)
+# removing wildcardlevel from global config
+#	if (wildcardlevel == 0) filter <- aglob2rx(filter)
+	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	for (i in LF) {
 		if (VerboseLevel > 0) print(paste("propagate() found:",i))
 		newone <- propagate2(i,psamples)

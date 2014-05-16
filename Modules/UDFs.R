@@ -5,6 +5,25 @@
 #
 ###################################
 
+newaglob <- function(pattern) {
+	class(pattern) <- "aglob"
+	return(pattern)
+}
+newglob <- function(pattern) {
+	class(pattern) <- "glob"
+	return(pattern)
+}
+
+torx <- function(pattern) UseMethod("torx")
+torx.aglob <- function(pattern) {
+	return(ifelse(missing(pattern),".*",aglob2rx(pattern)))
+}
+torx.glob <- function(pattern) {
+	return(ifelse(missing(pattern),".*",glob2rx(pattern)))
+}
+torx.default <- function(pattern) {
+	return(ifelse(missing(pattern),".*",pattern))
+}
 
 # advanced glob pattern to regular expression converter
 aglob2rx <- function(pattern,trim.head=TRUE,trim.tail=TRUE) {
@@ -28,7 +47,7 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
 # return a subset of data based on a pass through filter in
 # regex format
-filterdata <-function(filter,data) data[grep(filter,names(data))]
+filterdata <- function(filter,data) data[grep(filter,names(data))]
 
 #########################################
 # reverse the order of Parameters and Equations to place them to an order 
