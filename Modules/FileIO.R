@@ -6,10 +6,10 @@
 ###################################
 
 # data dump procedure
-dumpdata <- function(Z,ddDir,filter="*") {
+dumpdata <- function(Z,ddDir,filter) {
 	if (VerboseLevel > 0) print("Attempting to dumpdata")
-	if (wildcardlevel == 0) filter <- aglob2rx(filter)
-	Z <- filterdata(filter,Z)
+	class(filter) <- wildcardclass
+	Z <- filterdata(torx(filter),Z)
 	for (j in names(Z)) {
 		filename <- paste(ddDir,names(Z[j]),".dat",sep="")
 		if (VerboseLevel >= 2) print(paste("Attempting to write:",
@@ -20,9 +20,9 @@ dumpdata <- function(Z,ddDir,filter="*") {
 }
 
 # load data function
-loaddata <- function(DataDir,filter="*") {
-	if (wildcardlevel == 0) filter <- aglob2rx(filter)
-	LF <- list.files(path=DataDir,pattern=filter)
+loaddata <- function(DataDir,filter) {
+	class(filter) <- wildcardclass
+	LF <- list.files(path=DataDir,pattern=torx(filter))
 	size <- length(LF)
 	if (VerboseLevel >= 2) print(paste("reading: ",DataDir,LF[1],sep=""))
 	lfile <- paste(DataDir,LF[1],sep="")
