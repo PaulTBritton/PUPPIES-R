@@ -8,8 +8,7 @@ source("PUPPIES.R")
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
 
-# try removing as a global config
-#wildcardlevel <- 1	# default = 2, chose 1-3
+#wildcardclass <- "regex"
 
 N <- 500
 print(paste("Number of Samples =",N))

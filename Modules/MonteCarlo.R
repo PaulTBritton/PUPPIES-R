@@ -106,7 +106,7 @@ eD <- function(N,P) {
 # logical OR operation for compound event distributions
 OR <- function(Z,P) {
 	filter <- as.character(P$f)
-	filter <- switch(wildcardlevel,newglob(filter),newaglob(filter),filter)
+	class(filter) <- wildcardclass
 	X <- filterdata(torx(filter),Z)
 	return(1-apply(1-X,1,prod))
 }
@@ -114,7 +114,7 @@ OR <- function(Z,P) {
 # logical AND operation for compound event distributions
 AND <- function(Z,P) {
 	filter <- as.character(P$f)
-	filter <- switch(wildcardlevel,newglob(filter),newaglob(filter),filter)
+	class(filter) <- wildcardclass
 	X <- filterdata(torx(filter),Z)
 	return(apply(X,1,prod))
 }
@@ -215,9 +215,7 @@ UDist <- function(N,P) {
 
 montecarlo <- function(N,filter) {
 	if (VerboseLevel > 0) print(paste("montecarlo() matching:",filter))
-# removing wildcardlevel from global config
-#	if (wildcardlevel == 0) filter <- aglob2rx(filter)
-	filter <- switch(wildcardlevel,newglob(filter),newaglob(filter),filter)
+	class(filter) <- wildcardclass
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	for (i in LF) {
 		if (VerboseLevel > 0) print(paste("montecarlo() found:",i))

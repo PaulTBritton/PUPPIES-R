@@ -34,10 +34,9 @@ scatterbars_batch <- function(pbfile,Data)
 #print(ptable)
 		for (pat in ptable) {
 			len <- length(pat)
-			filter <- switch(wildcardlevel,newglob(pat[1]),
-					newaglob(pat[1]),pat[1])
+			filter <- pat[1]
+			class(filter) <- wildcardclass
 			filter <- torx(filter)
-#			if (wildcardlevel == 0) filter <- aglob2rx(filter)
 			if (exists("Dindex") & exists("desc2")) {
 				Dindex <- c(Dindex,grep(filter,names(Data)))
 				if (len == 2) {
@@ -85,10 +84,7 @@ scatterbars <- function(plotname="plot.tiff",Data,rmarg=8,filter,
 					nrow(Data)," Samples)",sep="")
 # removing wildcardlevel from global config
 	if (missing(filter)) filter <- ".*"
-	else {
-		filter <- switch(wildcardlevel,newglob(filter),
-			newaglob(filter),filter)
-	}
+	else class(filter) <- wildcardclass
 	Data <- filterdata(torx(filter),Data)
 	Labels <- names(Data)
 	M <- length(Labels)

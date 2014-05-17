@@ -8,9 +8,7 @@
 # data dump procedure
 dumpdata <- function(Z,ddDir,filter) {
 	if (VerboseLevel > 0) print("Attempting to dumpdata")
-	filter <- switch(wildcardlevel,newglob(filter),newaglob(filter),filter)
-#	if (wildcardlevel == 0) filter <- aglob2rx(filter)
-# removing wildcardlevel from global config
+	class(filter) <- wildcardclass
 	Z <- filterdata(torx(filter),Z)
 	for (j in names(Z)) {
 		filename <- paste(ddDir,names(Z[j]),".dat",sep="")
@@ -23,9 +21,7 @@ dumpdata <- function(Z,ddDir,filter) {
 
 # load data function
 loaddata <- function(DataDir,filter) {
-# removing wildcardlevel from global config
-#	if (wildcardlevel == 0) filter <- aglob2rx(filter)
-	filter <- switch(wildcardlevel,newglob(filter),newaglob(filter),filter)
+	class(filter) <- wildcardclass
 	LF <- list.files(path=DataDir,pattern=torx(filter))
 	size <- length(LF)
 	if (VerboseLevel >= 2) print(paste("reading: ",DataDir,LF[1],sep=""))
