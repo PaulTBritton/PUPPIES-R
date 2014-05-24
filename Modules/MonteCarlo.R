@@ -7,7 +7,7 @@
 # user defined "Call Functions"
 #	-Logic gates:
 #		- AND, OR
-#	-Math operations
+#	-Math operations <- replace with EXPR?
 #		- MULT, ADD, POW, EXPR(trumps old TRAN)
 #			 [old - TRAN(combination of all three)]
 #	-Expression evaluator (takes advantage of propagate module)
@@ -120,29 +120,29 @@ AND <- function(Z,P) {
 }
 
 #################
-# Mathematical operations
+# Mathematical operations <- replace with EXPR
 #
 
 # multiply by constant: a*X
-MULT <- function(Z,P) {
-	a <- as.numeric(P$a)
-	X <- Z[[as.character(P$f)]]
-	return(a*X)
-}
+#MULT <- function(Z,P) {
+#	a <- as.numeric(P$a)
+#	X <- Z[[as.character(P$f)]]
+#	return(a*X)
+#}
 
 # add constant: X+b
-ADD <- function(Z,P) {
-	b <- as.numeric(P$b)
-	X <- Z[[as.character(P$f)]]
-	return(X+b)
-}
+#ADD <- function(Z,P) {
+#	b <- as.numeric(P$b)
+#	X <- Z[[as.character(P$f)]]
+#	return(X+b)
+#}
 
 # raise to power: X^c
-POW <- function(Z,P) {
-	c <- as.numeric(P$c)
-	X <- Z[[as.character(P$f)]]
-	return(X^c)
-}
+#POW <- function(Z,P) {
+#	c <- as.numeric(P$c)
+#	X <- Z[[as.character(P$f)]]
+#	return(X^c)
+#}
 
 # Note: this TRAN is trumped by EXPR below.  Additionally, TRAN is used
 # represent Transfer Gate in the PUPPIES fault tree format.

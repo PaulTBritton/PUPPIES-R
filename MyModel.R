@@ -6,6 +6,11 @@
 #
 source("PUPPIES.R")
 
+#devise default dir scheme
+#INPUTS <- "INPUTS"
+#OUTPUTS <- "OUTPUTS"
+#DUMP <- "DUMP"
+
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
 
 #wildcardclass <- "regex"

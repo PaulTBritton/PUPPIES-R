@@ -1,0 +1,11 @@
+Date,Time: 5-13-2014, 8:20pm
+KEY: - = todo, * = done, -* = partially done, -? = under consideration
+-------------------------------------
+-propagate() -> propagate_batch
+	-propagate2() -> read.eqn()
+	-propagate3() >- propagate()
+-montecarlo() -> montecarlo_batch()
+	-montecarlo2() -> read.parameters()
+	-montecarlo3() -> montecarlo()
+-create classes for distribution types
+	-create correlation matrix class
