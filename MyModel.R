@@ -4,6 +4,10 @@
 #	- Example Model Script Demo
 #
 #
+
+rm(list=ls())			# removes all objects from the current
+				# R workspace/environment
+
 source("PUPPIES.R")
 
 #devise default dir scheme
@@ -35,5 +39,3 @@ scatterbars(plotname="OUTPUTS/Zplot.tiff",Data=Z[c("AVE_Engine","AVE_LOC")])
 
 
 print("MyModel.R Complete")	# status print statement demonstration
-#rm(list=ls())			# removes all objects from the current
-				# R workspace/environment

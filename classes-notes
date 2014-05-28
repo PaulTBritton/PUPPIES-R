@@ -9,3 +9,4 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 	-montecarlo3() -> montecarlo()
 -create classes for distribution types
 	-create correlation matrix class
+-need to modularize scatterbars()

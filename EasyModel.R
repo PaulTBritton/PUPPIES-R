@@ -4,6 +4,10 @@
 #	- Example Model Script Demo
 #
 #
+
+rm(list=ls())			# removes all objects from the current
+				# R workspace/environment
+
 source("PUPPIES.R")
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
@@ -22,5 +26,3 @@ scatterbars(plotname="OUTPUTS/OneEasyplot.tiff",Data=Z,
 	desc="INPUTS/Easy.pd",filter="S4")
 
 print("EasyModel.R Complete")	# status print statement demonstration
-#rm(list=ls())			# removes all objects from the current
-				# R workspace/environment

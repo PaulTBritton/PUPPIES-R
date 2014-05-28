@@ -1,5 +1,5 @@
 index;udist;up;calc;cp
-M1;CF;MULT;S1;5.00E-01;0;0;0
+M1;CF;EXPR;S1*5.00E-01;0
 M2;CF;EXPR;NOT(cos(S3))+sin(S1)+S2;0;0;0;0
 S1;CF;EXPR;MN(3,10,S2);3;10;0;0
 S2;CF;OR;B[1-3];0;0;0;0
