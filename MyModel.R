@@ -19,14 +19,14 @@ source("PUPPIES.R")
 
 #wildcardclass <- "regex"
 
-N <- 500
-print(paste("Number of Samples =",N))
+#N <- 500
+#print(paste("Number of Samples =",N))
 seed <- 1
 
 # samples from Vehicle system distributions,Engine Param, Alpha Factors
-X <- montecarlo(N,"[VEA].pp")
+X <- montecarlo(N=50,pups="[VEA].pp")
 # propagate uncertainty into vehicle models
-Y <- propagate("V?.pf",X)
+Y <- propagate(pups="V?.pf",pies=X)
 YX <- cbind(Y,X)	# combine (column-wise) Y and X
 #dumpdata(YX,"DUMP/")
 

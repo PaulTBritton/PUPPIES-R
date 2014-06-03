@@ -23,6 +23,9 @@
 # various theoretical distributions
 #
 
+# constant vector
+cD <- function(N,P) rep(as.numeric(P$a),times=N)
+
 # uniform distribution
 uD <- function(N,P) runif(N,as.numeric(P$a),as.numeric(P$b))
 
@@ -198,6 +201,9 @@ CallFunc <- function(func,...) {
 	return(f(...))
 }
 
+# UDist need to eliminate this in order to allow for more flexibility
+# in applying multiple missions times to the same failure rate sample
+#
 # Generate uncertainty distributions from parameter data.
 # The function along with CallFunc act like a switchboard
 # from the parameter data inputfile to the uncertainty distribution functions
@@ -249,6 +255,8 @@ montecarlo3 <- function(N,Params)
 	Z <- as.data.frame(array(0,c(N,nrow(Params))))
 	names(Z) <- row.names(Params)
 
+	# consider replacing switch statement with generic functions
+	#
 	# sample uncertainty distributions from parameter data
 	for (i in names(Z)) {
 		P <- Params[i,]

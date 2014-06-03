@@ -1,12 +1,20 @@
 Date,Time: 5-13-2014, 8:20pm
 KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -------------------------------------
+-combine *.pp and *.pe files
 -propagate() -> propagate_batch
 	-propagate2() -> read.eqn()
 	-propagate3() >- propagate()
+	-use with() statement
+	-use all.vars()
+	-and save environment:
+http://stackoverflow.com/questions/17769121/best-way-to-name-objects-programmatically-using-r
+
 -montecarlo() -> montecarlo_batch()
 	-montecarlo2() -> read.parameters()
 	-montecarlo3() -> montecarlo()
 -create classes for distribution types
 	-create correlation matrix class
+	-create argument parser for CallFunc()
+	-consider overide for wildcardtype
 -need to modularize scatterbars()
