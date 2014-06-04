@@ -24,13 +24,13 @@
 #load code modules
 source("Modules/FileIO.R")
 source("Modules/Number.R")
-#source("Modules/Boolean.R")
 source("Modules/UDFs.R")
 source("Modules/MonteCarlo.R")
 source("Modules/Propagate.R")
 source("Modules/scatterbars.R")
-source("Modules/CRAM.R")
-source("Modules/CommonCause.R")
+#source("Modules/Boolean.R")
+#source("Modules/CRAM.R")
+#source("Modules/CommonCause.R")
 
 #####################################################
 # define global configuration arguments

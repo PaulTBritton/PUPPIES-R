@@ -32,6 +32,8 @@ montecarlo <- function(N,mfile)
 	pe$N <- N
 	source("Modules/Boolean.R",local=pe)
 	source("Modules/Dist.R",local=pe)
+	source("Modules/CRAM.R",local=pe)
+	source("Modules/CommonCause.R",local=pe)
 	e <- new.env(parent=pe)
 	for (i in 1:size) {
 		code <- parse(text=as.character(modeldef[[i,2]]))
