@@ -13,9 +13,9 @@ source("PUPPIES.R")
 VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #seed <- 1		# global variable
 
-# samples from Vehicle system distributions,Engine Param, Alpha Factors
-X <- montecarlo(N=5,"INPUTS/new-pp.pp")
-# propagate uncertainty into vehicle models
+# generate monte carlo samples from model definition file
+X <- montecarlo(N=1000,"INPUTS/new-pp.pp")
+# propagate uncertainty from X into another model
 #Y <- propagate("equations.pe",X)
 #Z <- cbind(Y,X)	# combine (column-wise) Y and X
 scatterbars(plotname="OUTPUTS/Easyplot.tiff",Data=X,filter="M?|S?")
