@@ -2,21 +2,21 @@ Date,Time: 5-13-2014, 8:20pm
 KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -------------------------------------
 -use tail(x,-1) to remove headers from table
--combine *.pp and *.pe files
--need a local/global model environment and/or data.frame
+*combine *.pp and *.pe files
+-*need a local/global model environment and/or data.frame
 -propagate() -> propagate_batch
 	-propagate2() -> read.eqn()
 	-propagate3() -> propagate()
 	-use with() and within() statement: data to environment
-		-substitute(), eval(), parse()
-		-env to data.frame: as.data.frame(as.list(e))
+		-*substitute(), eval(), parse()
+		-*env to data.frame: as.data.frame(as.list(e))
 	-use all.names(), all.vars(): all names in an expression
 	-and save/load environments using save()/load():
 http://stackoverflow.com/questions/17769121/best-way-to-name-objects-programmatically-using-r
 
--montecarlo() -> montecarlo_batch()
-	-montecarlo2() -> read.parameters()
-	-montecarlo3() -> montecarlo()
+-*montecarlo() -> montecarlo_batch()
+	-*montecarlo2() -> read.parameters()
+	-*montecarlo3() -> montecarlo()
 -create classes for distribution types
 	-create correlation matrix class
 	-create argument parser for CallFunc()
