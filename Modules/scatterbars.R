@@ -75,10 +75,11 @@ print(plotcommand)
 
 # front-end to the plotting routine scatterbars2
 # more WYSIWYG than scatterbars3
-scatterbars <- function(plotname="plot.tiff",Data,rmarg=8,filter,
-	stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,legendpos,
-	units="Probability", xscale="log",xnotation=sciNotation,
-	xmarks,range)
+scatterbars <- function(plotname="plot.tiff",PM,
+	Data=as.data.frame(as.list(PM$m,all.names=TRUE)),
+	rmarg=8,filter, stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
+	legendpos,units="Probability", xscale="log",
+	xnotation=sciNotation,xmarks,range)
 {
 	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
 					nrow(Data)," Samples)",sep="")

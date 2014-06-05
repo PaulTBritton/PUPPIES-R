@@ -22,12 +22,13 @@
 
 #####################################################
 #load code modules
-source("Modules/FileIO.R")
-source("Modules/Number.R")
-source("Modules/UDFs.R")
-source("Modules/MonteCarlo.R")
-source("Modules/Propagate.R")
-source("Modules/scatterbars.R")
+print(getwd())
+source("FileIO.R")
+source("Number.R")
+source("UDFs.R")
+source("MonteCarlo.R")
+source("Propagate.R")
+source("scatterbars.R")
 #source("Modules/Boolean.R")
 #source("Modules/CRAM.R")
 #source("Modules/CommonCause.R")
