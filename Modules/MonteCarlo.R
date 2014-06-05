@@ -17,22 +17,36 @@
 #	return(modeldef)
 #}
 
+# Create a new PUPPIES model
 # sample the distributions and propagate uncertainty according
 # the to model definition
-montecarlo <- function(N,mfile="",mexpr)
+newpm <- function(N,seed=NULL,pmname="PUPPIES Model",
+		pmfile="",mexpr=parse(file=pmfile))
 {
-	pe <- new.env()
-	pe$N <- N
-	source("Modules/Boolean.R",local=pe)
-	source("Modules/Dist.R",local=pe)
-	source("Modules/CRAM.R",local=pe)
-	source("Modules/CommonCause.R",local=pe)
-	e <- new.env(parent=pe)
-	if (missing(mexpr)) eval(parse(file=mfile),e)
-	else eval(mexpr,e)
-	Z <- as.data.frame(as.list(e))
-	if (VerboseLevel >= 2) print(paste("montecarlo() complete on:",mfile))
-	return(Z)
+	if (!is.null(seed)) set.seed(seed)
+	p <- new.env()
+	p$N <- N
+	source("Modules/Boolean.R",local=p)
+	source("Modules/Dist.R",local=p)
+	source("Modules/CRAM.R",local=p)
+	source("Modules/CommonCause.R",local=p)
+	e <- new.env(parent=p)
+	eval(mexpr,e)
+#	Z <- as.data.frame(as.list(e))
+	if (VerboseLevel >= 2) print(paste("newpm() complete on:",pmname))
+#	return(Z)
+	return(list(n=pmname,m=e))
+}
+
+appendpm <- function(pm,pmfile="",mexpr=parse(file=pmfile)) {
+	eval(mexpr,pm$m)
+}
+
+spawnpm <- function(pm,pmname="PUPPIES Model",
+		pmfile="",mexpr=parse(file=pmfile)) {
+	e <- as.environment(as.list(pm$m,all.names=TRUE))
+	eval(mexpr,e)
+	return(list(n=pmname,m=e))
 }
 
 montecarlo_batch <- function(N,filter) {

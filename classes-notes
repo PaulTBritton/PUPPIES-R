@@ -1,13 +1,13 @@
 Date,Time: 5-13-2014, 8:20pm
 KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -------------------------------------
--need to fix set.seed for montecarlo and propagate
+-*need to fix set.seed for montecarlo and propagate
 -need to rename montecarlo and propagate
 -use tail(x,-1) to remove headers from table
 -?table headers might not be necessary
 *combine *.pp and *.pe files
 -*need a local/global model environment and/or data.frame
--propagate() -> propagate_batch
+-*propagate() -> propagate_batch: replace with newpm(),appendpm(),spawnpm()
 	-propagate2() -> read.eqn() and read.ft2eqn()
 	-propagate3() -> propagate()
 	-use with() and within() statement: data to environment
@@ -18,11 +18,14 @@ KEY: - = todo, * = done, -* = partially done, -? = under consideration
 http://stackoverflow.com/questions/17769121/best-way-to-name-objects-programmatically-using-r
 
 -*montecarlo() -> montecarlo_batch()
-	-*montecarlo2() -> read.parameters()
+	-*probably obsolete: montecarlo2() -> read.parameters()
 	-*montecarlo3() -> montecarlo()
--create classes for distribution types
-	-create correlation matrix class
-	-create argument parser for CallFunc()
-	-consider overide for wildcardtype
-	-make classes for number formats
+-create classes for distribution parameterization types
+	-lognmed.default(),logef.default(),logmed.meanef(),
+		logmed.musigma(),logef.musigma()
+	-create normD()
+-create correlation matrix class
+*obsolete: create argument parser for CallFunc()
+-consider overide for wildcardtype
+-make classes for number formats
 -need to modularize scatterbars()
