@@ -44,9 +44,11 @@ gammD <- function(shape,rate) {
 # create a vector of N lognormal samples
 # median = 50th
 # EF = 95th/50th
-lognD <- function(median,EF) {
-	mu <- log(median)
-	sigma <- log(EF)/qnorm(0.95)
+lognD <- function(EF=exp(qnorm(0.95)),sigma=log(EF)/qnorm(0.95),
+		mean=1,median=exp(log(mean)-(sigma^2)/2),
+		mu=log(median)) {
+#	mu <- log(median)
+#	sigma <- log(EF)/qnorm(0.95)
 	return(rlnorm(N,mu,sigma))
 }
 

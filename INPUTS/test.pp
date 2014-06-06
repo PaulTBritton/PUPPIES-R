@@ -3,8 +3,8 @@ E3 <- 3
 A3 <- triaD(2,3,4)
 B5 <- betaD(alpha=A3,beta=6)
 B4 <- empeD("INPUTS/B4.dat")
-B3 <- lognD(median=7.00E-05,EF=E3)
-B2 <- lognD(median=6.00E-04,EF=E5)
+B3 <- lognD(mu=log(7.00E-05)-(1e-4^2)/2,sigma=1e-4)
+B2 <- lognD(mean=6.00E-04,EF=E5)
 B1 <- lognD(median=B2,EF=E5)
 S5 <- B1&B2&B3
 S4 <- B3&(NOT(B5)|(B2&B1))
