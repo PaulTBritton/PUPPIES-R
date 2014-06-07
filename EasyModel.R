@@ -27,7 +27,7 @@ appendpm(X,pmfile="INPUTS/append.pp")
 scatterbars(plotname="OUTPUTS/appendplot.tiff",PM=X,
 	desc="INPUTS/Easy.pd",filter="S4")
 
-mlist <- ft2eqn("INPUTS/V.pf")
-cat(mlist[[2]])
-print(mlist[[1]])
+print(ft2eqn("INPUTS/V.pf"))
+cat(ft2pm("INPUTS/V.pf"))
+
 print("EasyModel.R Complete")	# status print statement demonstration

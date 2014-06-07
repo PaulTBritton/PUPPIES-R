@@ -12,7 +12,7 @@
 
 # batch version front-end to the plotting routine scatterbars
 # ? consider removing desc file feature: superseeded by pbfile
-scatterbars_batch <- function(pbfile,Data)
+scatterbars_batch <- function(pbfile,PM,Data=as.data.frame(as.list(PM$m,all.names=TRUE)))
 {
 	Ords <- paste(readLines(pbfile),collapse="")
 	if (VerboseLevel >= 2) {
@@ -82,7 +82,7 @@ scatterbars <- function(plotname="plot.tiff",PM,
 	xnotation=sciNotation,xmarks,range)
 {
 	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
-					nrow(Data)," Samples)",sep="")
+					nrow(Data)," Iterations)",sep="")
 # removing wildcardlevel from global config
 	if (missing(filter)) filter <- ".*"
 	else class(filter) <- wildcardclass

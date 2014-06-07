@@ -1,16 +1,17 @@
-index;dist;calc;f;a;b;c;t
-Abortability;tD;I;;.1;.6;.9;0
-V_Total_ICPS;bD;I;;2;10;0;0
-B_Motor;lD;I;;3e-4;3;0;0
-B_SEP;lD;I;;1e-5;5;0;0
-B_TVC;gD;e;;1;19;0;.02
-B_TPS;bD;I;;2;100;0;0
-B_AVI;gD;e;;1;50;0;.05
-B_STR;lD;I;;1e-7;7;0;0
-CS_MPS;gD;e;;1;10000;0;.05
-CS_TVC;gD;e;;1;1900;0;.02
-CS_TPS;bD;I;;2;100;0;0
-CS_AVI;gD;e;;1;5000;0;.05
-CS_RCS;gD;e;;2;20000;0;.05
-CS_STR;lD;I;;1e-5;5;0;0
-CS_SEP;lD;I;;1e-5;5;0;0
+TPS <- betaD(2,100)
+AVI_FR <- gammD(1,500)
+Abortability <- triaD(.1,.6,.9)
+V_Total_ICPS <- betaD(2,10)
+B_Motor <- lognD(median=3e-4,EF=3)
+B_SEP <- lognD(median=1e-5,EF=5)
+B_TVC <- 1-exp(-gammD(1,19)*.02)
+B_TPS <- TPS
+B_AVI <- 1-exp(-AVI_FR*.01)
+B_STR <- lognD(1e-7,7)
+CS_TVC <- 1-exp(-gammD(1,1900)*.02)
+CS_TPS <- TPS
+CS_MPS <- 1-exp(-gammD(1,10000)*.05)
+CS_AVI <- 1-exp(-AVI_FR*.05)
+CS_RCS <- 1-exp(-gammD(2,20000)*.05)
+CS_STR <- lognD(median=1e-5,EF=5)
+CS_SEP <- lognD(median=1e-5,EF=5)

@@ -18,8 +18,8 @@
 #}
 
 # evaluate a PUPPIES model with N random iteration
-evalpm <- function(N,seed=NULL,pmname="PUPPIES Model",ftfile="",
-		pmfile=ft2eqn(ftfile),mexpr=parse(file=pmfile))
+evalpm <- function(N,seed=NULL,pmname="PUPPIES Model",
+		pmfile="",mexpr=parse(file=pmfile))
 {
 	if (!is.null(seed)) set.seed(seed)
 	p <- new.env()
@@ -37,17 +37,21 @@ print(getwd())
 
 # propagate results from from one PUPPIES model into
 # another PUPPIES model and append the new results to the old results
-appendpm <- function(pm,ftfile="",pmfile=ft2eqn(ftfile),
-		mexpr=parse(file=pmfile)) {
+appendpm <- function(pm,pmfile="",mexpr=parse(file=pmfile)) {
 	eval(mexpr,pm$m)
 }
 
 # propagate results from from one PUPPIES model into
 # another PUPPIES model and return the only the new results
-spawnpm <- function(pm,pmname="PUPPIES Model",ftfile="",
-		pmfile=ft2eqn(ftfile),mexpr=parse(file=pmfile)) {
+spawnpm <- function(pm,pmname="PUPPIES Model",pmfile="",
+		mexpr=parse(file=pmfile)) {
 	e <- as.environment(as.list(pm$m,all.names=TRUE))
+	parent.env(e) <- parent.env(pm$m)
+#print(ls(e))
 	eval(mexpr,e)
+#print(ls(e))
+	rm(list=ls(pm$m),envir=e)
+#print(ls(e))
 	return(list(n=pmname,m=e))
 }
 

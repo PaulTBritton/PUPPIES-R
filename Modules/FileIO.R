@@ -60,6 +60,19 @@ loaddata <- function(DataDir,filter) {
 	return(Z[,O])
 }
 
+ft2pm <- function(filename) {
+	X <- revorder(ft2eqn(filename))
+#	size <- nrow(X)
+	pm <- ""
+	for (i in names(X)) {
+#		pm <- paste(pm,X[[i,1]],"<-",X[[i,2]],"\n") #ifelse(i==size,"","\n"))
+		pm <- paste(pm,i,"<-",X[[i]],"\n") #ifelse(i==size,"","\n"))
+	}
+	expr <- parse(text=pm)
+#print(expr)
+	return(expr)
+}
+
 ft2eqn <- function(filename) {
 	if (file.access(filename,mode=4)) {
 		stop(paste("File access error:",filename))
@@ -79,7 +92,6 @@ ft2eqn <- function(filename) {
 	}
 	size <- length(X)
 	I <- array("",c(size))
-	eqns <- ""
 	for (i in 1:size) {
 		if (VerboseLevel >= 2) {
 			Y <- scan(text=X[i],what="character",sep=";")
@@ -103,12 +115,15 @@ ft2eqn <- function(filename) {
 		if (Y[2] == "AND")
 			Y[3] <- gsub(",","\\&",Y[3])
 		if (Y[2] == "TRAN")
-			Y[3] <- as.character(ft2eqn(as.character(Y[3]))[[2]])
+			Y[3] <- as.character(ft2eqn(as.character(Y[3]))[[1]])
 		Y[3] <- gsub("#",",",Y[3])
-		eqns <- paste(eqns,"(",Y[3],")",ifelse(i==size,"","\n"),sep="")
+		X[i] <- paste("(",Y[3],")",sep="")
 	}
 #	Z <- data.frame(expression=X)
 #	row.names(Z) <- I
-	return(list(I,eqns))
+#	return(rowrevorder(Z))
+#	Z <- as.list(X)
+	names(X) <- I
+	return(X)
 }
 

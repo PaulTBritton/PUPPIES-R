@@ -31,7 +31,7 @@ CC_V_RS25;EXPR;
 	GAD_2_4_Rate*V_RS25
 $
 GAD_2_4_Rate;EXPR;
-	GlobalAlpha(2,A1_4_R,A2_4_R,A3_4_R,A4_4_R)
+	.5
 $
 V_RS25;OR;
 	V_RS25_Cont,
