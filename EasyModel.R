@@ -10,15 +10,15 @@ rm(list=ls())			# removes all objects from the current
 
 source("Modules/PUPPIES.R",chdir=TRUE)
 
-VerboseLevel <- 3	# default = 1, choose from 0 to 3
+#VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #seed <- 1		# global variable
 
 # generate monte carlo samples from model definition file
-X <- newpm(N=100,pmfile="INPUTS/test.pp")
+X <- evalpm(N=100,pmfile="INPUTS/test.pp")
 scatterbars(plotname="OUTPUTS/testplot.tiff",PM=X,filter="M?|S?")
 
 modeldef <- expression(T1<-betaD(3,4),T2<-lognD(.01,5))
-Y <- newpm(N=100,mexpr=modeldef)
+Y <- evalpm(N=100,mexpr=modeldef)
 scatterbars(plotname="OUTPUTS/mexprplot.tiff",PM=Y)
 
 
@@ -27,4 +27,7 @@ appendpm(X,pmfile="INPUTS/append.pp")
 scatterbars(plotname="OUTPUTS/appendplot.tiff",PM=X,
 	desc="INPUTS/Easy.pd",filter="S4")
 
+mlist <- ft2eqn("INPUTS/V.pf")
+cat(mlist[[2]])
+print(mlist[[1]])
 print("EasyModel.R Complete")	# status print statement demonstration

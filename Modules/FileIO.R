@@ -79,6 +79,7 @@ ft2eqn <- function(filename) {
 	}
 	size <- length(X)
 	I <- array("",c(size))
+	eqns <- ""
 	for (i in 1:size) {
 		if (VerboseLevel >= 2) {
 			Y <- scan(text=X[i],what="character",sep=";")
@@ -102,12 +103,12 @@ ft2eqn <- function(filename) {
 		if (Y[2] == "AND")
 			Y[3] <- gsub(",","\\&",Y[3])
 		if (Y[2] == "TRAN")
-			Y[3] <- as.character(ft2eqn(as.character(Y[3]))[[1,1]])
+			Y[3] <- as.character(ft2eqn(as.character(Y[3]))[[2]])
 		Y[3] <- gsub("#",",",Y[3])
-		X[i] <- paste("(",Y[3],")",sep="")
+		eqns <- paste(eqns,"(",Y[3],")",ifelse(i==size,"","\n"),sep="")
 	}
-	Z <- data.frame(expression=X)
-	row.names(Z) <- I
-	return(Z)
+#	Z <- data.frame(expression=X)
+#	row.names(Z) <- I
+	return(list(I,eqns))
 }
 
