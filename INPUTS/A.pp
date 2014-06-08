@@ -4,6 +4,10 @@ GA_1_4 <- GlobalAlpha(1,Dir4)
 GA_2_4 <- GlobalAlpha(2,Dir4)
 GA_3_4 <- GlobalAlpha(3,Dir4)
 GA_4_4 <- GlobalAlpha(4,Dir4)
-GA_1_4 <- GlobalAlpha(1,Dir3)
-GA_2_4 <- GlobalAlpha(2,Dir3)
-GA_3_4 <- GlobalAlpha(3,Dir3)
+GA_1_3 <- GlobalAlpha(1,Dir3)
+GA_2_3 <- GlobalAlpha(2,Dir3)
+GA_3_3 <- GlobalAlpha(3,Dir3)
+A_1_4 <- Dir4$A1
+A_2_4 <- Dir4[[2]]
+A_3_4 <- Dir4[[3]]
+A_4_4 <- Dir4$A4

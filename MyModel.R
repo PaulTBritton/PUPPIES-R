@@ -25,6 +25,7 @@ source("Modules/PUPPIES.R",chdir=TRUE)
 # samples from Vehicle system distributions,Engine Param, Alpha Factors
 #X <- batch_evalpm(N=50,seed=1,filter="[VEA].pp")
 X <- superevalp(N=500,seed=1,filter="[VEA].pp")
+scatterbars(plotname="OUTPUTS/A.tiff",PM=X,filter="*_?_[4]")
 # propagate uncertainty into vehicle models
 Y <- spawnp(p=X,pexpr=ft2pm("INPUTS/V.pf"))
 scatterbars(plotname="OUTPUTS/mymodel.tiff",PM=Y,filter="V_*")

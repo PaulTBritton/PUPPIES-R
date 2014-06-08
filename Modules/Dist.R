@@ -76,12 +76,17 @@ empeD <- function(empfile) {
 diriD <- function(...) {
 	AlphaVector <- list(...)
 	k <- length(AlphaVector)
-	Y <- array(0,c(N,k))
-	for (i in 1:k) {
-print(AlphaVector[[i]])
-		Y[,i] <- rgamma(N,shape=AlphaVector[[i]],rate=1)
+	Y <- list()
+	Y[[1]] <- rgamma(N,shape=AlphaVector[[1]],rate=1)
+	V <- Y[[1]]
+	n <- "A1"
+	for (i in 2:k) {
+		Y[[i]] <- rgamma(N,shape=AlphaVector[[i]],rate=1)
+		V <- V + Y[[i]]
+		n <- c(n,paste("A",i,sep=""))
 	}
-	V <- rowSums(Y)
 	dividebyV <- function(X) X/V
-	return(apply(Y,2,dividebyV))
+	Dir <- lapply(Y,dividebyV)
+	names(Dir) <- n
+	return(Dir)
 }
