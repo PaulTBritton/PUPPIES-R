@@ -24,45 +24,42 @@ evalpm <- function(N,seed=NULL,pmname="PUPPIES Model",
 	if (!is.null(seed)) set.seed(seed)
 	p <- new.env()
 	p$N <- N
-print(getwd())
+	#print(getwd())
 	sys.source("Modules/Boolean.R",envir=p)
 	sys.source("Modules/Dist.R",envir=p)
 	sys.source("Modules/CRAM.R",envir=p)
 	sys.source("Modules/CommonCause.R",envir=p)
 	e <- new.env(parent=p)
 	eval(mexpr,e)
-	if (VerboseLevel >= 2) print(paste("newpm() complete on:",pmname))
-	return(list(n=pmname,m=e))
+	if (VerboseLevel >= 2) print(paste("evalpm() complete on:",pmname))
+	return(list(n=pmname,r=e))
 }
 
 # propagate results from from one PUPPIES model into
 # another PUPPIES model and append the new results to the old results
 appendpm <- function(pm,pmfile="",mexpr=parse(file=pmfile)) {
-	eval(mexpr,pm$m)
+	eval(mexpr,pm$r)
 }
 
 # propagate results from from one PUPPIES model into
 # another PUPPIES model and return the only the new results
 spawnpm <- function(pm,pmname="PUPPIES Model",pmfile="",
 		mexpr=parse(file=pmfile)) {
-	e <- as.environment(as.list(pm$m,all.names=TRUE))
-	parent.env(e) <- parent.env(pm$m)
-#print(ls(e))
+	e <- as.environment(as.list(pm$r,all.names=TRUE))
+	parent.env(e) <- parent.env(pm$r)
 	eval(mexpr,e)
-#print(ls(e))
-	rm(list=ls(pm$m),envir=e)
-#print(ls(e))
-	return(list(n=pmname,m=e))
+	rm(list=ls(pm$r),envir=e)
+	return(list(n=pmname,r=e))
 }
 
 batch_evalpm <- function(N,seed=NULL,pmname="PUPPIES Model",filter) {
 	if (VerboseLevel > 0) print(paste("batch_evalpm() matching:",filter))
 	class(filter) <- wildcardclass
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
-	model <- evalpm(N,seed,pmname,LF[1])
+	model <- evalpm(N,seed,pmname,pmfile=LF[1])
 	for (i in LF[-1]) {
 		if (VerboseLevel > 0) print(paste("batch_evalpm() found:",i))
-		appendpm(model,i)
+		appendpm(pm=model,pmfile=i)
 #		if (exists("X")) X <- cbind(newone,X[!(X %in% newone)])
 #		else X <- newone
 	}

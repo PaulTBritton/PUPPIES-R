@@ -19,8 +19,9 @@ source("Modules/PUPPIES.R",chdir=TRUE)
 
 #wildcardclass <- "regex"
 
-#N <- 500
-#print(paste("Number of Samples =",N))
+#print(ft2eqn("INPUTS/V.pf"))
+#cat(ft2pm("INPUTS/V.pf"))
+
 # samples from Vehicle system distributions,Engine Param, Alpha Factors
 #X <- batch_evalpm(N=50,seed=1,filter="[VEA].pp")
 X <- batch_evalpm(N=500,seed=1,filter="[VE].pp")

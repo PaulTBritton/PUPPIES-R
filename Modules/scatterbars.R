@@ -12,7 +12,7 @@
 
 # batch version front-end to the plotting routine scatterbars
 # ? consider removing desc file feature: superseeded by pbfile
-scatterbars_batch <- function(pbfile,PM,Data=as.data.frame(as.list(PM$m,all.names=TRUE)))
+scatterbars_batch <- function(pbfile,PM,Data=as.data.frame(as.list(PM$r,all.names=TRUE)))
 {
 	Ords <- paste(readLines(pbfile),collapse="")
 	if (VerboseLevel >= 2) {
@@ -76,7 +76,7 @@ print(plotcommand)
 # front-end to the plotting routine scatterbars2
 # more WYSIWYG than scatterbars3
 scatterbars <- function(plotname="plot.tiff",PM,
-	Data=as.data.frame(as.list(PM$m,all.names=TRUE)),
+	Data=as.data.frame(as.list(PM$r,all.names=TRUE)),
 	rmarg=8,filter, stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
 	legendpos,units="Probability", xscale="log",
 	xnotation=sciNotation,xmarks,range)
