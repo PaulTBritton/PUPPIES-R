@@ -60,16 +60,16 @@ loaddata <- function(DataDir,filter) {
 	return(Z[,O])
 }
 
+#superft2pm <- function(filter) {
+#}
+
 ft2pm <- function(filename) {
 	X <- revorder(ft2eqn(filename))
-#	size <- nrow(X)
 	pm <- ""
 	for (i in names(X)) {
-#		pm <- paste(pm,X[[i,1]],"<-",X[[i,2]],"\n") #ifelse(i==size,"","\n"))
 		pm <- paste(pm,i,"<-",X[[i]],"\n") #ifelse(i==size,"","\n"))
 	}
 	expr <- parse(text=pm)
-#print(expr)
 	return(expr)
 }
 

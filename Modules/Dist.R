@@ -69,3 +69,19 @@ empeD <- function(empfile) {
 	return(Qfun(runif(N,0,1)))
 }
 
+# k dimensional dirichlet probability distribution
+# returns an array of k vectors of size N
+# each of the k vectors corresponds to the margins of
+# the dirichlet distribution
+diriD <- function(...) {
+	AlphaVector <- list(...)
+	k <- length(AlphaVector)
+	Y <- array(0,c(N,k))
+	for (i in 1:k) {
+print(AlphaVector[[i]])
+		Y[,i] <- rgamma(N,shape=AlphaVector[[i]],rate=1)
+	}
+	V <- rowSums(Y)
+	dividebyV <- function(X) X/V
+	return(apply(Y,2,dividebyV))
+}
