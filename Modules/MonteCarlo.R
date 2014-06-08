@@ -1,73 +1,84 @@
 ##########################################################
 #
-# monte carlo functions:
+# monte carlo simulation functions:
 #
 # Author: Paul Thomas Britton
 #
 ###################################
 
+# initialize evaluation environment for evaluating
+# PUPPIES models
+initevalenv <- function(env) {
+	sys.source("Modules/Boolean.R",envir=env)
+	sys.source("Modules/Dist.R",envir=env)
+	sys.source("Modules/CRAM.R",envir=env)
+	sys.source("Modules/CommonCause.R",envir=env)
+}
 
 # evaluate a PUPPIES model with N random iteration
-evalpm <- function(N,seed=NULL,pmname="PUPPIES Model",
-		pmfile="",mexpr=parse(file=pmfile))
+# return a list containing the model name and the model results
+evalp <- function(N,seed=NULL,pname="PUPPIES Model",
+		pfile="",pexpr=parse(file=pfile))
 {
 	if (!is.null(seed)) set.seed(seed)
 	p <- new.env()
 	p$N <- N
-	#print(getwd())
-	sys.source("Modules/Boolean.R",envir=p)
-	sys.source("Modules/Dist.R",envir=p)
-	sys.source("Modules/CRAM.R",envir=p)
-	sys.source("Modules/CommonCause.R",envir=p)
+	initevalenv(env=p)
 	e <- new.env(parent=p)
-	eval(mexpr,e)
-	if (VerboseLevel >= 2) print(paste("evalpm() complete on:",pmname))
-	return(list(n=pmname,r=e))
+	eval(pexpr,e)
+	if (VerboseLevel >= 2) print(paste("evalp() complete on:",pname))
+	return(list(n=pname,r=e))
 }
 
-# propagate results from from one PUPPIES model into
-# another PUPPIES model and append the new results to the old results
-appendpm <- function(pm,pmfile="",mexpr=parse(file=pmfile)) {
-	eval(mexpr,pm$r)
+# propagate results x from one PUPPIES model into
+# another PUPPIES model and append the new results to x
+appendp <- function(x,pfile="",pexpr=parse(file=pfile)) {
+	eval(pexpr,x$r)
 }
 
-clonepm <- function(pm) {
-	e <- as.environment(as.list(pm$r,all.names=TRUE))
-	parent.env(e) <- parent.env(pm$r)
-	return(list(n=pm$n,r=e))
+# return a clone of a list of model name and model results
+clonep <- function(p) {
+	e <- as.environment(as.list(p$r,all.names=TRUE))
+	parent.env(e) <- parent.env(p$r)
+	return(list(n=p$n,r=e))
 }
 
-# propagate results from from one PUPPIES model into
+# propagate results x from from one PUPPIES model into
 # another PUPPIES model and return the only the new results
-spawnpm <- function(pm,pmname="PUPPIES Model",pmfile="",
-		mexpr=parse(file=pmfile)) {
-	e <- clonepm(pm)
-	eval(mexpr,e$r)
-	rm(list=ls(pm$r),envir=e$r)
-	return(list(n=pmname,r=e$r))
+spawnp <- function(p,pname="PUPPIES Model",pfile="",
+		pexpr=parse(file=pfile)) {
+	e <- clonep(p)
+	eval(pexpr,e$r)
+	rm(list=ls(p$r),envir=e$r)	# keep only the new results
+	return(list(n=pname,r=e$r))
 }
 
-batch_evalpm <- function(N,seed=NULL,pmname="PUPPIES Model",filter) {
-	if (VerboseLevel > 0) print(paste("batch_evalpm() matching:",filter))
+# evaluate several PUPPIES models (described by filter)
+# with N random iteration by appending them into one set of results
+# return a list containing the model name and the (combine) model results
+superevalp <- function(N,seed=NULL,pname="PUPPIES Model",filter) {
+	if (VerboseLevel > 0) print(paste("superevalp() matching:",filter))
 	class(filter) <- wildcardclass
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
-	if (VerboseLevel > 0) print(paste("batch_evalpm() found:",LF[1]))
-	model <- evalpm(N,seed,pmname,pmfile=LF[1])
+	if (VerboseLevel > 0) print(paste("superevalp() found:",LF[1]))
+	x <- evalp(N=N,seed=seed,pname=pname,pfile=LF[1])
 	for (i in LF[-1]) {
-		if (VerboseLevel > 0) print(paste("batch_evalpm() found:",i))
-		appendpm(pm=model,pmfile=i)
+		if (VerboseLevel > 0) print(paste("superevalp() found:",i))
+		appendp(x=x,pfile=i)
 	}
-	if (VerboseLevel >= 2) print(paste("batch_evalpm() complete on:",filter))
-	return(model)
+	if (VerboseLevel >= 2) print(paste("superevalp() complete on:",filter))
+	return(x)
 }
 
-batch_appendpm <- function(pm,filter) {
-	if (VerboseLevel > 0) print(paste("batch_appendpm() matching:",filter))
+# propagate results x from one PUPPIES model into several other
+# PUPPIES models (described by filter) and append the new results to x
+superappendp <- function(x,filter) {
+	if (VerboseLevel > 0) print(paste("superappendp() matching:",filter))
 	class(filter) <- wildcardclass
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	for (i in LF) {
-		if (VerboseLevel > 0) print(paste("batch_appendpm() found:",i))
-		appendpm(pm,i)
+		if (VerboseLevel > 0) print(paste("superappendp() found:",i))
+		appendp(x,i)
 	}
-	if (VerboseLevel >= 2) print(paste("batch_appendpm() complete on:",filter))
+	if (VerboseLevel >= 2) print(paste("superappendp() complete on:",filter))
 }

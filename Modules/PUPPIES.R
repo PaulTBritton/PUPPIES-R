@@ -27,11 +27,7 @@ source("FileIO.R")
 source("Number.R")
 source("UDFs.R")
 source("MonteCarlo.R")
-source("Propagate.R")
 source("scatterbars.R")
-#source("Modules/Boolean.R")
-#source("Modules/CRAM.R")
-#source("Modules/CommonCause.R")
 
 #####################################################
 # define global configuration arguments
