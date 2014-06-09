@@ -1,4 +1,6 @@
 pname <- "PUPPIES Model"
+testname <<- "Test PUPPIES Model"
+# setname("Test Model Name")
 E5 <- unifD(4,6)
 E3 <- 3
 A3 <- triaD(2,3,4)

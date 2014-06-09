@@ -8,11 +8,15 @@
 
 # initialize evaluation environment for evaluating
 # PUPPIES models
-initevalenv <- function(env) {
-	sys.source("Modules/Boolean.R",envir=env)
-	sys.source("Modules/Dist.R",envir=env)
-	sys.source("Modules/CRAM.R",envir=env)
-	sys.source("Modules/CommonCause.R",envir=env)
+initevalenv <- function(p) {
+	p$testname <- "default"
+	eval(expression(setname <- function(x) {print(paste("setname:",testname))
+						print(paste("setname:",x))
+						testname <<- x}),p)
+	sys.source("Modules/Boolean.R",envir=p)
+	sys.source("Modules/Dist.R",envir=p)
+	sys.source("Modules/CRAM.R",envir=p)
+	sys.source("Modules/CommonCause.R",envir=p)
 }
 
 # evaluate a PUPPIES model with N random iterations
@@ -23,9 +27,11 @@ evalp <- function(N,seed=NULL,pname="PUPPIES Model",
 	if (!is.null(seed)) set.seed(seed)
 	p <- new.env()
 	p$N <- N
-	initevalenv(env=p)
+	initevalenv(p)
 	e <- new.env(parent=p)
 	eval(pexpr,e)
+y <- get("testname",e)
+print(paste("get:",y))
 	if (VerboseLevel >= 2) print(paste("evalp() complete on:",pname))
 	return(list(n=pname,r=e))
 }
