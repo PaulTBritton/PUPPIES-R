@@ -12,9 +12,6 @@ initevalenv <- function(p,N=1,seed,pname) {
 	p$N <- N
 	p$seed <- seed
 	p$pname <- pname
-#	eval(expression(setname <- function(x) {print(paste("setname:",testname))
-#						print(paste("setname:",x))
-#						testname <<- x}),p)
 	sys.source("Modules/Boolean.R",envir=p)
 	sys.source("Modules/Dist.R",envir=p)
 	sys.source("Modules/CRAM.R",envir=p)
@@ -31,8 +28,7 @@ evalp <- function(N,seed=NULL,pname="PUPPIES Model",
 	initevalenv(p,N,seed,pname)
 	e <- new.env(parent=p)
 	eval(pexpr,e)
-y <- get("pname",e)
-#print(paste("get:",y))
+	y <- get("pname",e)
 	if (VerboseLevel >= 2) print(paste("evalp() complete on:",y))
 	return(e)
 }

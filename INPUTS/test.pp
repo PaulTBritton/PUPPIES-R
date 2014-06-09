@@ -1,5 +1,4 @@
 pname <<- "Overide default name"
-#testname <<- "Test PUPPIES Model"
 # setname("Test Model Name")
 E5 <- unifD(4,6)
 E3 <- 3

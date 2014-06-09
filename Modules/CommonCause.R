@@ -6,21 +6,21 @@
 #
 ###################################
 
-alphaT <- function(Dir) {
-	k <- length(Dir)
+alphaT <- function(diri) {
+	k <- length(diri)
 	tmp <- 0
 	for (i in 1:k) {
-		tmp <- tmp + i * Dir[[i]]
+		tmp <- tmp + i * diri[[i]]
 	}
 	return(tmp)
 }
 
-GlobalAlpha <- function(M,Dir) {
-	k <- length(Dir)
+GlobalAlpha <- function(M,diri) {
+	k <- length(diri)
 	tmp <- 0
-	aT <- alphaT(Dir)
+	aT <- alphaT(diri)
 	for (j in M:k) {
-		tmp <- tmp + (k * Dir[[j]])/aT
+		tmp <- tmp + (k * diri[[j]])/aT
 	}
 	return(tmp)
 }

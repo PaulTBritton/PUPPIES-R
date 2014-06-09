@@ -42,13 +42,16 @@ gammD <- function(shape,rate) {
 }
 
 # create a vector of N lognormal samples
-# median = 50th
-# EF = 95th/50th
+# mean = mean of lognormal
+# median = 50th of lognormal
+# EF = 95th/50th (of lognormal)
+# mu = mean of underlying normal
+# sigma = standard dev of underlying normal
+#
+# user must provide either: mean & EF, median & EF, or mu & sigma
 lognD <- function(EF=exp(qnorm(0.95)),sigma=log(EF)/qnorm(0.95),
 		mean=1,median=exp(log(mean)-(sigma^2)/2),
 		mu=log(median)) {
-#	mu <- log(median)
-#	sigma <- log(EF)/qnorm(0.95)
 	return(rlnorm(N,mu,sigma))
 }
 
@@ -85,7 +88,7 @@ diriD <- function(...) {
 		n[i] <- paste("a",i,sep="")
 	}
 	dividebyV <- function(X) X/V
-	Dir <- lapply(Y,dividebyV)
-	names(Dir) <- n
-	return(Dir)
+	diri <- lapply(Y,dividebyV)
+	names(diri) <- n
+	return(diri)
 }

@@ -7,7 +7,7 @@ B_SEP <- lognD(median=1e-5,EF=5)
 B_TVC <- 1-exp(-gammD(1,19)*.02)
 B_TPS <- TPS
 B_AVI <- 1-exp(-AVI_FR*.01)
-B_STR <- lognD(1e-7,7)
+B_STR <- lognD(median=1e-7,EF=7)
 CS_TVC <- 1-exp(-gammD(1,1900)*.02)
 CS_TPS <- TPS
 CS_MPS <- 1-exp(-gammD(1,10000)*.05)

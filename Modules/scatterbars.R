@@ -81,14 +81,8 @@ scatterbars <- function(plotname="plot.tiff",PM,
 	legendpos,units="Probability", xscale="log",
 	xnotation=sciNotation,xmarks,range)
 {
-#	if (exists("pname",envir=PM$r,inherits=FALSE)) {
-#		pname <- PM$r$pname
-#		clone <- clonep(PM)
-#print(ls(clone$r))
-#		rm("pname",envir=clone$r)
-#		Data <- as.data.frame(as.list(clone$r,all.names=TRUE))
-#	} else pname <- ""
 	if (missing(PM)) PM <- parent.frame(1)
+print(ls(parent.frame(2)))
 print(ls(PM))
 	pname <- get("pname",PM)
 print(paste("plotname: ",plotname))

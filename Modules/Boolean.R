@@ -37,9 +37,8 @@ MN <- function(M,N,X) {
 # logical OR operation filter for probabilities
 OR <- function(filter) {
 	class(filter) <- wildcardclass
-	e <- parent.frame(3)$e
-	ne <- as.list(e)
-	Z <- as.data.frame(ne)
+	e <- parent.frame(1)
+	Z <- as.data.frame(as.list(e))
 	X <- filterdata(torx(filter),Z)
 	return(1-apply(1-X,1,prod))
 }
@@ -47,9 +46,8 @@ OR <- function(filter) {
 # logical AND operation filter for probabilities
 AND <- function(filter) {
 	class(filter) <- wildcardclass
-	e <- parent.frame(3)$e
-	ne <- as.list(e)
-	Z <- as.data.frame(ne)
+	e <- parent.frame(1)
+	Z <- as.data.frame(as.list(e))
 	X <- filterdata(torx(filter),Z)
 	return(apply(X,1,prod))
 }
