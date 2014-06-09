@@ -77,13 +77,12 @@ diriD <- function(...) {
 	AlphaVector <- list(...)
 	k <- length(AlphaVector)
 	Y <- list()
-	Y[[1]] <- rgamma(N,shape=AlphaVector[[1]],rate=1)
-	V <- Y[[1]]
-	n <- "A1"
-	for (i in 2:k) {
+	V <- rep(0,N)
+	n <- rep("",k)
+	for (i in 1:k) {
 		Y[[i]] <- rgamma(N,shape=AlphaVector[[i]],rate=1)
 		V <- V + Y[[i]]
-		n <- c(n,paste("A",i,sep=""))
+		n[i] <- paste("a",i,sep="")
 	}
 	dividebyV <- function(X) X/V
 	Dir <- lapply(Y,dividebyV)

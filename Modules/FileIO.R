@@ -65,12 +65,12 @@ loaddata <- function(DataDir,filter) {
 
 ft2pm <- function(filename) {
 	X <- revorder(ft2eqn(filename))
-	pm <- ""
+	expr <- ""
 	for (i in names(X)) {
-		pm <- paste(pm,i,"<-",X[[i]],"\n") #ifelse(i==size,"","\n"))
+		expr <- paste(expr,i,"<-",X[[i]],"\n")
 	}
-	expr <- parse(text=pm)
-	return(expr)
+	pexpr <- parse(text=expr)
+	return(pexpr)
 }
 
 ft2eqn <- function(filename) {
@@ -119,10 +119,6 @@ ft2eqn <- function(filename) {
 		Y[3] <- gsub("#",",",Y[3])
 		X[i] <- paste("(",Y[3],")",sep="")
 	}
-#	Z <- data.frame(expression=X)
-#	row.names(Z) <- I
-#	return(rowrevorder(Z))
-#	Z <- as.list(X)
 	names(X) <- I
 	return(X)
 }

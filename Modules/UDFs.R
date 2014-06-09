@@ -5,37 +5,6 @@
 #
 ###################################
 
-# advanced glob pattern to regular expression converter
-aglob2rx <- function(pattern,trim.head=TRUE,trim.tail=TRUE) {
-    p <- gsub("\\.", "\\\\.", paste("^", pattern, "$",sep=""))
-    p <- gsub("\\?", ".", gsub("\\*", ".*", p))
-#    p <- gsub("([^\\])\\(", "\\1\\\\(", p)
-#    p <- gsub("([^\\])\\[", "\\1\\\\[", p)
-    p <- gsub("([^\\])\\{", "\\1\\\\{", p)
-    if (trim.tail) 
-        p <- sub("\\.\\*\\$$", "", p)
-    if (trim.head) 
-        p <- sub("\\^\\.\\*", "", p)
-    return(p)
-}
-
-# define a generic function torx that takes different wildcardclasses and
-# converts them to regular expressions
-torx <- function(pattern) UseMethod("torx")
-torx.aglob <- function(pattern) aglob2rx(pattern)
-torx.glob <- function(pattern) glob2rx(pattern)
-torx.default <- function(pattern) pattern
-
-# trim white space characters from a string
-trim.leading <- function (x)  sub("^\\s+", "", x)
-trim.trailing <- function (x) sub("\\s+$", "", x)
-trim <- function (x) gsub("^\\s+|\\s+$", "", x)
-
-
-# return a subset of data based on a pass through filter in
-# regex format
-filterdata <- function(filter,data) data[grep(filter,names(data))]
-
 #########################################
 # reverse the order of Parameters and Equations to place them to an order 
 # such that any data dependencies will coincide with the for-loop control
@@ -101,58 +70,5 @@ revorder <- function(lst) {
 #		CFR[i,] <- exp(LFRU[i,] * sigmaFR[i] + muFR[i])
 #	}
 #	return(CFR)
-#}
-
-# parse args.txt to extract global configuration arguments
-# and place them in a list data structure
-#parseArgsLines <- function(ArgsLines) {
-#	return(list(N = as.integer(sub("N=","",
-#			ArgsLines[grep("N=",ArgsLines)])),
-#		seed = suppressWarnings(as.integer(sub("seed=","",
-#			ArgsLines[grep("seed=",ArgsLines)]))),
-#		PlotDir = sub("PlotDir=","",
-#			ArgsLines[grep("PlotDir=",ArgsLines)]),
-#		f = "",
-#		d = "INPUTS/descriptions.csv",
-#		p = "INPUTS/parameters.csv",
-#		e = "INPUTS/equations.csv",
-#		mode = "p",
-#		fieldsep = ";"
-##		fieldsep = sub("fieldsep=","",
-##			ArgsLines[grep("fieldsep=",ArgsLines)]),
-#		)
-#	)
-#}
-#
-#parseCargsLines <- function(cargs) {
-#	dargs <- parseArgsLines("Modules/args.txt")
-#	args <- list(f="",d="INPUTS/descriptions.csv",fieldsep=";",
-#		plot="plot.tiff",p="INPUTS/parameters.csv",
-#		e="INPUTS/equations.csv",N=100,s=NULL,mode="p")
-#	if (max(grepl("^plot=",cargs))) {
-#		args$plot <- sub("plot=","",cargs[grep("^plot=",cargs)])
-#	}
-#	if (max(grepl("^f=",cargs))) {
-#		args$f <- sub("f=","",cargs[grep("^f=",cargs)])
-#	}
-#	if (max(grepl("^p=",cargs))) {
-#		args$p <- sub("p=","",cargs[grep("^p=",cargs)])
-#	}
-#	if (max(grepl("^e=",cargs))) {
-#		args$e <- sub("e=","",cargs[grep("^e=",cargs)])
-#	}
-#	# number of samples from command line
-#	if (max(grepl("^N=",cargs))) {
-#		args$N <- as.integer(sub("N=","",cargs[grep("^N=",cargs)]))
-#	}
-#	if (max(grepl("^s=",cargs))) {
-#		args$s <- suppress.Warnings(as.integer(sub("s=","",
-#				cargs[grep("^s=",cargs)])))
-#	}
-#	if (max(grepl("^mode=",cargs))) {
-#		args$mode <- sub("mode=","",
-#			cargs[grep("^mode=",cargs)])
-#	}
-#	return(args)
 #}
 
