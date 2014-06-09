@@ -12,7 +12,7 @@
 
 # batch version front-end to the plotting routine scatterbars
 # ? consider removing desc file feature: superseeded by pbfile
-scatterbars_batch <- function(pbfile,PM,Data=as.data.frame(as.list(PM$r,all.names=TRUE)))
+scatterbars_batch <- function(pbfile,PM,Data=as.data.frame(as.list(PM,all.names=TRUE)))
 {
 	Ords <- paste(readLines(pbfile),collapse="")
 	if (VerboseLevel >= 2) {
@@ -76,18 +76,23 @@ print(plotcommand)
 # front-end to the plotting routine scatterbars2
 # more WYSIWYG than scatterbars3
 scatterbars <- function(plotname="plot.tiff",PM,
-	Data=as.data.frame(as.list(PM$r,all.names=TRUE)),
+	Data=as.data.frame(as.list(PM,all.names=TRUE)),
 	rmarg=8,filter, stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
 	legendpos,units="Probability", xscale="log",
 	xnotation=sciNotation,xmarks,range)
 {
-	if (exists("pname",envir=PM$r,inherits=FALSE)) {
-		pname <- PM$r$pname
-		clone <- clonep(PM)
+#	if (exists("pname",envir=PM$r,inherits=FALSE)) {
+#		pname <- PM$r$pname
+#		clone <- clonep(PM)
 #print(ls(clone$r))
-		rm("pname",envir=clone$r)
-		Data <- as.data.frame(as.list(clone$r,all.names=TRUE))
-	} else pname <- ""
+#		rm("pname",envir=clone$r)
+#		Data <- as.data.frame(as.list(clone$r,all.names=TRUE))
+#	} else pname <- ""
+	if (missing(PM)) PM <- parent.frame(1)
+print(ls(PM))
+	pname <- get("pname",PM)
+print(paste("plotname: ",plotname))
+print(paste("pname: ",pname))
 	if (missing(maintitle)) maintitle <- paste(pname," Monte Carlo Results (",
 					nrow(Data)," Iterations)",sep="")
 # removing wildcardlevel from global config

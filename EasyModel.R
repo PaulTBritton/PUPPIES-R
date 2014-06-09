@@ -15,10 +15,10 @@ VerboseLevel <- 3	# default = 1, choose from 0 to 3
 
 # generate monte carlo samples from model definition file
 X <- evalp(N=500,pfile="INPUTS/test.pp")
-scatterbars(plotname="OUTPUTS/testplot.tiff",PM=X,filter="M?|S?")
-print("scatterbar")
+#scatterbars(plotname="OUTPUTS/testplot.tiff",PM=X,filter="M?|S?")
+#print("scatterbar")
 
-modeldef <- expression(pname<-"in-line model",T1<-betaD(3,4),T2<-lognD(.01,5))
+modeldef <- expression(pname<<-"in-line model",T1<-betaD(3,4),T2<-lognD(.01,5))
 Y <- evalp(N=500,pexpr=modeldef)
 scatterbars(plotname="OUTPUTS/mexprplot.tiff",PM=Y)
 print("scatterbar")

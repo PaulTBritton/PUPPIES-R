@@ -8,11 +8,13 @@
 
 # initialize evaluation environment for evaluating
 # PUPPIES models
-initevalenv <- function(p) {
-	p$testname <- "default"
-	eval(expression(setname <- function(x) {print(paste("setname:",testname))
-						print(paste("setname:",x))
-						testname <<- x}),p)
+initevalenv <- function(p,N=1,seed,pname) {
+	p$N <- N
+	p$seed <- seed
+	p$pname <- pname
+#	eval(expression(setname <- function(x) {print(paste("setname:",testname))
+#						print(paste("setname:",x))
+#						testname <<- x}),p)
 	sys.source("Modules/Boolean.R",envir=p)
 	sys.source("Modules/Dist.R",envir=p)
 	sys.source("Modules/CRAM.R",envir=p)
@@ -20,33 +22,33 @@ initevalenv <- function(p) {
 }
 
 # evaluate a PUPPIES model with N random iterations
-# return a list containing the model name and the model results
+# return the model results
 evalp <- function(N,seed=NULL,pname="PUPPIES Model",
 		pfile="",pexpr=parse(file=pfile))
 {
 	if (!is.null(seed)) set.seed(seed)
 	p <- new.env()
-	p$N <- N
-	initevalenv(p)
+	initevalenv(p,N,seed,pname)
 	e <- new.env(parent=p)
 	eval(pexpr,e)
-y <- get("testname",e)
-print(paste("get:",y))
-	if (VerboseLevel >= 2) print(paste("evalp() complete on:",pname))
-	return(list(n=pname,r=e))
+y <- get("pname",e)
+#print(paste("get:",y))
+	if (VerboseLevel >= 2) print(paste("evalp() complete on:",y))
+	return(e)
 }
 
 # propagate results x from one PUPPIES model into
 # another PUPPIES model and append the new results to x
 appendp <- function(x,pfile="",pexpr=parse(file=pfile)) {
-	eval(pexpr,x$r)
+	eval(pexpr,x)
 }
 
-# return a clone of a list of model name and model results
+# return a clone e of the model results p
+# set the parent of e to be the parent of p
 clonep <- function(p) {
-	e <- as.environment(as.list(p$r,all.names=TRUE))
-	parent.env(e) <- parent.env(p$r)
-	return(list(n=p$n,r=e))
+	e <- as.environment(as.list(p,all.names=TRUE))
+	parent.env(e) <- parent.env(p)
+	return(e)
 }
 
 # propagate results x from from one PUPPIES model into
@@ -54,9 +56,9 @@ clonep <- function(p) {
 spawnp <- function(p,pname="PUPPIES Model",pfile="",
 		pexpr=parse(file=pfile)) {
 	e <- clonep(p)
-	eval(pexpr,e$r)
-	rm(list=ls(p$r),envir=e$r)	# keep only the new results
-	return(list(n=pname,r=e$r))
+	eval(pexpr,e)
+	rm(list=ls(p),envir=e)	# keep only the new results
+	return(e)
 }
 
 # evaluate several PUPPIES models (described by filter)
