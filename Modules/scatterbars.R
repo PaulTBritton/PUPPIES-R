@@ -81,7 +81,13 @@ scatterbars <- function(plotname="plot.tiff",PM,
 	legendpos,units="Probability", xscale="log",
 	xnotation=sciNotation,xmarks,range)
 {
-	if (missing(maintitle)) maintitle <- paste("Monte Carlo Results (",
+	if (exists("pname",envir=PM$r)) {
+		pname <- PM$r$pname
+		clone <- clonep(PM)
+		rm("pname",envir=clone$r)
+		Data <- as.data.frame(as.list(clone$r,all.names=TRUE))
+	} else pname <- ""
+	if (missing(maintitle)) maintitle <- paste(pname," Monte Carlo Results (",
 					nrow(Data)," Iterations)",sep="")
 # removing wildcardlevel from global config
 	if (missing(filter)) filter <- ".*"

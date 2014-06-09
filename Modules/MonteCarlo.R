@@ -15,7 +15,7 @@ initevalenv <- function(env) {
 	sys.source("Modules/CommonCause.R",envir=env)
 }
 
-# evaluate a PUPPIES model with N random iteration
+# evaluate a PUPPIES model with N random iterations
 # return a list containing the model name and the model results
 evalp <- function(N,seed=NULL,pname="PUPPIES Model",
 		pfile="",pexpr=parse(file=pfile))
