@@ -83,6 +83,7 @@ scatterbars <- function(plotname="plot.tiff",PM,
 {
 	if (missing(PM)) PM <- parent.frame(1)
 #print(ls(parent.frame(2)))
+#print(ls(parent.env(PM)))
 #print(ls(PM))
 	pname <- get("pname",PM)
 print(paste("plotname: ",plotname))

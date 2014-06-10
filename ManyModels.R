@@ -14,7 +14,7 @@ source("Modules/PUPPIES.R",chdir=TRUE)
 #wildcardclass <- "regex"
 
 # samples from Vehicle systems, Engine Parameters, and Alpha Factor distributions
-X <- superevalp(N=1000,seed=1,pname="Many Models",filter="[VEA].pp")
+X <- superevalp(N=500,seed=1,pname="Many Models",filter="[VEA].pp")
 # propagate uncertainty into a vehicle fault tree model
 Y <- spawnp(p=X,pexpr=ft2pm("INPUTS/V.pf"))
 scatterbars(plotname="OUTPUTS/vehiclemodel.tiff",PM=Y,filter="V_*")

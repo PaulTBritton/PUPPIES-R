@@ -10,8 +10,10 @@
 # PUPPIES models
 initevalenv <- function(p,N,seed,pname) {
 	p$N <- N
-	p$seed <- seed
+	p$seed <- seed	# save seed
+	if (!is.null(seed)) set.seed(seed)
 	p$pname <- pname
+	sys.source("Modules/MetaData.R",envir=p)
 	sys.source("Modules/Boolean.R",envir=p)
 	sys.source("Modules/Dist.R",envir=p)
 	sys.source("Modules/CRAM.R",envir=p)
@@ -23,7 +25,6 @@ initevalenv <- function(p,N,seed,pname) {
 evalp <- function(N=1,seed=NULL,pname="PUPPIES Model",
 		pfile="",pexpr=parse(file=pfile))
 {
-	if (!is.null(seed)) set.seed(seed)
 	p <- new.env()
 	initevalenv(p,N,seed,pname)
 	e <- new.env(parent=p)

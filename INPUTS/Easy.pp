@@ -1,6 +1,6 @@
-pname <<- "Easy Model"
-N <<- 500
-# setname("Test Model Name")
+set.modelname("Easy Model")
+set.iterations(400)
+set.seed(1)
 E5 <- unifD(4,6)
 E3 <- 3
 A3 <- triaD(2,3,4)
