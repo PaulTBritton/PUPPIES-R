@@ -19,6 +19,8 @@ VerboseLevel <- 3	# default = 1, choose from 0 to 3
 # generate monte carlo samples from model definition file
 X <- evalp(model="INPUTS/Easy.pp")
 
+#print((as.list(X))[c("B2","S2","M2","A3")][[2]])
+#print(as.data.frame(as.list(X))[c("B2","S2","M2","A3")][[2]])
 # propagate uncertainty from X into another model
 #appendp(x=X,pfile="INPUTS/append.pp")
 #scatterbars(plotname="OUTPUTS/appendplot.tiff",PM=X,

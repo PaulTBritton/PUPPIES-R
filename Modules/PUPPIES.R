@@ -29,6 +29,7 @@ source("Number.R")
 source("UDFs.R")
 source("MonteCarlo.R")
 source("scatterbars.R")
+source("Plots.R")
 
 #####################################################
 # define global configuration arguments
@@ -58,4 +59,4 @@ wildcardclass <- "aglob"
 
 # seed for random number generator
 # NULL means rely on the CPU clock for seed generation
-seed <- NULL
+#seed <- NULL
