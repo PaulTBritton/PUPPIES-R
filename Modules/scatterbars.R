@@ -82,8 +82,8 @@ scatterbars <- function(plotname="plot.tiff",PM,
 	xnotation=sciNotation,xmarks,range)
 {
 	if (missing(PM)) PM <- parent.frame(1)
-print(ls(parent.frame(2)))
-print(ls(PM))
+#print(ls(parent.frame(2)))
+#print(ls(PM))
 	pname <- get("pname",PM)
 print(paste("plotname: ",plotname))
 print(paste("pname: ",pname))

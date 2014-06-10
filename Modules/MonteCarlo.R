@@ -6,9 +6,9 @@
 #
 ###################################
 
-# initialize evaluation environment for evaluating
+# initialize evaluation environment for
 # PUPPIES models
-initevalenv <- function(p,N=1,seed,pname) {
+initevalenv <- function(p,N,seed,pname) {
 	p$N <- N
 	p$seed <- seed
 	p$pname <- pname
@@ -20,7 +20,7 @@ initevalenv <- function(p,N=1,seed,pname) {
 
 # evaluate a PUPPIES model with N random iterations
 # return the model results
-evalp <- function(N,seed=NULL,pname="PUPPIES Model",
+evalp <- function(N=1,seed=NULL,pname="PUPPIES Model",
 		pfile="",pexpr=parse(file=pfile))
 {
 	if (!is.null(seed)) set.seed(seed)

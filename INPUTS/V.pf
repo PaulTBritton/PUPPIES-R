@@ -28,10 +28,7 @@ IND_V_RS25;OR;
 	2/4 V_RS25
 $
 CC_V_RS25;EXPR;
-	GAD_2_4_Rate*V_RS25
-$
-GAD_2_4_Rate;EXPR;
-	ga_2_4
+	ga_2_4*V_RS25
 $
 V_RS25;OR;
 	V_RS25_Cont,
