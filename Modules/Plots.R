@@ -58,7 +58,8 @@ print(paste("pname: ",pname))
 			padper <- .1
 		}
 	)
-	X <- t(as.matrix(as.data.frame(as.list(Data))))
+#	X <- t(as.matrix(as.data.frame(as.list(Data))))
+	X <- unlist(Data)
 	rightm <- (max(X))
 	leftm <-(min(X))
 	if(VerboseLevel == 3) {
