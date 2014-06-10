@@ -14,11 +14,13 @@ source("Modules/PUPPIES.R",chdir=TRUE)
 #wildcardclass <- "regex"
 
 # samples from Vehicle systems, Engine Parameters, and Alpha Factor distributions
-X <- superevalp(N=500,seed=1,pname="Many Models",filter="[VEA].pp")
+X <- superevalp(N=600,seed=1,pname="Many Models",filter="[VEA].pp")
 # propagate uncertainty into a vehicle fault tree model
-Y <- spawnp(p=X,pexpr=ft2pm("INPUTS/V.pf"))
+Y <- spawnp(p=X,model="INPUTS/V.pf")
 scatterbars(plotname="OUTPUTS/vehiclemodel.tiff",PM=Y,filter="V_*")
-#Y <- batch_appendpm(pm=X,filter="V?.pf")
+appendp(p=X,model="INPUTS/V_5segBooster.pf")
+superappendp(p=X,filter="V?.pf")
+scatterbars(plotname="OUTPUTS/VLOMLOC.tiff",PM=X,filter="V?_LO?")
 #dumpdata(YX,"DUMP/")
 
 #YX <- loaddata("DUMP/")

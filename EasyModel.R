@@ -13,8 +13,11 @@ source("Modules/PUPPIES.R",chdir=TRUE)
 VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #seed <- 1		# global variable
 
+# define a PUPPIES Model from a PUPPIES file
+#modeldef <- pfile("INPUTS/Easy.pp")
+
 # generate monte carlo samples from model definition file
-X <- evalp(pfile="INPUTS/Easy.pp")
+X <- evalp(model="INPUTS/Easy.pp")
 
 # propagate uncertainty from X into another model
 #appendp(x=X,pfile="INPUTS/append.pp")

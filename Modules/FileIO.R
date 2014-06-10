@@ -60,18 +60,6 @@ loaddata <- function(DataDir,filter) {
 	return(Z[,O])
 }
 
-#superft2pm <- function(filter) {
-#}
-
-ft2pm <- function(filename) {
-	X <- revorder(ft2eqn(filename))
-	expr <- ""
-	for (i in names(X)) {
-		expr <- paste(expr,i,"<-",X[[i]],"\n")
-	}
-	pexpr <- parse(text=expr)
-	return(pexpr)
-}
 
 ft2eqn <- function(filename) {
 	if (file.access(filename,mode=4)) {
@@ -123,3 +111,30 @@ ft2eqn <- function(filename) {
 	return(X)
 }
 
+ft2pexpr <- function(file) {
+	X <- revorder(ft2eqn(file))
+	expr <- ""
+	for (i in names(X)) {
+		expr <- paste(expr,i,"<-",X[[i]],"\n")
+	}
+	pexpr <- parse(text=expr)
+	return(pexpr)
+}
+
+#superft2pm <- function(filter) {
+#}
+
+#######################################
+# Model input functions
+#
+
+topexpr <- function(x) {
+	if (class(x) == "expression") return(x)
+	else if (grepl(".*\\.pf",x)) return(ft2pexpr(x))
+	else return(parse(file=x))
+}
+
+#topexpr <- function(modeldef) UseMethod("toexpr")
+#topexpr.ft <- function(modeldef) ft2pexpr(file=modeldef)
+#topexpr.pfile <- function(modeldef) parse(file=modeldef)
+#toexpr.default <- function(modeldef) modeldef

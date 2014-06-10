@@ -14,9 +14,8 @@ source("Modules/PUPPIES.R",chdir=TRUE)
 #seed <- 1		# global variable
 
 modeldef <- expression(T1<-betaD(3,4),T2<-lognD(.01,5),T3<-T1|T2)
-print(class(modeldef))
 
-Y <- evalp(N=1000,pname="Simple in-line model",pexpr=modeldef)
+Y <- evalp(N=1000,pname="Simple in-line model",model=modeldef)
 
 scatterbars(plotname="OUTPUTS/Simpleplot.tiff",PM=Y)
 

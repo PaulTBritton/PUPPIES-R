@@ -11,9 +11,6 @@ $
 V_Total_Booster;OR;
 	1/2 V_5segBooster
 $
-V_5segBooster;TRAN;
-	INPUTS/V_5segBooster.pf
-$
 V_Total_CS;OR;
 	CS_MPS, CS_TVC, CS_TPS,
 	2/2 CS_AVI,
@@ -28,10 +25,7 @@ IND_V3_RS25;OR;
 	2/4 V3_RS25
 $
 CC_V3_RS25;EXPR;
-	GAI_2_4_Rate*V3_RS25
-$
-GAI_2_4_Rate;EXPR;
-	GlobalAlpha(2,a_1_4_R,a_2_4_R,a_3_4_R,a_4_4_R)
+	ga_2_4*V3_RS25
 $
 V3_RS25;OR;
 	V3_RS25_Cont,
