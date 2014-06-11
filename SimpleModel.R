@@ -19,5 +19,8 @@ Y <- evalp(N=1000,pname="Simple in-line model",model=modeldef)
 
 #scatterbar(plotname="OUTPUTS/Simpleplot.tiff",PM=Y)
 scatterbars(plotname="OUTPUTS/Simpleplot.tiff",PM=Y)
+print(class(Y))
+print(str(Y))
+print(Y)
 
 print("SimpleModel.R Complete")	# status print statement demonstration
