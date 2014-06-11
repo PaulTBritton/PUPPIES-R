@@ -8,24 +8,26 @@
 
 # initialize evaluation environment for
 # PUPPIES models
-initevalenv <- function(p,N,seed,pname) {
+initevalenv <- function(p,N,seed,pname,wildcard) {
 	p$N <- N
 	p$seed <- seed	# save seed
 	if (!is.null(seed)) set.seed(seed)
 	p$pname <- pname
-	sys.source("Modules/MetaData.R",envir=p)
-	sys.source("Modules/Boolean.R",envir=p)
-	sys.source("Modules/Dist.R",envir=p)
-	sys.source("Modules/CRAM.R",envir=p)
-	sys.source("Modules/CommonCause.R",envir=p)
+	p$wildcardclass <- wildcard
+	sys.source("Modules/metadata.R",envir=p)
+	sys.source("Modules/boolean.R",envir=p)
+	sys.source("Modules/distributions.R",envir=p)
+	sys.source("Modules/cram.R",envir=p)
+	sys.source("Modules/commoncause.R",envir=p)
 }
 
 # evaluate a PUPPIES model with N random iterations
 # return the model results
-evalp <- function(N=1,seed=NULL,pname="PUPPIES Model",model="")
+evalp <- function(N=1,seed=NULL,pname="PUPPIES Model",model="",
+		wildcard="aglob")
 {
 	p <- new.env()
-	initevalenv(p,N,seed,pname)
+	initevalenv(p,N,seed,pname,wildcard)
 	e <- new.env(parent=p)
 	pexpr <- topexpr(model)
 	eval(pexpr,e)
@@ -62,9 +64,10 @@ spawnp <- function(p,pname="PUPPIES Model",model="") {
 # evaluate several PUPPIES models (described by filter)
 # with N random iteration by appending them into one set of results
 # return a list containing the model name and the (combine) model results
-superevalp <- function(N,seed=NULL,pname="PUPPIES Model",filter="") {
+superevalp <- function(N,seed=NULL,pname="PUPPIES Model",filter="",
+		wildcard="aglob") {
 	if (VerboseLevel > 0) print(paste("superevalp() matching:",filter))
-	class(filter) <- wildcardclass
+	class(filter) <- wildcard
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	if (VerboseLevel > 0) print(paste("superevalp() found:",LF[1]))
 	x <- evalp(N=N,seed=seed,pname=pname,model=LF[1])
@@ -80,6 +83,7 @@ superevalp <- function(N,seed=NULL,pname="PUPPIES Model",filter="") {
 # PUPPIES models (described by filter) and append the new results to x
 superappendp <- function(p,filter="") {
 	if (VerboseLevel > 0) print(paste("superappendp() matching:",filter))
+	wildcardclass <- get("wildcardclass",p)
 	class(filter) <- wildcardclass
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	for (i in LF) {

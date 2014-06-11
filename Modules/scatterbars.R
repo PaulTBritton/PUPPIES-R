@@ -86,6 +86,7 @@ scatterbars <- function(plotname="plot.tiff",PM,
 #print(ls(parent.env(PM)))
 #print(ls(PM))
 	pname <- get("pname",PM)
+	wildcardclass <- get("wildcardclass",PM)
 print(paste("plotname: ",plotname))
 print(paste("pname: ",pname))
 	if (missing(maintitle)) maintitle <- paste(pname," Monte Carlo Results (",

@@ -1,6 +1,7 @@
-set.modelname("Easy Model")
-set.iterations(1000)
-set.seed(1)
+set.puppies(name="Easy Model",iterations=100,seed=1)
+#set.modelname("Easy Model")
+#set.iterations(1000)
+#set.seed(1)
 E5 <- unifD(4,6)
 E3 <- 3
 A3 <- triaD(2,3,4)

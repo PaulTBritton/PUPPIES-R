@@ -8,7 +8,7 @@
 rm(list=ls())			# removes all objects from the current
 				# R workspace/environment
 
-source("Modules/PUPPIES.R",chdir=TRUE)
+source("Modules/puppies.R",chdir=TRUE)
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #wildcardclass <- "regex"

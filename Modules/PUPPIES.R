@@ -23,13 +23,13 @@
 #####################################################
 #load code modules
 #print(getwd())
-source("Filter.R")
-source("FileIO.R")
-source("Number.R")
-source("UDFs.R")
-source("MonteCarlo.R")
+source("filter.R")
+source("fileio.R")
+source("number.R")
+source("udfs.R")
+source("montecarlo.R")
 source("scatterbars.R")
-source("Plots.R")
+source("plots.R")
 
 #####################################################
 # define global configuration arguments
@@ -55,7 +55,7 @@ VerboseLevel <- 1
 # "regex" = regular expression
 # "aglob" = advanced glob
 # "glob" = glob
-wildcardclass <- "aglob"
+#wildcardclass <- "aglob"
 
 # seed for random number generator
 # NULL means rely on the CPU clock for seed generation
