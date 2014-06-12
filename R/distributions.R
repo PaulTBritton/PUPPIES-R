@@ -58,7 +58,11 @@ gammD <- function(shape,rate) {
 lognD <- function(EF=exp(qnorm(0.95)),sigma=log(EF)/qnorm(0.95),
 		mean=1,median=exp(log(mean)-(sigma^2)/2),
 		mu=log(median)) {
-	if (!exists("N")) N <- get("N",parent.frame())
+	if (!exists("N")) {
+		N <- get("N",parent.frame())
+		print("calling heirarchy")
+	} else print("enclosing heirarchy")
+	print(searchpaths())
 	return(rlnorm(N,mu,sigma))
 }
 

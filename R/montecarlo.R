@@ -6,31 +6,31 @@
 #
 ###################################
 
-# initialize evaluation environment for
+# initialize meta data environment for
 # PUPPIES models
-puppiesparent <- function(name,N,seed,wildcard) {
-	p <- new.env(parent=puppiesenv)
-	p$N <- N
-	p$saveseed <- seed	# save seed
+metaenv <- function(name,N,seed,wildcard) {
+	m <- new.env(parent=puppiesenv)
+	m$N <- N
+	m$saveseed <- seed	# save seed
 	if (!is.null(seed)) set.seed(seed)
-	p$modelname <- name
-	p$wildcardclass <- wildcard
-	return(p)
+	m$modelname <- name
+	m$wildcardclass <- wildcard
+	return(m)
 }
 
 # evaluate a PUPPIES model with N random iterations
-# return the model results
+# return the model results p
 evalp <- function(name="PUPPIES Model",N=10,seed=NULL,wildcard="aglob",
                 model="")
 {
-	p <- puppiesparent(name,N,seed,wildcard)
-	e <- new.env(parent=p)
+	m <- metaenv(name,N,seed,wildcard)
+	p <- new.env(parent=m)
 	pexpr <- topexpr(model)
-	eval(pexpr,e)
-	y <- get("modelname",e)
-	class(e) <- c("environment","puppies")
+	eval(pexpr,p)
+	y <- get("modelname",p)
+	class(p) <- c("environment","puppies")
 	if (VerboseLevel >= 2) print(paste("evalp() complete on:",y))
-	return(e)
+	return(p)
 }
 
 # propagate results p from one PUPPIES model into
