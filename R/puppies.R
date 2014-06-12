@@ -30,6 +30,8 @@ source("udfs.R")
 source("montecarlo.R")
 source("scatterbars.R")
 source("plots.R")
+#source("cram.R")
+#source("commoncause.R")
 
 #####################################################
 # define global configuration arguments
@@ -65,5 +67,5 @@ puppiesenv <- new.env()
 sys.source("metadata.R",envir=puppiesenv)
 sys.source("boolean.R",envir=puppiesenv)
 sys.source("distributions.R",envir=puppiesenv)
-sys.source("cram.R",envir=puppiesenv)
-sys.source("commoncause.R",envir=puppiesenv)
+#sys.source("cram.R",envir=puppiesenv)
+#sys.source("commoncause.R",envir=puppiesenv)

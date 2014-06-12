@@ -7,11 +7,12 @@
 ###################################
 
 setpuppies <- function(name,iterations,seed,wildcard) {
-	if (!missing(name)) modelname <<- name
-	if (!missing(iterations)) N <<- iterations
+	m <- parent.frame(2)
+	if (!missing(name)) m$modelname <- name
+	if (!missing(iterations)) m$N <- iterations
 	if (!missing(seed)) {
-		saveseed <<- seed
+		m$saveseed <- seed
 		if (!is.null(seed)) set.seed(seed)
 	}
-	if (!missing(wildcard)) wildcardclass <<- wildcard
+	if (!missing(wildcard)) m$wildcardclass <- wildcard
 }

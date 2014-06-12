@@ -17,6 +17,7 @@ VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #modeldef <- pfile("INPUTS/Easy.pp")
 
 # generate monte carlo samples from model definition file
+#X <- evalp(model="EasyModel.p",N=20,seed=2)
 X <- evalp(model="EasyModel.p")
 
 #print((as.list(X))[c("B2","S2","M2","A3")][[2]])

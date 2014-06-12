@@ -9,6 +9,8 @@ rm(list=ls())			# removes all objects from the current
 				# R workspace/environment
 
 source("../../R/puppies.R",chdir=TRUE)
+source("../../R/cram.R")
+source("../../R/commoncause.R")
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #wildcardclass <- "regex"

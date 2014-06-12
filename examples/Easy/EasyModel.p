@@ -1,4 +1,6 @@
 setpuppies(name="Easy Model",iterations=100,seed=1)
+#print("easymodel.p")
+#print(ls(parent.frame()))
 E5 <- unifD(4,6)
 #print(E5)
 E3 <- 3
