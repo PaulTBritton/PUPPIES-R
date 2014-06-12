@@ -13,7 +13,10 @@
 #consV <- function(c=0) rep(c,times=N)
 
 # uniform distribution
-unifD <- function(a=0,b=1) runif(N,a,b)
+unifD <- function(a=0,b=1) {
+	if (!exists("N")) N <- get("N",parent.frame())
+	return(runif(N,a,b))
+}
 
 # create a vector of N trianglular samples
 # a = min
@@ -23,6 +26,7 @@ triaD <- function(a,b,c) {
 #	if (!((0<=a)&&(a<=b)&&(b<=c)&&(c<=1))) {
 #		stop("triaD: Invalid Triangle Distribution Parameters")
 #	}
+	if (!exists("N")) N <- get("N",parent.frame())
 	U <- runif(N,0,1)
 	x <- (b-a)/(c-a)
 	Tri <- U <= x
@@ -33,11 +37,13 @@ triaD <- function(a,b,c) {
 
 # N beta samples
 betaD <- function(alpha,beta) {
+	if (!exists("N")) N <- get("N",parent.frame())
 	return(rbeta(N,alpha,beta))
 }
 
 # N gamma samples
 gammD <- function(shape,rate) {
+	if (!exists("N")) N <- get("N",parent.frame())
 	return(rgamma(N,shape,rate))
 }
 
@@ -52,6 +58,7 @@ gammD <- function(shape,rate) {
 lognD <- function(EF=exp(qnorm(0.95)),sigma=log(EF)/qnorm(0.95),
 		mean=1,median=exp(log(mean)-(sigma^2)/2),
 		mu=log(median)) {
+	if (!exists("N")) N <- get("N",parent.frame())
 	return(rlnorm(N,mu,sigma))
 }
 
@@ -59,6 +66,7 @@ lognD <- function(EF=exp(qnorm(0.95)),sigma=log(EF)/qnorm(0.95),
 # create a vector of N samples based on an emperical distribution
 # (first fit a cdf based on data then spline fit the inverse cdf)
 empeD <- function(empfile) {
+	if (!exists("N")) N <- get("N",parent.frame())
 	if (VerboseLevel >= 2) print(paste("Loading Emperical Data:",empfile))
 	res <- 10*N + 1
 	X <- seq(0,1,length.out=res)
@@ -77,6 +85,7 @@ empeD <- function(empfile) {
 # each of the k vectors corresponds to the margins of
 # the dirichlet distribution
 diriD <- function(...) {
+	if (!exists("N")) N <- get("N",parent.frame(1))
 	AlphaVector <- list(...)
 	k <- length(AlphaVector)
 	Y <- list()

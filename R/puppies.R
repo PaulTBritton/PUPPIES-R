@@ -9,7 +9,7 @@
 #	Propagation
 #	Into
 #	Equations
-#	Scripts
+#	Software
 #
 # Performs Customizable Monte Carlo Simulations and
 # Plots Scatter Bars (uncertainty bars)
@@ -60,3 +60,10 @@ VerboseLevel <- 1
 # seed for random number generator
 # NULL means rely on the CPU clock for seed generation
 #seed <- NULL
+
+puppiesenv <- new.env()
+sys.source("metadata.R",envir=puppiesenv)
+sys.source("boolean.R",envir=puppiesenv)
+sys.source("distributions.R",envir=puppiesenv)
+sys.source("cram.R",envir=puppiesenv)
+sys.source("commoncause.R",envir=puppiesenv)

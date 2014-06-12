@@ -8,7 +8,7 @@
 rm(list=ls())			# removes all objects from the current
 				# R workspace/environment
 
-source("Modules/puppies.R",chdir=TRUE)
+source("../../R/puppies.R",chdir=TRUE)
 
 VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #seed <- 1		# global variable
@@ -17,7 +17,7 @@ VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #modeldef <- pfile("INPUTS/Easy.pp")
 
 # generate monte carlo samples from model definition file
-X <- evalp(model="INPUTS/EasyModel.p")
+X <- evalp(model="EasyModel.p")
 
 #print((as.list(X))[c("B2","S2","M2","A3")][[2]])
 #print(as.data.frame(as.list(X))[c("B2","S2","M2","A3")][[2]])

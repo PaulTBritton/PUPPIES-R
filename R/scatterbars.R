@@ -85,7 +85,7 @@ scatterbars <- function(plotname="plot.tiff",PM,
 #print(ls(parent.frame(2)))
 #print(ls(parent.env(PM)))
 #print(ls(PM))
-	pname <- get("pname",PM)
+	pname <- get("modelname",PM)
 	wildcardclass <- get("wildcardclass",PM)
 print(paste("plotname: ",plotname))
 print(paste("pname: ",pname))

@@ -8,31 +8,26 @@
 
 # initialize evaluation environment for
 # PUPPIES models
-parent.puppies <- function(name,N,seed,wildcard) {
-	p <- new.env()
+puppiesparent <- function(name,N,seed,wildcard) {
+	p <- new.env(parent=puppiesenv)
 	p$N <- N
-	p$seed <- seed	# save seed
+	p$saveseed <- seed	# save seed
 	if (!is.null(seed)) set.seed(seed)
-	p$name <- name
+	p$modelname <- name
 	p$wildcardclass <- wildcard
-	sys.source("Modules/metadata.R",envir=p)
-	sys.source("Modules/boolean.R",envir=p)
-	sys.source("Modules/distributions.R",envir=p)
-	sys.source("Modules/cram.R",envir=p)
-	sys.source("Modules/commoncause.R",envir=p)
 	return(p)
 }
 
 # evaluate a PUPPIES model with N random iterations
 # return the model results
-evalp <- function(name="PUPPIES Model",N=1,seed=NULL,model="",
-		wildcard="aglob")
+evalp <- function(name="PUPPIES Model",N=10,seed=NULL,wildcard="aglob",
+                model="")
 {
-	p <- parent.puppies(name,N,seed,wildcard)
+	p <- puppiesparent(name,N,seed,wildcard)
 	e <- new.env(parent=p)
 	pexpr <- topexpr(model)
 	eval(pexpr,e)
-	y <- get("name",e)
+	y <- get("modelname",e)
 	class(e) <- c("environment","puppies")
 	if (VerboseLevel >= 2) print(paste("evalp() complete on:",y))
 	return(e)
@@ -47,9 +42,14 @@ appendp <- function(p,model="") {
 
 # return a clone e of the model results p
 # set the parent of e to be the parent of p
-clonep <- function(p) {
+clonep <- function(p,name) {
+	pp <- parent.env(p)
+	ppp <- parent.env(pp)
 	e <- as.environment(as.list(p,all.names=TRUE))
-	parent.env(e) <- parent.env(p)
+	parent.env(e) <- as.environment(as.list(pp,all.names=TRUE))
+	x <- parent.env(e)
+        parent.env(x) <- ppp
+        x$modelname <- name
 	class(e) <- class(p)
 	return(e)
 }
@@ -58,7 +58,7 @@ clonep <- function(p) {
 # another PUPPIES model and return the only the new results
 spawnp <- function(p,name="PUPPIES Model",model="") {
 	pexpr <- topexpr(model)
-	e <- clonep(p)
+	e <- clonep(p,name)
 	eval(pexpr,e)
 	rm(list=ls(p),envir=e)	# keep only the new results
 	return(e)
@@ -67,13 +67,13 @@ spawnp <- function(p,name="PUPPIES Model",model="") {
 # evaluate several PUPPIES models (described by filter)
 # with N random iteration by appending them into one set of results
 # return a list containing the model name and the (combine) model results
-superevalp <- function(name="PUPPIES Model",N=1,seed=NULL,filter="",
-		wildcard="aglob") {
+superevalp <- function(name="PUPPIES Model",N=10,seed=NULL,wildcard="aglob",
+                filter="") {
 	if (VerboseLevel > 0) print(paste("superevalp() matching:",filter))
 	class(filter) <- wildcard
-	LF <- list.files(pattern=torx(filter),full.names=TRUE)
+	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	if (VerboseLevel > 0) print(paste("superevalp() found:",LF[1]))
-	x <- evalp(N=N,seed=seed,name=name,model=LF[1])
+	x <- evalp(name=name,N=N,seed=seed,wildcard=wildcard,model=LF[1])
 	for (i in LF[-1]) {
 		if (VerboseLevel > 0) print(paste("superevalp() found:",i))
 		appendp(p=x,model=i)
@@ -88,7 +88,8 @@ superappendp <- function(p,filter="") {
 	if (VerboseLevel > 0) print(paste("superappendp() matching:",filter))
 	wildcardclass <- get("wildcardclass",p)
 	class(filter) <- wildcardclass
-	LF <- list.files(pattern=torx(filter),full.names=TRUE)
+#	LF <- list.files(pattern=torx(filter),full.names=TRUE)
+	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	for (i in LF) {
 		if (VerboseLevel > 0) print(paste("superappendp() found:",i))
 		appendp(p=p,model=i)
