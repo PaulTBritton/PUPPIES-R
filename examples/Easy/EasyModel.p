@@ -1,4 +1,4 @@
-setpuppies(name="Easy Model",iterations=100,seed=1)
+metadata(name="Easy Model",iterations=100,seed=1)
 #print("easymodel.p")
 #print(ls(parent.frame()))
 E5 <- unifD(4,6)
