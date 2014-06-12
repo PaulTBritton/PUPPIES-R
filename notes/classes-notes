@@ -1,26 +1,16 @@
-Date,Time: 5-13-2014, 8:20pm
+Date: 6-12-2014
 KEY: - = todo, * = done, -* = partially done, -? = under consideration
 -------------------------------------
 -*need to fix set.seed for montecarlo and propagate
 -*need to rename montecarlo and propagate
--use tail(x,-1) to remove headers from table
+-?use tail(x,-1) to remove headers from table
 -?table headers might not be useful
 *combine *.pp and *.pe files
--*need a local/global model environment and/or data.frame
--*propagate() -> propagate_batch: replace with newpm(),appendpm(),spawnpm()
-	-propagate2() -> read.eqn() and read.ft2eqn()
-	-propagate3() -> propagate()
-	-use with() and within() statement: data to environment
-		-*substitute(), eval(), parse()
-		-*env to data.frame: as.data.frame(as.list(e))
-	-use all.names(), all.vars(): all names in an expression
-	-? generic functions: save/load environments using save()/load():
+*need a local/global model environment and/or data.frame
+*propagate() -> propagate_batch: replace with newpm(),appendpm(),spawnpm()
+-? generic functions: save/load environments using save()/load():
 http://stackoverflow.com/questions/17769121/best-way-to-name-objects-programmatically-using-r
-
--*montecarlo() -> montecarlo_batch()
-	-montecarlo_batch() needs renaming
-	-*probably obsolete: montecarlo2() -> read.parameters()
-	-*montecarlo3() -> montecarlo()
+*montecarlo() -> montecarlo_batch()
 -create classes/generic functions for re-parameterization
 	-*solved with optional args:
 		lognmed.default(),logef.default(),logmed.meanef(),
@@ -28,7 +18,13 @@ http://stackoverflow.com/questions/17769121/best-way-to-name-objects-programmati
 	-create normD()
 -create correlation matrix class
 *obsolete: create argument parser for CallFunc()
--consider overide for wildcardtype
+*consider overide for wildcardtype
 -make classes for number formats
 -need to modularize scatterbars()
 	-change samples in title into iterations
+-make verboseLevel non-global
+-make a separate PRA package with commoncause data and engine data
+-create print, summary and plot methods for puppies objects/elements
+-run package.skeleton()
+-choose license
+-?add unit tests
