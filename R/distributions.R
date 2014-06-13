@@ -83,12 +83,7 @@ empeD <- function(empfile) {
 	return(Qfun(runif(N,0,1)))
 }
 
-# k dimensional dirichlet probability distribution
-# returns an array of k vectors of size N
-# each of the k vectors corresponds to the margins of
-# the dirichlet distribution
-diriD <- function(...) {
-	N <- get("N",parent.frame(1))
+dirichlet <- function(N,...) {
 	AlphaVector <- list(...)
 	k <- length(AlphaVector)
 	Y <- list()
@@ -103,4 +98,13 @@ diriD <- function(...) {
 	diri <- lapply(Y,dividebyV)
 	names(diri) <- n
 	return(diri)
+}
+
+# k dimensional dirichlet probability distribution
+# returns an array of k vectors of size N
+# each of the k vectors corresponds to the margins of
+# the dirichlet distribution
+diriD <- function(...) {
+	N <- get("N",parent.frame(1))
+	return(dirichlet(N,...))
 }
