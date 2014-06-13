@@ -5,6 +5,8 @@
 # Author: Paul Thomas Britton
 ##########
 
+source("dirichlet.R")
+
 #############################################################
 # various theoretical distributions
 #
