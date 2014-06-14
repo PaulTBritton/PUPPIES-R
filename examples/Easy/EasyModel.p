@@ -21,6 +21,6 @@ S2 <- OR("B[1-3]")
 S1 <- MN(3,10,S2)
 M2 <- NOT(cos(S3))+sin(S1)+S2
 M1 <- S1*5.00E-01
-#scatterbar(plotname="Easyplot.tiff",filter="M?|S?")
-scatterbars(plotname="Easyplot.tiff",filter="M?|S?")
+scatterbar(plotname="Easyplot.tiff",filter="M?|S?")
+#scatterbars(plotname="Easyplot.tiff",filter="M?|S?")
 print("Easy Model Complete")

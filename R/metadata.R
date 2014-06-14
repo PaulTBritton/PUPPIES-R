@@ -9,7 +9,7 @@
 # set puppies model meta data values inside the meta environment
 # of the model
 metadata <- function(name,iterations,seed,wildcard) {
-	m <- parent.frame(2)
+	m <- parent.env(parent.frame())
 	if (!missing(name)) m$modelname <- name
 	if (!missing(iterations)) m$N <- iterations
 	if (!missing(seed)) {

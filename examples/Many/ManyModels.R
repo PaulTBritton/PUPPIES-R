@@ -17,16 +17,16 @@ source("../../R/commoncause.R")
 #wildcardclass <- "regex"
 
 # samples from Vehicle systems, Engine Parameters, and Alpha Factor distributions
-X <- superevalp(name="Many Models",N=650,seed=1,filter="[VEA].pp")
+X <- superevalp(name="Many Models",N=600,seed=1,filter="[VEA].pp")
 print("X")
 # propagate uncertainty into a vehicle fault tree model
 Y <- spawnp(p=X,model="INPUTS/V.pf")
 print("Y")
-scatterbars(plotname="OUTPUTS/vehiclemodel.tiff",PM=Y,filter="V_*")
+scatterbar(plotname="OUTPUTS/vehiclemodel.tiff",PM=Y,filter="V_*")
 appendp(p=X,model="INPUTS/V_5segBooster.pf")
 print("append")
 superappendp(p=X,filter="V?.pf")
-scatterbars(plotname="OUTPUTS/VLOMLOC.tiff",PM=X,filter="V?_LO?")
+scatterbar(plotname="OUTPUTS/VLOMLOC.tiff",PM=X,filter="V?_LO?")
 #dumpdata(YX,"DUMP/")
 
 #YX <- loaddata("DUMP/")

@@ -61,9 +61,6 @@ lognD <- function(EF=exp(qnorm(0.95)),sigma=log(EF)/qnorm(0.95),
 		mean=1,median=exp(log(mean)-(sigma^2)/2),
 		mu=log(median)) {
 	N <- get("N",parent.frame())
-#	print("calling heirarchy")
-#	print(ls(parent.frame()))
-#	print(ls(parent.env(parent.frame())))
 	return(rlnorm(N,mu,sigma))
 }
 
@@ -85,28 +82,28 @@ empeD <- function(empfile) {
 	return(Qfun(runif(N,0,1)))
 }
 
-dirichlet <- function(N,...) {
-	AlphaVector <- list(...)
-	k <- length(AlphaVector)
-	Y <- list()
-	V <- rep(0,N)
-	n <- rep("",k)
-	for (i in 1:k) {
-		Y[[i]] <- rgamma(N,shape=AlphaVector[[i]],rate=1)
-		V <- V + Y[[i]]
-		n[i] <- paste("a",i,sep="")
-	}
-	dividebyV <- function(X) X/V
-	diri <- lapply(Y,dividebyV)
-	names(diri) <- n
-	return(diri)
-}
+#dirichlet <- function(N,...) {
+#	AlphaVector <- list(...)
+#	k <- length(AlphaVector)
+#	Y <- list()
+#	V <- rep(0,N)
+#	n <- rep("",k)
+#	for (i in 1:k) {
+#		Y[[i]] <- rgamma(N,shape=AlphaVector[[i]],rate=1)
+#		V <- V + Y[[i]]
+#		n[i] <- paste("a",i,sep="")
+#	}
+#	dividebyV <- function(X) X/V
+#	diri <- lapply(Y,dividebyV)
+#	names(diri) <- n
+#	return(diri)
+#}
 
 # k dimensional dirichlet probability distribution
 # returns an array of k vectors of size N
 # each of the k vectors corresponds to the margins of
 # the dirichlet distribution
 diriD <- function(...) {
-	N <- get("N",parent.frame(1))
+	N <- get("N",parent.frame())
 	return(dirichlet(N,...))
 }

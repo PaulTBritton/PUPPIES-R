@@ -1,29 +1,22 @@
 # front-end to the plotting routine scatterbar2
 # more WYSIWYG than scatterbar2
-scatterbar <- function(plotname="plot.tiff",PM,
-	rmarg=8,filter, stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
+scatterbar <- function(plotname="plot.tiff",PM=parent.frame(),
+	rmarg=8,filter=".*", stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
 	legendpos,units="Probability", xscale="log",
 	xnotation=sciNotation,xmarks,range)
 {
-	if (missing(filter)) filter <- ".*"
-	else class(filter) <- wildcardclass
-	if (missing(PM)) PM <- parent.frame(1)
-	Data <- (as.list(PM,all.names=TRUE))
-	Data <- filterdata(torx(filter),Data)
+	class(filter) <- get("wildcardclass",PM)
+	modelname <- get("modelname",PM)
+	N <- get("N",PM)
+	Data <- filterdata(torx(filter),as.list(PM,all.names=TRUE))
 	Labels <- names(Data)
 	M <- length(Labels)
-#print(ls(parent.frame(2)))
-#print(ls(parent.env(PM)))
-#print(ls(PM))
-	pname <- get("pname",PM)
-	N <- get("N",PM)
 print(paste("plotname: ",plotname))
-print(paste("pname: ",pname))
+print(paste("modelname: ",modelname))
 	if (missing(maintitle)) maintitle <-
-		paste(pname," Monte Carlo Results (",N," Iterations)",sep="")
-# removing wildcardlevel from global config
+		paste(modelname," Monte Carlo Results (",N," Iterations)",sep="")
 	if (!missing(desc)) {
-		if (VerboseLevel > 0) print(paste("scatterbars()",
+		if (VerboseLevel > 0) print(paste("scatterbar()",
 					"reading:",desc))
 		if (file.access(desc,mode=4)==-1) {
 			stop(paste("File access error:",desc))
@@ -58,7 +51,6 @@ print(paste("pname: ",pname))
 			padper <- .1
 		}
 	)
-#	X <- t(as.matrix(as.data.frame(as.list(Data))))
 	X <- unlist(Data)
 	rightm <- (max(X))
 	leftm <-(min(X))
@@ -92,11 +84,11 @@ print(paste("pname: ",pname))
 }
 
 # the scatterbar2 drawing routine
-# less WYSIWYG than the front-end scatterbars
+# less WYSIWYG than the front-end scatterbar
 scatterbar2 <- function(name,M,X,L,logaxis,tsize,tpos,rmarg,xmarks,
 	xnotation,stats,prec,maintitle,lpos,units,range)
 {
-	if (VerboseLevel > 0) print(paste("scatterbars() opening:",name))
+	if (VerboseLevel > 0) print(paste("scatterbar() opening:",name))
 	tiff(name,width=11,height=8,units="in",bg="white",res=300)
 	par(mar=c(6,2,2,rmarg))
 	plot.new()
@@ -188,5 +180,5 @@ scatterbar2 <- function(name,M,X,L,logaxis,tsize,tpos,rmarg,xmarks,
 			col=c(gray(.3),"darkorange1","red3","blue"))
 	}
 	junk <- dev.off()
-	if (VerboseLevel > 0) print(paste("scatterbars() completed:",name))
+	if (VerboseLevel > 0) print(paste("scatterbar() completed:",name))
 }

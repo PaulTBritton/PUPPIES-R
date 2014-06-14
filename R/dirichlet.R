@@ -7,8 +7,16 @@
 # the dirichlet distribution
 
 dirichlet <- function(N,...) {
-	AlphaVector <- list(...)
-	k <- length(AlphaVector)
+	args <- list(...)
+	len <- length(args)
+	if (len == 1) {
+		AlphaVector <- as.list(args[[1]])
+		k <- length(AlphaVector)
+	} else {
+		AlphaVector <- args
+		k <- len
+	}
+	if (k < 2) stop(paste("k=",k,"; dirichlet() requires k > 1"))
 	Y <- list()
 	V <- rep(0,N)
 	n <- rep("",k)
