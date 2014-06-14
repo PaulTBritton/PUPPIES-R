@@ -1,4 +1,4 @@
-metadata(name="Easy Model",iterations=100,seed=1)
+metadata(name="Easy Model",iterations=10,seed=1)
 #print("easymodel.p")
 #print(ls(parent.frame()))
 E5 <- unifD(4,6)
@@ -21,6 +21,8 @@ S2 <- OR("B[1-3]")
 S1 <- MN(3,10,S2)
 M2 <- NOT(cos(S3))+sin(S1)+S2
 M1 <- S1*5.00E-01
-scatterbar(plotname="Easyplot.tiff",filter="M?|S?")
+scatterbar(plotname="Easyplot.tiff",Objs=list(M1=M1,M2=M2,S1=S1,S2=S2)) #,filter="M?|S?")
 #scatterbars(plotname="Easyplot.tiff",filter="M?|S?")
+print(ls())
+print(list(M1,M2,S1,S2))
 print("Easy Model Complete")
