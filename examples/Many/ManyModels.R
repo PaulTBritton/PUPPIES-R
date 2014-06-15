@@ -9,7 +9,7 @@ rm(list=ls())			# removes all objects from the current
 				# R workspace/environment
 
 source("../../R/puppies.R",chdir=TRUE)
-source("../../R/cram.R")
+source("cram.R")
 source("../../R/commoncause.R")
 #library(msfcpra)
 

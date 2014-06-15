@@ -36,4 +36,3 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 # return a subset of data based on a pass through filter in
 # regex format
 filterdata <- function(filter,data) data[grep(filter,names(data))]
-

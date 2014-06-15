@@ -5,14 +5,11 @@
 # Author: Paul Thomas Britton
 ##########
 
-source("dirichlet.R")
+source("pradist.R")
 
 #############################################################
 # various theoretical distributions
 #
-
-# constant vector
-#consV <- function(c=0) rep(c,times=N)
 
 # uniform distribution
 unifD <- function(a=0,b=1) {
@@ -25,16 +22,8 @@ unifD <- function(a=0,b=1) {
 # b = mode
 # c = max
 triaD <- function(a,b,c) {
-	if (!((a<=b)&&(b<=c))) {
-		stop("triaD: Invalid Triangle Distribution Parameters")
-	}
 	N <- get("N",parent.frame())
-	U <- runif(N,0,1)
-	x <- (b-a)/(c-a)
-	Tri <- U <= x
-	Tri[Tri==TRUE] <- a+sqrt(U[U<=x]*(c-a)*(b-a))
-	Tri[Tri==FALSE] <- c-sqrt((1-U[U>x])*(c-a)*(c-b))
-	return(Tri)
+	return(triadist(N,a,b,c))
 }
 
 # N beta samples
@@ -49,19 +38,9 @@ gammD <- function(shape,rate) {
 	return(rgamma(N,shape,rate))
 }
 
-# create a vector of N lognormal samples
-# mean = mean of lognormal
-# median = 50th of lognormal
-# EF = 95th/50th (of lognormal)
-# mu = mean of underlying normal
-# sigma = standard dev of underlying normal
-#
-# user must provide either: mean & EF, median & EF, or mu & sigma
-lognD <- function(EF=exp(qnorm(0.95)),sigma=log(EF)/qnorm(0.95),
-		mean=1,median=exp(log(mean)-(sigma^2)/2),
-		mu=log(median)) {
+lognD <- function(...) {
 	N <- get("N",parent.frame())
-	return(rlnorm(N,mu,sigma))
+	return(logndist(N,...))
 }
 
 ####################################################
@@ -81,23 +60,6 @@ empeD <- function(empfile) {
 					empfile))
 	return(Qfun(runif(N,0,1)))
 }
-
-#dirichlet <- function(N,...) {
-#	AlphaVector <- list(...)
-#	k <- length(AlphaVector)
-#	Y <- list()
-#	V <- rep(0,N)
-#	n <- rep("",k)
-#	for (i in 1:k) {
-#		Y[[i]] <- rgamma(N,shape=AlphaVector[[i]],rate=1)
-#		V <- V + Y[[i]]
-#		n[i] <- paste("a",i,sep="")
-#	}
-#	dividebyV <- function(X) X/V
-#	diri <- lapply(Y,dividebyV)
-#	names(diri) <- n
-#	return(diri)
-#}
 
 # k dimensional dirichlet probability distribution
 # returns an array of k vectors of size N

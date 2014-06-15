@@ -60,6 +60,9 @@ loaddata <- function(DataDir,filter) {
 	return(Z[,O])
 }
 
+#######################################
+# Model input functions
+#
 
 ft2eqn <- function(filename) {
 	if (file.access(filename,mode=4)) {
@@ -120,13 +123,6 @@ ft2pexpr <- function(file) {
 	pexpr <- parse(text=expr)
 	return(pexpr)
 }
-
-#superft2pm <- function(filter) {
-#}
-
-#######################################
-# Model input functions
-#
 
 topexpr <- function(x) {
 	if (class(x) == "expression") return(x)

@@ -10,7 +10,7 @@ rm(list=ls())			# removes all objects from the current
 
 source("../../R/puppies.R",chdir=TRUE)
 
-VerboseLevel <- 3	# default = 1, choose from 0 to 3
+#VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #seed <- 1		# global variable
 
 # define a PUPPIES Model from a PUPPIES file

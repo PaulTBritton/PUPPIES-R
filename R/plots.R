@@ -1,19 +1,16 @@
 # front-end to the plotting routine scatterbar2
 # more WYSIWYG than scatterbar2
-scatterbar <- function(plotname="plot.tiff",PM=parent.frame(),
-	rmarg=8,filter=".*", stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
+scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
+	rmarg=8,filter, stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
 	legendpos,units="Probability", xscale="log",
-	xnotation=sciNotation,xmarks,range,Objs)
+	xnotation=sciNotation,xmarks,range,list=as.list(envir,all.names=TRUE))
 {
-	class(filter) <- get("wildcardclass",PM)
-	modelname <- get("modelname",PM)
-	N <- get("N",PM)
-#	Data <- filterdata(torx(filter),as.list(PM,all.names=TRUE))
-	Data <- Objs
-print(class(Data))
-print(Data)
+	if (missing(filter)) filter <- ".*"
+	else class(filter) <- get("wildcardclass",envir)
+	modelname <- get("modelname",envir)
+	N <- get("N",envir)
+	Data <- filterdata(torx(filter),list)
 	Labels <- names(Data)
-print(Labels)
 	M <- length(Labels)
 print(paste("plotname: ",plotname))
 print(paste("modelname: ",modelname))
@@ -100,7 +97,7 @@ scatterbar2 <- function(name,M,X,L,logaxis,tsize,tpos,rmarg,xmarks,
 		col="black",cex=.7)
 		#,axes=FALSE ,xlab="",ylab="",frame.plot=TRUE)
 	box()
-	axis(4,1:M,labels = revorder(L),hadj=0,las=1)
+	axis(4,1:M,labels = L,hadj=0,las=1)
 	axis(side=1,at=xmarks,labels=xnotation(xmarks),las=0)
 	xscale <- switch(logaxis,x=" (log scale)","(linear scale)")
 	mtext(paste(units,xscale),font=2,side=1,line=3)
@@ -117,10 +114,9 @@ scatterbar2 <- function(name,M,X,L,logaxis,tsize,tpos,rmarg,xmarks,
 	abline(h=1:(M),lwd=1.2,lty=1,col="gray")
 	abline(v=xmarks,lwd=1.2,lty=1,col="gray")
 
-	i <- M + 1
+	i <- 0
 	for (v in X) {
-print(v)
-		i <- i - 1
+		i <- i + 1
 		# compute sample stats
 		#
 		Fifth <- quantile(v,0.05)
