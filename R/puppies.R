@@ -64,6 +64,7 @@ VerboseLevel <- 1
 #seed <- NULL
 
 puppiesenv <- new.env()
+eval(expression(plotlist <- alist),puppiesenv)
 sys.source("metadata.R",envir=puppiesenv)
 sys.source("boolean.R",envir=puppiesenv)
 sys.source("distributions.R",envir=puppiesenv)

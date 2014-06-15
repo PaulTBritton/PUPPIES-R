@@ -1,7 +1,7 @@
 # front-end to the plotting routine scatterbar2
 # more WYSIWYG than scatterbar2
 scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
-	rmarg=8,filter, stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
+	rmarg=8,filter, stats=c(2,0,2,2),prec=2,maintitle,
 	legendpos,units="Probability", xscale="log",
 	xnotation=sciNotation,xmarks,range,lst=as.list(envir,all.names=TRUE))
 {
@@ -9,10 +9,7 @@ scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
 	else class(filter) <- get("wildcardclass",envir)
 	modelname <- get("modelname",envir)
 	N <- get("N",envir)
-print(class(lst))
-print(lst)
 	savenames <- names(lst)
-print(savenames)
 	myget <- function(x) get(as.character(x),envir)
 	if (is.null(savenames)) {
 		newlst <- lapply(lst,myget)
@@ -23,16 +20,14 @@ print(savenames)
 		newlst <- list()
 		for (n in savenames) {
 			if (n == "") {
-				newnames[i] <- as.character(lst[i][[1]])
+				newnames[i] <- as.character(lst[[i]])
 			}
-			newlst[[i]] <- myget(lst[i][[1]])
+			newlst[[i]] <- myget(lst[[i]])
 			i = i + 1
 		}
 		names(newlst) <- newnames
 	}
-#print(newlst)
 	Data <- filterdata(torx(filter),newlst)
-#print(Data)
 	Labels <- names(Data)
 print(Labels)
 	M <- length(Labels)
@@ -40,27 +35,6 @@ print(paste("plotname: ",plotname))
 print(paste("modelname: ",modelname))
 	if (missing(maintitle)) maintitle <-
 		paste(modelname," Monte Carlo Results (",N," Iterations)",sep="")
-	if (!missing(desc)) {
-		if (VerboseLevel > 0) print(paste("scatterbar()",
-					"reading:",desc))
-		if (file.access(desc,mode=4)==-1) {
-			stop(paste("File access error:",desc))
-		}
-		D <- read.csv(desc,sep=args$fieldsep,row.names=1)
-		if (VerboseLevel > 0) print(D)
-		tmp <- Labels
-		for (i in row.names(D)) {
-			j <- grep(i,tmp)
-			Labels[j] <- as.character(D[[i,1]])
-		}
-	}
-	if (!missing(desc2)) {
-		tmp <- Labels
-		for (i in 1:ncol(desc2)) {
-			j <- grep(desc2[1,i],tmp)
-			Labels[j] <- as.character(desc2[2,i])
-		}
-	}
 	T <- switch(as.character(M),"1"=1,"2"=1,"3"=1,"4"=2,"5"=2,3)
 	switch(T,
 		{	tsize <- 1
@@ -107,6 +81,28 @@ print(paste("modelname: ",modelname))
 		tsize,tpos,rmarg,xmarks,xnotation,stats,prec,maintitle,
 		legendpos,units,range)
 }
+
+	#if (!missing(desc)) {
+	#	if (VerboseLevel > 0) print(paste("scatterbar()",
+	#				"reading:",desc))
+	#	if (file.access(desc,mode=4)==-1) {
+	#		stop(paste("File access error:",desc))
+	#	}
+	#	D <- read.csv(desc,sep=args$fieldsep,row.names=1)
+	#	if (VerboseLevel > 0) print(D)
+	#	tmp <- Labels
+	#	for (i in row.names(D)) {
+	#		j <- grep(i,tmp)
+	#		Labels[j] <- as.character(D[[i,1]])
+	#	}
+	#}
+	#if (!missing(desc2)) {
+	#	tmp <- Labels
+	#	for (i in 1:ncol(desc2)) {
+	#		j <- grep(desc2[1,i],tmp)
+	#		Labels[j] <- as.character(desc2[2,i])
+	#	}
+	#}
 
 # the scatterbar2 drawing routine
 # less WYSIWYG than the front-end scatterbar
