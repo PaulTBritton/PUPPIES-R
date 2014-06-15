@@ -3,14 +3,38 @@
 scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
 	rmarg=8,filter, stats=c(2,0,2,2),prec=2,desc,desc2,maintitle,
 	legendpos,units="Probability", xscale="log",
-	xnotation=sciNotation,xmarks,range,list=as.list(envir,all.names=TRUE))
+	xnotation=sciNotation,xmarks,range,lst=as.list(envir,all.names=TRUE))
 {
 	if (missing(filter)) filter <- ".*"
 	else class(filter) <- get("wildcardclass",envir)
 	modelname <- get("modelname",envir)
 	N <- get("N",envir)
-	Data <- filterdata(torx(filter),list)
+print(class(lst))
+print(lst)
+	savenames <- names(lst)
+print(savenames)
+	myget <- function(x) get(as.character(x),envir)
+	if (is.null(savenames)) {
+		newlst <- lapply(lst,myget)
+		names(newlst) <- lst
+	} else {
+		i = 1
+		newnames <- savenames
+		newlst <- list()
+		for (n in savenames) {
+			if (n == "") {
+				newnames[i] <- as.character(lst[i][[1]])
+			}
+			newlst[[i]] <- myget(lst[i][[1]])
+			i = i + 1
+		}
+		names(newlst) <- newnames
+	}
+#print(newlst)
+	Data <- filterdata(torx(filter),newlst)
+#print(Data)
 	Labels <- names(Data)
+print(Labels)
 	M <- length(Labels)
 print(paste("plotname: ",plotname))
 print(paste("modelname: ",modelname))

@@ -1,4 +1,4 @@
-metadata(name="Easy Model",iterations=300,seed=1)
+metadata(name="Easy Model",iterations=200,seed=1)
 #print("easymodel.p")
 #print(ls(parent.frame()))
 E5 <- unifD(4,6)
@@ -21,11 +21,16 @@ S2 <- OR("B[1-3]")
 S1 <- MN(3,10,S2)
 M2 <- NOT(cos(S3))+sin(S1)+S2
 M1 <- S1*5.00E-01
-eventstoplot <- list("S2 name"=S2,S1=S1,"M2 descr"=M2,M1=M1)
-#eventlist <- list(B4,B5,M2,M1)
-#scatterbar(plotname="Easyplot1.tiff",list=eventlist)
-scatterbar(plotname="Easyplot2.tiff",list=eventstoplot)
-scatterbar(plotname="Easyplot3.tiff",filter="M?|S?")
+#eventlist <- function(lst) {
+#        print(class(substitute(lst)))
+#        print(substitute(lst))
+#}
+#eventlist(lst=list(B4,B5,M2,M1))
+scatterbar(plotname="Easyplot1.tiff",lst=alist(B4,B5,M2,M1))
+elist <- alist(B4,B5,M2,M1)
+scatterbar(plotname="Easyplot2.tiff",lst=elist)
+eventstoplot <- alist("B4 name"=B4,B5,"M2 descr"=M2,M1)
+scatterbar(plotname="Easyplot3.tiff",lst=eventstoplot) #,filter="M?|S?")
 print(ls())
 #print(list(S2,S1,M2,M1))
 print("Easy Model Complete")
