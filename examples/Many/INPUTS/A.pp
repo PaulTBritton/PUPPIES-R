@@ -3,7 +3,8 @@ a_1_4 <- diri4$a1
 a_2_4 <- diri4$a2
 a_3_4 <- diri4$a3
 a_4_4 <- diri4$a4
-scatterbar(plotname="OUTPUTS/alphaxof4.tiff",filter="a_?_4")
+scatterbar(plotname="OUTPUTS/alphaxof4a.tiff",lst=plotlist("a1 desc"=a_1_4,a_2_4))
+scatterbar(plotname="OUTPUTS/alphaxof4b.tiff",filter="a_?_4")
 
 ga_2_4 <- GlobalAlpha(2,diri4)
 ga_3_4 <- GlobalAlpha(3,diri4)

@@ -3,7 +3,8 @@
 scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
 	rmarg=8,filter, stats=c(2,0,2,2),prec=2,maintitle,
 	legendpos,units="Probability", xscale="log",
-	xnotation=sciNotation,xmarks,range,lst=as.list(envir,all.names=TRUE))
+	xnotation=sciNotation,xmarks,range,lst=ls(envir))
+#	xnotation=sciNotation,xmarks,range,lst=as.list(envir,all.names=TRUE))
 {
 	if (missing(filter)) filter <- ".*"
 	else class(filter) <- get("wildcardclass",envir)
