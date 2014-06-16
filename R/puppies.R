@@ -27,8 +27,8 @@ source("filter.R")
 source("fileio.R")
 source("number.R")
 source("udfs.R")
-source("montecarlo.R")
-source("scatterbars.R")
+source("evaluate.R")
+#source("scatterbars.R")
 source("plots.R")
 #source("cram.R")
 #source("commoncause.R")
@@ -64,7 +64,8 @@ VerboseLevel <- 1
 #seed <- NULL
 
 puppiesenv <- new.env()
-eval(expression(plotlist <- alist),puppiesenv)
+plotlist <- alist
+#eval(expression(plotlist <- alist),puppiesenv)
 sys.source("metadata.R",envir=puppiesenv)
 sys.source("boolean.R",envir=puppiesenv)
 sys.source("distributions.R",envir=puppiesenv)

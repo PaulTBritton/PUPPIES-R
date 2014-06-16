@@ -1,6 +1,6 @@
 ##########################################################
 #
-# monte carlo simulation functions:
+# Evaluate monte carlo simulation functions:
 #
 # Author: Paul Thomas Britton
 #
@@ -35,14 +35,14 @@ evalp <- function(name="PUPPIES Model",N=10,seed=NULL,wildcard="aglob",
 
 # propagate results p from one PUPPIES model into
 # another PUPPIES model and append the new results to p
-appendp <- function(p,model="") {
+appendp <- function(p=parent.frame(),model="") {
 	pexpr <- topexpr(model)
 	eval(pexpr,p)
 }
 
 # return a clone e of the model results p
 # set the parent of e to be the parent of p
-clonep <- function(p,name) {
+clonep <- function(p=parent.frame(),name="Copy Model") {
 	pp <- parent.env(p)
 	ppp <- parent.env(pp)
 	e <- as.environment(as.list(p,all.names=TRUE))

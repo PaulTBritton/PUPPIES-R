@@ -15,10 +15,10 @@ source("../../R/puppies.R",chdir=TRUE)
 
 modeldef <- expression(T1<-betaD(3,4),T2<-lognD(.01,5),T3<-T1|T2)
 
-Y <- evalp(name="Simple in-line model",N=700,model=modeldef)
+Y <- evalp(name="Simple in-line model",N=770,model=modeldef)
 
 #scatterbar(plotname="Simpleplot.tiff",PM=Y)
-scatterbars(plotname="Simpleplot.tiff",PM=Y)
+scatterbar(plotname="Simpleplot.tiff",envir=Y)
 #print(class(Y))
 #print(str(Y))
 #print(Y)
