@@ -16,6 +16,7 @@ source("../../R/puppies.R",chdir=TRUE)
 # generate monte carlo samples from model definition file
 #X <- evalp(model="EasyModel.p",N=20,seed=2)
 X <- evalp(model="EasyModel.p")
+#for (i in ls(X)) print(i)
 
 # propagate uncertainty from X into another model
 appendp(p=X,model="append.p")

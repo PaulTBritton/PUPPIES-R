@@ -5,60 +5,6 @@
 #
 ###################################
 
-# data dump procedure
-dumpdata <- function(Z,ddDir,filter) {
-	if (VerboseLevel > 0) print("Attempting to dumpdata")
-	class(filter) <- wildcardclass
-	Z <- filterdata(torx(filter),Z)
-	for (j in names(Z)) {
-		filename <- paste(ddDir,names(Z[j]),".dat",sep="")
-		if (VerboseLevel >= 2) print(paste("Attempting to write:",
-					filename))
-		write(Z[[j]],file=filename)
-	}
-	if (VerboseLevel > 0) print("dumpdata Complete")
-}
-
-# load data function
-loaddata <- function(DataDir,filter) {
-	class(filter) <- wildcardclass
-	LF <- list.files(path=DataDir,pattern=torx(filter))
-	size <- length(LF)
-	if (VerboseLevel >= 2) print(paste("reading: ",DataDir,LF[1],sep=""))
-	lfile <- paste(DataDir,LF[1],sep="")
-	if (file.access(lfile,mode=4)) {
-		stop(paste("File access error:",lfile))
-	}
-	X <- scan(lfile)
-	N <- length(X)
-	Z <- as.data.frame(array(0,c(N,size)))
-	Labels <- array("",c(size))
-	Z[1] <- X
-# need to test new regex to strip extention
-	Labels[1] <- sub("[.].*$","",LF[1])
-	if (size > 1) {
-		for (i in 2:size) {
-			if (VerboseLevel >= 2) print(paste("reading: ",
-						DataDir,LF[i],sep=""))
-			lfile <- paste(DataDir,LF[i],sep="")
-			if (file.access(lfile,mode=4)) {
-				stop(paste("File access error:",lfile))
-			}
-			X <- scan(lfile)
-			Z[i] <- X
-			Labels[i] <- sub("[.].*$","",LF[i])
-		}
-	}
-	names(Z) <- Labels
-	DLF <- paste(DataDir,LF,sep="")
-	times <- file.info(DLF)$ctime
-	tmp <- cbind(Labels,times)
-	row.names(tmp) <- Labels
-	O <- tmp[order(tmp[,"times"])]	# recover original order of data
-					# using ctime since list.files lists
-					# files lexicographically
-	return(Z[,O])
-}
 
 #######################################
 # Model input functions

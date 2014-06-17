@@ -10,7 +10,7 @@ rm(list=ls())			# removes all objects from the current
 
 source("../../R/puppies.R",chdir=TRUE)
 source("cram.R")
-source("../../R/commoncause.R")
+source("commoncause.R")
 #library(msfcpra)
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
