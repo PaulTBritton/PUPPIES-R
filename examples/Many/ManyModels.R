@@ -11,13 +11,12 @@ rm(list=ls())			# removes all objects from the current
 source("../../R/puppies.R",chdir=TRUE)
 source("cram.R")
 source("commoncause.R")
-#library(msfcpra)
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
 #wildcardclass <- "regex"
 
 # samples from Vehicle systems, Engine Parameters, and Alpha Factor distributions
-X <- superevalp(name="Many Models",N=741,seed=1,filter="[VEA].pp")
+X <- superevalp(name="Many Models",N=500,seed=1,filter="[VEA].pp")
 print("X")
 # propagate uncertainty into a vehicle fault tree model
 Y <- spawnp(p=X,model="INPUTS/V.pf")

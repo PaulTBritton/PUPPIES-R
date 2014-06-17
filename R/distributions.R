@@ -5,7 +5,8 @@
 # Author: Paul Thomas Britton
 ##########
 
-source("pradist.R")
+#source("pradist.R")
+library(pradist)
 
 #############################################################
 # various theoretical distributions
