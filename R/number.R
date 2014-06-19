@@ -10,16 +10,6 @@ logfloor <- function(x) 10^floor(log10(x))
 
 logceil <- function(x) 10^ceiling(log10(x))
 
-# switch board for different number formats
-notation <- function(num,prec,form) {
-	return(switch(as.character(form),
-		"1"=percentNotation(num,prec),
-		"2"=sciNotation(num,prec),
-		"3"=oneinNotation(num,prec),
-		"4"=bothNotation(num,prec),
-		warning("Not a valid stats format")))
-}
-
 percentNotation <- function(x, digits = 1) {
 	return(paste(100*signif(x,digits),"%",sep=""))
 }

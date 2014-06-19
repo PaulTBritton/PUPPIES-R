@@ -32,7 +32,7 @@ source("scatterbar.R")
 
 #####################################################
 # define global configuration arguments
-args <- list(fieldsep=";")
+#args <- list(fieldsep=";")
 
 #
 # VerboseLevel -

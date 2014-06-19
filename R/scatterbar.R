@@ -1,6 +1,16 @@
 # a more intuitive name for alist()
 plotlist <- alist
 
+# switch board for different number formats
+notation <- function(num,prec,form) {
+	return(switch(as.character(form),
+		"1"=percentNotation(num,prec),
+		"2"=sciNotation(num,prec),
+		"3"=oneinNotation(num,prec),
+		"4"=bothNotation(num,prec),
+		warning("Not a valid stats format")))
+}
+
 # front-end to the plotting routine scatterbar2
 # more WYSIWYG than scatterbar2
 scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
