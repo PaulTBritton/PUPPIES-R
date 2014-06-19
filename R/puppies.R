@@ -25,9 +25,9 @@
 #print(getwd())
 source("filter.R")
 source("fileio.R")
-source("number.R")
+source("numform.R")
 source("udfs.R")
-source("evaluate.R")
+source("evalp.R")
 source("scatterbar.R")
 
 #####################################################
