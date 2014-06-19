@@ -14,10 +14,10 @@ source("cram.R")
 library(commoncause)
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
-#wildcardclass <- "regex"
 
-# samples from Vehicle systems, Engine Parameters, and Alpha Factor distributions
-X <- superevalp(name="Many Models",N=400,seed=1,filter="[VEA].pp")
+# samples from Vehicle systems, Engine Parameters,
+# and Alpha Factor distributions
+X <- superevalp(name="Many Models",iterations=400,seed=1,filter="[VEA].pp")
 print("X")
 # propagate uncertainty into a vehicle fault tree model
 Y <- spawnp(p=X,model="INPUTS/V.pf")

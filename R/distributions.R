@@ -5,7 +5,6 @@
 # Author: Paul Thomas Britton
 ##########
 
-#source("pradist.R")
 library(pradist)
 
 #############################################################

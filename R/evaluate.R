@@ -8,9 +8,9 @@
 
 # initialize meta data environment for
 # PUPPIES models
-metaenv <- function(name,N,seed,wildcard) {
+metaenv <- function(name,iterations,seed,wildcard) {
 	m <- new.env(parent=puppiesenv)
-	m$N <- N
+	m$N <- iterations
 	m$saveseed <- seed	# save seed
 	if (!is.null(seed)) set.seed(seed)
 	m$modelname <- name
@@ -20,10 +20,10 @@ metaenv <- function(name,N,seed,wildcard) {
 
 # evaluate a PUPPIES model with N random iterations
 # return the model results p
-evalp <- function(name="PUPPIES Model",N=10,seed=NULL,wildcard="aglob",
-                model="")
+evalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
+		wildcard="aglob",model="")
 {
-	m <- metaenv(name,N,seed,wildcard)
+	m <- metaenv(name,iterations,seed,wildcard)
 	p <- new.env(parent=m)
 	pexpr <- topexpr(model)
 	eval(pexpr,p)
@@ -67,13 +67,15 @@ spawnp <- function(p,name="PUPPIES Model",model="") {
 # evaluate several PUPPIES models (described by filter)
 # with N random iteration by appending them into one set of results
 # return a list containing the model name and the (combine) model results
-superevalp <- function(name="PUPPIES Model",N=10,seed=NULL,wildcard="aglob",
-                filter="") {
+superevalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
+		wildcard="aglob",filter="")
+{
 	if (VerboseLevel > 0) print(paste("superevalp() matching:",filter))
 	class(filter) <- wildcard
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	if (VerboseLevel > 0) print(paste("superevalp() found:",LF[1]))
-	x <- evalp(name=name,N=N,seed=seed,wildcard=wildcard,model=LF[1])
+	x <- evalp(name=name,iterations=iterations,seed=seed,
+		wildcard=wildcard,model=LF[1])
 	for (i in LF[-1]) {
 		if (VerboseLevel > 0) print(paste("superevalp() found:",i))
 		appendp(p=x,model=i)

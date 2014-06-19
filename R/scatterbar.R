@@ -1,3 +1,6 @@
+# a more intuitive name for alist()
+plotlist <- alist
+
 # front-end to the plotting routine scatterbar2
 # more WYSIWYG than scatterbar2
 scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
@@ -30,10 +33,10 @@ scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
 	}
 	Data <- filterdata(torx(filter),newlst)
 	Labels <- names(Data)
-print(Labels)
+#print(Labels)
 	M <- length(Labels)
-print(paste("plotname: ",plotname))
-print(paste("modelname: ",modelname))
+#print(paste("plotname: ",plotname))
+#print(paste("modelname: ",modelname))
 	if (missing(maintitle)) maintitle <-
 		paste(modelname," Monte Carlo Results (",N," Iterations)",sep="")
 	T <- switch(as.character(M),"1"=1,"2"=1,"3"=1,"4"=2,"5"=2,3)
@@ -82,28 +85,6 @@ print(paste("modelname: ",modelname))
 		tsize,tpos,rmarg,xmarks,xnotation,stats,prec,maintitle,
 		legendpos,units,range)
 }
-
-	#if (!missing(desc)) {
-	#	if (VerboseLevel > 0) print(paste("scatterbar()",
-	#				"reading:",desc))
-	#	if (file.access(desc,mode=4)==-1) {
-	#		stop(paste("File access error:",desc))
-	#	}
-	#	D <- read.csv(desc,sep=args$fieldsep,row.names=1)
-	#	if (VerboseLevel > 0) print(D)
-	#	tmp <- Labels
-	#	for (i in row.names(D)) {
-	#		j <- grep(i,tmp)
-	#		Labels[j] <- as.character(D[[i,1]])
-	#	}
-	#}
-	#if (!missing(desc2)) {
-	#	tmp <- Labels
-	#	for (i in 1:ncol(desc2)) {
-	#		j <- grep(desc2[1,i],tmp)
-	#		Labels[j] <- as.character(desc2[2,i])
-	#	}
-	#}
 
 # the scatterbar2 drawing routine
 # less WYSIWYG than the front-end scatterbar
