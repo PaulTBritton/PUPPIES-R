@@ -1,3 +1,5 @@
+library(numform)
+
 # a more intuitive name for alist()
 plotlist <- alist
 
