@@ -43,10 +43,18 @@ scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
 		}
 		names(newlst) <- newnames
 	}
+#print("newlist")
+#print(newlst)
+#print("ls filter newlist")
+#print(ls(newlst,pattern=torx(filter)))
+	Data <- ls(newlst,pattern=torx(filter))
+#print("Data")
+#print(Data)
+#print("as.list Data")
+#print(as.list(Data))
 	Data <- filterdata(torx(filter),newlst)
-	Labels <- names(Data)
-#print(Labels)
-	M <- length(Labels)
+#print("filter Data")
+#print(Data)
 #print(paste("plotname: ",plotname))
 #print(paste("modelname: ",modelname))
 	if (missing(maintitle)) maintitle <-
@@ -93,16 +101,18 @@ scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
 	logaxis <- switch(xscale,log="x",linear="")
 	if (VerboseLevel >= 2) print(paste("Creating scatterbar plot:",
 				plotname))
-	scatterbar2(plotname,M,Data,Labels,logaxis,
+	scatterbar2(plotname,Data,logaxis,
 		tsize,tpos,rmarg,xmarks,xnotation,stats,prec,maintitle,
 		legendpos,units,range)
 }
 
 # the scatterbar2 drawing routine
 # less WYSIWYG than the front-end scatterbar
-scatterbar2 <- function(name,M,X,L,logaxis,tsize,tpos,rmarg,xmarks,
+scatterbar2 <- function(name,X,logaxis,tsize,tpos,rmarg,xmarks,
 	xnotation,stats,prec,maintitle,lpos,units,range)
 {
+	L <- names(X)
+	M <- length(L)
 	if (VerboseLevel > 0) print(paste("scatterbar() opening:",name))
 	tiff(name,width=11,height=8,units="in",bg="white",res=300)
 	par(mar=c(6,2,2,rmarg))
@@ -120,8 +130,6 @@ scatterbar2 <- function(name,M,X,L,logaxis,tsize,tpos,rmarg,xmarks,
 	}
 	par(cex=tsize)
 	N <- length(X[[1]])
-#	prob <- rep(0,N) #array(0,c(N))
-#	shade <- rep(0,N) #array(0,c(N))
 
 	# draw grid
 #	grid(12,(M+1),lwd=1.2,lty=1,col="gray")
