@@ -1,4 +1,4 @@
-metadata(name="Easy Model",iterations=11,seed=1)
+metadata(name="Easy Model",iterations=1500,seed=1)
 #print("easymodel.p")
 #print(ls(parent.frame()))
 E5 <- unifD(4,6)
@@ -21,7 +21,8 @@ S2 <- OR("B[1-3]")
 S1 <- MN(3,10,S2)
 M2 <- NOT(cos(S3))+sin(S1)+S2
 M1 <- S1*5.00E-01
-scatterbar(plotname="Easyplot1.tiff",lst=plotlist(B4,B5,M2,M1))
+testM <- rbeta(50,A3,6)
+scatterbar(plotname="Easyplot1.tiff",lst=plotlist(B4,B5,testM,M2,M1))
 elist <- plotlist(B4,B5,M2,M1)
 scatterbar(plotname="Easyplot2.tiff",lst=elist)
 eventstoplot <- plotlist("B4 name"=B4,B5,"M2 descr"=M2,M1)

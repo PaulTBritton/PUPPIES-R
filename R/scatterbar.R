@@ -13,20 +13,10 @@ notation <- function(num,prec,form) {
 		warning("Not a valid stats format")))
 }
 
-# front-end to the plotting routine scatterbar2
-# more WYSIWYG than scatterbar2
-scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
-	rmarg=8,filter, stats=c(2,0,2,2),prec=2,maintitle,
-	legendpos,units="Probability", xscale="log",
-	xnotation=sciNotation,xmarks,range,lst=ls(envir))
-#	xnotation=sciNotation,xmarks,range,lst=as.list(envir,all.names=TRUE))
-{
-	if (missing(filter)) filter <- ".*"
-	else class(filter) <- get("wildcardclass",envir)
-	modelname <- get("modelname",envir)
-	N <- get("N",envir)
-	savenames <- names(lst)
+setnames <- function(lst,envir) {
 	myget <- function(x) get(as.character(x),envir)
+
+	savenames <- names(lst)
 	if (is.null(savenames)) {
 		newlst <- lapply(lst,myget)
 		names(newlst) <- lst
@@ -43,78 +33,78 @@ scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
 		}
 		names(newlst) <- newnames
 	}
-#print("newlist")
-#print(newlst)
-#print("ls filter newlist")
-#print(ls(newlst,pattern=torx(filter)))
-	Data <- ls(newlst,pattern=torx(filter))
-#print("Data")
-#print(Data)
-#print("as.list Data")
-#print(as.list(Data))
-	Data <- filterdata(torx(filter),newlst)
-#print("filter Data")
-#print(Data)
-#print(paste("plotname: ",plotname))
-#print(paste("modelname: ",modelname))
+	return(newlst)
+}
+
+# front-end to the plotting routine scatterbar2
+# more WYSIWYG than scatterbar2
+scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
+	rmarg=8,filter, stats=c(2,0,2,2),prec=2,maintitle,
+	legendpos,units="Probability", xscale="log",
+	xnotation=sciNotation,xmarks,range,lst)
+{
+	if (missing(filter)) filter <- ".*"
+	else class(filter) <- get("wildcardclass",envir)
+	modelname <- get("modelname",envir)
+	N <- get("N",envir)
+	if (missing(lst)) lst <- ls(envir,pattern=torx(filter))
+#	newlst <- setnames(lst,envir)
+	Data <- setnames(lst,envir)
 	if (missing(maintitle)) maintitle <-
-		paste(modelname," Monte Carlo Results (",N," Iterations)",sep="")
-	T <- switch(as.character(M),"1"=1,"2"=1,"3"=1,"4"=2,"5"=2,3)
-	switch(T,
-		{	tsize <- 1
-			tpos <- c(.3,.45)
-			padper <- .15
-		},
-		{	tsize <- .87
-			tpos <- c(.33,.48)
-			padper <- .1
-		},
-		{	tsize <- 0.75
-			tpos <- c(.35,.55)
-			padper <- .1
-		}
-	)
-	X <- unlist(Data)
-	rightm <- (max(X))
-	leftm <-(min(X))
+		paste(modelname," Monte Carlo Results (",N," Iterations)",
+			sep="")
+	logaxis <- switch(xscale,log="x",linear="")
+	if (VerboseLevel >= 2) print(paste("Creating scatterbar plot:",
+				plotname))
+	scatterbar2(plotname,Data,logaxis,rmarg,xnotation,stats,prec,
+		maintitle,legendpos,units)
+}
+
+
+calcxmarks <- function(leftm,rightm,logaxis) {
+	if (VerboseLevel >= 2) print("Determining x-axis marks")
+	xmarks <- switch(logaxis,x= {
+		if (leftm <= 0) stop("Can't plot zero's on a log scale")
+		10^seq(floor(log10(leftm))-1,
+		ceiling(log10(rightm))+1,by=2) },
+		seq(floor(leftm)-10,ceiling(rightm)+10,by=20))
+	return(xmarks)
+}
+
+calcrange <- function(leftm,rightm,logaxis) {
+	if (VerboseLevel >= 2) print("Determining x-axis range")
+	pad <- (0.1)*(rightm - leftm)
+	range <- switch(logaxis,x= {
+		if (leftm <= 0) stop("Can't plot zero's on a log scale")
+		c(logfloor(leftm)/10,logceil(rightm)*10) },
+		c(leftm-pad,rightm+pad))
+	return(range)
+}
+
+# the scatterbar2 drawing routine
+# less WYSIWYG than the front-end scatterbar
+scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
+		maintitle,lpos,units,xmarks,range,tsize,tpos)
+{
+	UX <- unlist(X)
+	rightm <- (max(UX))
+	leftm <-(min(UX))
 	if(VerboseLevel == 3) {
 		print(paste("Calculated Right Margin =",rightm))
 		print(paste("Calculated Left Margin =",leftm))
 	}
 	# xmarks: need to test the linear scale case
-	if (missing(xmarks)) {
-		if (VerboseLevel >= 2) print("Determining x-axis marks")
-		xmarks <- switch(xscale,log= {
-			if (leftm <= 0) stop("Can't plot zero's on a log scale")
-			10^seq(floor(log10(leftm))-1,
-			ceiling(log10(rightm))+1,by=2) },
-			linear= seq(floor(leftm)-10,ceiling(rightm)+10,by=20))
-	}
-	if (missing(range)) {
-		if (VerboseLevel >= 2) print("Determining x-axis range")
-		pad <- pad <- padper*(rightm - leftm)
-		range <- switch(xscale,log= {
-			if (leftm <= 0) stop("Can't plot zero's on a log scale")
-			c(logfloor(leftm)/10,logceil(rightm)*10) },
-			linear=c(leftm-pad,rightm+pad))
-	}
-	logaxis <- switch(xscale,log="x",linear="")
-	if (VerboseLevel >= 2) print(paste("Creating scatterbar plot:",
-				plotname))
-	scatterbar2(plotname,Data,logaxis,
-		tsize,tpos,rmarg,xmarks,xnotation,stats,prec,maintitle,
-		legendpos,units,range)
-}
+	if (missing(xmarks)) xmarks <- calcxmarks(leftm,rightm,logaxis)
+	if (missing(range)) range <- calcrange(leftm,rightm,logaxis)
 
-# the scatterbar2 drawing routine
-# less WYSIWYG than the front-end scatterbar
-scatterbar2 <- function(name,X,logaxis,tsize,tpos,rmarg,xmarks,
-	xnotation,stats,prec,maintitle,lpos,units,range)
-{
 	L <- names(X)
 	M <- length(L)
-	if (VerboseLevel > 0) print(paste("scatterbar() opening:",name))
-	tiff(name,width=11,height=8,units="in",bg="white",res=300)
+	T <- switch(as.character(M),"1"=1,"2"=1,"3"=1,"4"=2,"5"=2,3)
+	if(missing(tsize)) tsize <- switch(T,1,.87,.75)
+	if(missing(tpos)) tpos <- switch(T,c(.3,.45),c(.33,.48),c(.35,.55))
+
+	if (VerboseLevel > 0) print(paste("scatterbar() opening:",file))
+	tiff(file,width=11,height=8,units="in",bg="white",res=300)
 	par(mar=c(6,2,2,rmarg))
 	plot.new()
 	plot.window(log=logaxis,xlim=range,ylim=c(.5,M+.5),pch=20,
@@ -129,7 +119,7 @@ scatterbar2 <- function(name,X,logaxis,tsize,tpos,rmarg,xmarks,
 		title(main=maintitle)
 	}
 	par(cex=tsize)
-	N <- length(X[[1]])
+#	N <- length(X[[1]])
 
 	# draw grid
 #	grid(12,(M+1),lwd=1.2,lty=1,col="gray")
@@ -149,17 +139,13 @@ scatterbar2 <- function(name,X,logaxis,tsize,tpos,rmarg,xmarks,
 		# color the samples gray as a function of cumulative
 		# probability
 		#
-		prob <- rep(0,N) #array(0,c(N))
-		shade <- rep(0,N) #array(0,c(N))
-		shadeLogic <- rep(FALSE,N) #array(FALSE,c(N))
-		prob <- plnorm(v,log(Fiftyith),
-			log(Nfifth/Fiftyith)/qnorm(0.95), lower.tail=TRUE)
-		shadeLogic <- prob <= 0.5
-		shade[shadeLogic==TRUE] <- -1.3*prob[prob <= 0.5] + .65
-		shade[shadeLogic==FALSE] <- 1.3*prob[prob > 0.5] - .65
-		for (j in 1:N) {
-			segments(v[j],i-.09,v[j],i+.09,lwd=.5,
-			col=gray(shade[j]))
+		for (j in v) {
+			prob <- plnorm(j,log(Fiftyith),
+				log(Nfifth/Fiftyith)/qnorm(0.95),
+				lower.tail=TRUE)
+			sign <- ifelse(prob <= 0.5,-1,1)
+			shade <- sign*1.3*prob - sign*0.65
+			segments(j,i-.09,j,i+.09,lwd=.5,col=gray(shade))
 		}
 
 		# place sample stats on band-aid
@@ -203,5 +189,5 @@ scatterbar2 <- function(name,X,logaxis,tsize,tpos,rmarg,xmarks,
 			col=c(gray(.3),"darkorange1","red3","blue"))
 	}
 	junk <- dev.off()
-	if (VerboseLevel > 0) print(paste("scatterbar() completed:",name))
+	if (VerboseLevel > 0) print(paste("scatterbar() completed:",file))
 }
