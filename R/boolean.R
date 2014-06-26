@@ -38,7 +38,8 @@ MN <- function(M,N,X) {
 OR <- function(filter) {
 	e <- parent.frame(1)
 	Z <- as.data.frame(as.list(e))
-	class(filter) <- get("wildcardclass",e)
+#	class(filter) <- get("wildcardclass",e)
+	class(filter) <- attr(e,"wildcardclass")
 	X <- filterdata(torx(filter),Z)
 	return(1-apply(1-X,1,prod))
 }
@@ -47,7 +48,8 @@ OR <- function(filter) {
 AND <- function(filter) {
 	e <- parent.frame(1)
 	Z <- as.data.frame(as.list(e))
-	class(filter) <- get("wildcardclass",e)
+#	class(filter) <- get("wildcardclass",e)
+	class(filter) <- attr(e,"wildcardclass")
 	X <- filterdata(torx(filter),Z)
 	return(apply(X,1,prod))
 }

@@ -8,26 +8,30 @@
 
 # initialize meta data environment for
 # PUPPIES models
-metaenv <- function(name,iterations,seed,wildcard) {
-	m <- new.env(parent=puppiesenv)
-	m$N <- iterations
-	m$saveseed <- seed	# save seed
-	if (!is.null(seed)) set.seed(seed)
-	m$modelname <- name
-	m$wildcardclass <- wildcard
-	return(m)
-}
+#metaenv <- function(name,iterations,seed,wildcard) {
+#	m <- new.env(parent=puppiesenv)
+#	m$N <- iterations
+#	m$saveseed <- seed	# save seed
+#	if (!is.null(seed)) set.seed(seed)
+#	m$modelname <- name
+#	m$wildcardclass <- wildcard
+#	return(m)
+#}
 
 # evaluate a PUPPIES model with N random iterations
 # return the model results p
 evalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
 		wildcard="aglob",model="")
 {
-	m <- metaenv(name,iterations,seed,wildcard)
-	p <- new.env(parent=m)
+	p <- new.env(parent=puppiesenv)
+	attr(p,"modelname") <- name
+	attr(p,"N") <- iterations
+	attr(p,"saveseed") <- seed
+	attr(p,"wildcardclass") <- wildcard
 	pexpr <- topexpr(model)
 	eval(pexpr,p)
-	y <- get("modelname",p)
+#	y <- get("modelname",p)
+	y <- attr(p,"modelname")
 	class(p) <- c("environment","puppies")
 	if (VerboseLevel >= 2) print(paste("evalp() complete on:",y))
 	return(p)
@@ -88,7 +92,8 @@ superevalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
 # PUPPIES models (described by filter) and append the new results to x
 superappendp <- function(p,filter="") {
 	if (VerboseLevel > 0) print(paste("superappendp() matching:",filter))
-	wildcardclass <- get("wildcardclass",p)
+#	wildcardclass <- get("wildcardclass",p)
+	wildcardclass <- attr(p,"wildcardclass")
 	class(filter) <- wildcardclass
 #	LF <- list.files(pattern=torx(filter),full.names=TRUE)
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
