@@ -51,7 +51,7 @@ scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
 #	newlst <- setnames(lst,envir)
 	Data <- setnames(lst,envir)
 	if (missing(maintitle)) maintitle <-
-		paste(modelname," Monte Carlo Results (",N," Iterations)",
+		paste(modelname,": Monte Carlo Results (",N," Iterations)",
 			sep="")
 	logaxis <- switch(xscale,log="x",linear="")
 	if (VerboseLevel >= 2) print(paste("Creating scatterbar plot:",
@@ -86,9 +86,9 @@ calcrange <- function(leftm,rightm,logaxis) {
 scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
 		maintitle,lpos,units,xmarks,range,tsize,tpos)
 {
-	UX <- unlist(X)
-	rightm <- (max(UX))
-	leftm <-(min(UX))
+	ULX <- unlist(X)
+	rightm <- (max(ULX))
+	leftm <-(min(ULX))
 	if(VerboseLevel == 3) {
 		print(paste("Calculated Right Margin =",rightm))
 		print(paste("Calculated Left Margin =",leftm))
@@ -144,8 +144,9 @@ scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
 				log(Nfifth/Fiftyith)/qnorm(0.95),
 				lower.tail=TRUE)
 			sign <- ifelse(prob <= 0.5,-1,1)
-			shade <- sign*1.3*prob - sign*0.65
-			segments(j,i-.09,j,i+.09,lwd=.5,col=gray(shade))
+			maxshade <- 0.5
+			shade <- sign*2*maxshade*prob - sign*maxshade
+			segments(j,i-.09,j,i+.09,lwd=.1,col=gray(shade))
 		}
 
 		# place sample stats on band-aid
@@ -170,13 +171,16 @@ scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
 	#		notation(max(X[i,]),2)), adj=c(0,0))
 
 		# draw 5th - 95th box with mean and median bars
-		segments(Fifth,i+.2,Nfifth,i+.2,col=12,lwd=2)
-		segments(Fifth,i-.2,Nfifth,i-.2,col=12,lwd=2)
-		segments(Fifth,i+.2,Fifth,i-.2,col=12,lwd=2)
-		segments(Nfifth,i+.2,Nfifth,i-.2,col=12,lwd=2)
-		segments(Fiftyith,i - .35,Fiftyith,i + .35,
-			lwd=2,col="darkorange1")
-		segments(Mean,i - .35,Mean,i + .35,lwd=2,col="red3")
+		offcenter <- .18
+		MM <- 0.3
+		lw <- 1.9
+		segments(Fifth,i+offcenter,Nfifth,i+offcenter,col=12,lwd=lw)
+		segments(Fifth,i-offcenter,Nfifth,i-offcenter,col=12,lwd=lw)
+		segments(Fifth,i+offcenter,Fifth,i-offcenter,col=12,lwd=lw)
+		segments(Nfifth,i+offcenter,Nfifth,i-offcenter,col=12,lwd=lw)
+		segments(Fiftyith,i - MM,Fiftyith,i + MM,
+			lwd=lw,col="darkorange1")
+		segments(Mean,i - MM,Mean,i + MM,lwd=lw,col="red3")
 
 	}
 
