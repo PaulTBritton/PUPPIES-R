@@ -1,8 +1,5 @@
 library(numform)
 
-# a more intuitive name for alist()
-plotlist <- alist
-
 # switch board for different number formats
 notation <- function(num,prec,form) {
 	return(switch(as.character(form),
@@ -12,6 +9,9 @@ notation <- function(num,prec,form) {
 		"4"=bothNotation(num,prec),
 		warning("Not a valid stats format")))
 }
+
+# a more intuitive name for alist() for the way scatterbar() uses alist()
+plotlist <- alist
 
 setnames <- function(lst,envir) {
 	myget <- function(x) get(as.character(x),envir)
@@ -99,11 +99,10 @@ scattertext <- function(stats,prec,tpos,i,Fifth,Fiftyith,Mean,Nfifth) {
 #		notation(max(X[i,]),2)), adj=c(0,0))
 }
 
-# the scatterbar2 drawing routine
-# less WYSIWYG than the front-end scatterbar
-scatterbar2 <- function(file,envir,filter,lst,logaxis,rmarg,xnotation,
-		prec,tsize,tpos,maintitle,lpos,units="Probability",xmarks,
-		range,sbox=FALSE,stext=FALSE,stats)
+# the scatterbar drawing routine
+scatterbar <- function(file,envir,filter,lst,logaxis,rmarg,xnotation,
+		prec,stats,tsize,tpos,maintitle,lpos,units="Probability",
+		xmarks,range,sbox=FALSE,stext=FALSE)
 {
 	if (missing(lst)) lst <- ls(envir,pattern=torx(filter))
 	X <- setnames(lst,envir)
@@ -185,29 +184,4 @@ scatterbar2 <- function(file,envir,filter,lst,logaxis,rmarg,xnotation,
 			lwd=c(2,2,2,2),
 			col=c(gray(.3),"darkorange1","red3","blue"))
 	}
-}
-
-
-# front-end to the plotting routine scatterbar2
-# more WYSIWYG than scatterbar2
-scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
-	rmarg=8,filter, stats=c(2,0,2,2),prec=2,maintitle,
-	legendpos,units="Probability", xscale="log",
-	xnotation=sciNotation,xmarks,range,lst)
-{
-	if (missing(filter)) filter <- ".*"
-	else class(filter) <- attr(envir,"wildcardclass")
-	modelname <- attr(envir,"modelname")
-	N <- attr(envir,"N")
-	if (missing(maintitle)) maintitle <-
-		paste(modelname,": Monte Carlo Results (",N," Iterations)",
-			sep="")
-	logaxis <- switch(xscale,log="x",linear="")
-	if (VerboseLevel >= 2) print(paste("Creating scatterbar plot:",
-				plotname))
-	scatterbar2(file=plotname,envir,filter=torx(filter),lst,logaxis,
-		rmarg,xnotation,prec,maintitle=maintitle,lpos=legendpos,
-		units=units,sbox=TRUE,stext=TRUE,stats=stats)
-	junk <- dev.off()
-	if (VerboseLevel > 0) print(paste("scatterbar() completed:",plotname))
 }

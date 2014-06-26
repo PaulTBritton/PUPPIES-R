@@ -29,6 +29,7 @@ source("fileio.R")
 source("udfs.R")
 source("evalp.R")
 source("scatterbar.R")
+source("plots.R")
 
 #####################################################
 # define global configuration arguments

@@ -48,13 +48,18 @@ appendp <- function(p=parent.frame(),model="") {
 # set the parent of e to be the parent of p
 clonep <- function(p=parent.frame(),name="Copy Model") {
 	pp <- parent.env(p)
-	ppp <- parent.env(pp)
+#	ppp <- parent.env(pp)
 	e <- as.environment(as.list(p,all.names=TRUE))
-	parent.env(e) <- as.environment(as.list(pp,all.names=TRUE))
-	x <- parent.env(e)
-        parent.env(x) <- ppp
-        x$modelname <- name
+	parent.env(e) <- pp
+#	parent.env(e) <- as.environment(as.list(pp,all.names=TRUE))
+#	x <- parent.env(e)
+#        parent.env(x) <- ppp
+#        x$modelname <- name
 	class(e) <- class(p)
+	attr(e,"modelname") <- attr(p,"modelname")
+	attr(e,"N") <- attr(p,"N")
+	attr(e,"saveseed") <- attr(p,"saveseed")
+	attr(e,"wildcardclass") <- attr(p,"wildcardclass")
 	return(e)
 }
 
