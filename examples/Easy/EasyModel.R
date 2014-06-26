@@ -18,5 +18,5 @@ X <- evalp(model="EasyModel.p")
 
 # propagate uncertainty from X into another model
 appendp(p=X,model="append.p")
-scatterbar(plotname="appendplot.tiff",envir=X,lst=plotlist("Single V4"=V4))
+pplot(plotname="appendplot.tiff",envir=X,lst=plotlist("Single V4"=V4))
 

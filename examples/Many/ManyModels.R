@@ -21,10 +21,10 @@ print("X")
 # propagate uncertainty into a vehicle fault tree model
 Y <- spawnp(p=X,model="INPUTS/V.pf")
 print("Y")
-scatterbar(plotname="OUTPUTS/vehiclemodel.tiff",envir=Y,filter="V_*")
+pplot(plotname="OUTPUTS/vehiclemodel.tiff",envir=Y,filter="V_*")
 appendp(p=X,model="INPUTS/V_5segBooster.pf")
 print("append to X")
 superappendp(p=X,filter="V?.pf")
-scatterbar(plotname="OUTPUTS/VLOMLOC.tiff",envir=X,filter="V?_LO?")
+pplot(plotname="OUTPUTS/VLOMLOC.tiff",envir=X,filter="V?_LO?")
 
 print("ManyModels.R Complete")	# status print statement demonstration
