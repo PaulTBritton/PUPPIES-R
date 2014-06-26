@@ -36,30 +36,6 @@ setnames <- function(lst,envir) {
 	return(newlst)
 }
 
-# front-end to the plotting routine scatterbar2
-# more WYSIWYG than scatterbar2
-scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
-	rmarg=8,filter, stats=c(2,0,2,2),prec=2,maintitle,
-	legendpos,units="Probability", xscale="log",
-	xnotation=sciNotation,xmarks,range,lst)
-{
-	if (missing(filter)) filter <- ".*"
-	else class(filter) <- get("wildcardclass",envir)
-	modelname <- get("modelname",envir)
-	N <- get("N",envir)
-	if (missing(lst)) lst <- ls(envir,pattern=torx(filter))
-#	newlst <- setnames(lst,envir)
-	Data <- setnames(lst,envir)
-	if (missing(maintitle)) maintitle <-
-		paste(modelname,": Monte Carlo Results (",N," Iterations)",
-			sep="")
-	logaxis <- switch(xscale,log="x",linear="")
-	if (VerboseLevel >= 2) print(paste("Creating scatterbar plot:",
-				plotname))
-	scatterbar2(plotname,Data,logaxis,rmarg,xnotation,stats,prec,
-		maintitle,legendpos,units)
-}
-
 
 calcxmarks <- function(leftm,rightm,logaxis) {
 	if (VerboseLevel >= 2) print("Determining x-axis marks")
@@ -81,14 +57,66 @@ calcrange <- function(leftm,rightm,logaxis) {
 	return(range)
 }
 
+scatterbox <- function(i,Fifth,Fiftyith,Mean,Nfifth,maximum,minimum) {
+	# draw 5th - 95th box with mean and median bars
+	offcenter <- .18
+	MM <- 0.33
+	lw <- 1.8
+	segments(minimum,i - .09,minimum,i + .09,lwd=1.2,
+		col="black")
+	segments(maximum,i - .09,maximum,i + .09,lwd=1.2,
+		col="black")
+	segments(minimum,i,maximum,i,lwd=1.2,col="black")
+	segments(Fifth,i+offcenter,Nfifth,i+offcenter,col=12,lwd=lw)
+	segments(Fifth,i-offcenter,Nfifth,i-offcenter,col=12,lwd=lw)
+	segments(Fifth,i+offcenter,Fifth,i-offcenter,col=12,lwd=lw)
+	segments(Nfifth,i+offcenter,Nfifth,i-offcenter,col=12,lwd=lw)
+	segments(Fiftyith,i - MM,Fiftyith,i + MM,
+		lwd=lw,col="darkorange1")
+	segments(Mean,i - MM,Mean,i + MM,lwd=lw,col="red3")
+}
+
+scattertext <- function(stats,prec,tpos,i,Fifth,Fiftyith,Mean,Nfifth) {
+	# place sample stats on band-aid
+	#
+	if (Mean < Fiftyith) {
+		madj <- c(1,1)
+		fadj <- c(0,1)
+	} else {
+		fadj <- c(1,1)
+		madj <- c(0,1)
+	}
+	if (stats[1] != 0) text(Fifth,i+tpos[1],labels=paste("5th: ",
+		notation(Fifth,prec,stats[1])), adj=c(1,1))
+	if (stats[2] != 0) text(Fiftyith,i+tpos[2],
+		labels=paste("Median: ",notation(Fiftyith,prec,
+		stats[2])),adj=fadj)
+	if (stats[3] != 0) text(Mean,i+tpos[2],labels=paste("Mean: ",
+		notation(Mean,prec,stats[3])), adj=madj)
+	if (stats[4] != 0) text(Nfifth,i+tpos[1],labels=paste("95th: ",
+		notation(Nfifth,prec,stats[4])), adj=c(0,1))
+#	text(max(X[i,]),i,labels=paste("Max: ",
+#		notation(max(X[i,]),2)), adj=c(0,0))
+}
+
 # the scatterbar2 drawing routine
 # less WYSIWYG than the front-end scatterbar
-scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
-		maintitle,lpos,units,xmarks,range,tsize,tpos)
+scatterbar2 <- function(file,envir,filter,lst,logaxis,rmarg,xnotation,
+		prec,tsize,tpos,maintitle,lpos,units="Probability",xmarks,
+		range,sbox=FALSE,stext=FALSE,stats)
 {
+	if (missing(lst)) lst <- ls(envir,pattern=torx(filter))
+	X <- setnames(lst,envir)
 	ULX <- unlist(X)
 	rightm <- (max(ULX))
 	leftm <-(min(ULX))
+
+	L <- names(X)
+	M <- length(L)
+	T <- switch(as.character(M),"1"=1,"2"=1,"3"=1,"4"=2,"5"=2,3)
+	if(missing(tsize)) tsize <- switch(T,1,.87,.75)
+	if(missing(tpos)) tpos <- switch(T,c(.3,.45),c(.33,.48),c(.35,.55))
+
 	if(VerboseLevel == 3) {
 		print(paste("Calculated Right Margin =",rightm))
 		print(paste("Calculated Left Margin =",leftm))
@@ -96,12 +124,6 @@ scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
 	# xmarks: need to test the linear scale case
 	if (missing(xmarks)) xmarks <- calcxmarks(leftm,rightm,logaxis)
 	if (missing(range)) range <- calcrange(leftm,rightm,logaxis)
-
-	L <- names(X)
-	M <- length(L)
-	T <- switch(as.character(M),"1"=1,"2"=1,"3"=1,"4"=2,"5"=2,3)
-	if(missing(tsize)) tsize <- switch(T,1,.87,.75)
-	if(missing(tpos)) tpos <- switch(T,c(.3,.45),c(.33,.48),c(.35,.55))
 
 	if (VerboseLevel > 0) print(paste("scatterbar() opening:",file))
 	tiff(file,width=11,height=8,units="in",bg="white",res=300)
@@ -118,14 +140,13 @@ scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
 	if (!missing(maintitle)) {
 		title(main=maintitle)
 	}
-	par(cex=tsize)
-#	N <- length(X[[1]])
 
 	# draw grid
 #	grid(12,(M+1),lwd=1.2,lty=1,col="gray")
 	abline(h=1:(M),lwd=1.2,lty=1,col="gray")
 	abline(v=xmarks,lwd=1.2,lty=1,col="gray")
 
+	par(cex=tsize)
 	i <- 0
 	for (v in X) {
 		i <- i + 1
@@ -135,6 +156,8 @@ scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
 		Fiftyith <- quantile(v,0.5)
 		Mean <- mean(v)
 		Nfifth <- quantile(v,0.95)
+		maximum <- max(v)
+		minimum <- min(v)
 
 		# color the samples gray as a function of cumulative
 		# probability
@@ -144,44 +167,14 @@ scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
 				log(Nfifth/Fiftyith)/qnorm(0.95),
 				lower.tail=TRUE)
 			sign <- ifelse(prob <= 0.5,-1,1)
-			maxshade <- 0.5
+			maxshade <- 0.6
 			shade <- sign*2*maxshade*prob - sign*maxshade
 			segments(j,i-.09,j,i+.09,lwd=.1,col=gray(shade))
 		}
-
-		# place sample stats on band-aid
-		#
-		if (Mean < Fiftyith) {
-			madj <- c(1,1)
-			fadj <- c(0,1)
-		} else {
-			fadj <- c(1,1)
-			madj <- c(0,1)
-		}
-		if (stats[1] != 0) text(Fifth,i+tpos[1],labels=paste("5th: ",
-			notation(Fifth,prec,stats[1])), adj=c(1,1))
-		if (stats[2] != 0) text(Fiftyith,i+tpos[2],
-			labels=paste("Median: ",notation(Fiftyith,prec,
-			stats[2])),adj=fadj)
-		if (stats[3] != 0) text(Mean,i+tpos[2],labels=paste("Mean: ",
-			notation(Mean,prec,stats[3])), adj=madj)
-		if (stats[4] != 0) text(Nfifth,i+tpos[1],labels=paste("95th: ",
-			notation(Nfifth,prec,stats[4])), adj=c(0,1))
-	#	text(max(X[i,]),i,labels=paste("Max: ",
-	#		notation(max(X[i,]),2)), adj=c(0,0))
-
-		# draw 5th - 95th box with mean and median bars
-		offcenter <- .18
-		MM <- 0.3
-		lw <- 1.9
-		segments(Fifth,i+offcenter,Nfifth,i+offcenter,col=12,lwd=lw)
-		segments(Fifth,i-offcenter,Nfifth,i-offcenter,col=12,lwd=lw)
-		segments(Fifth,i+offcenter,Fifth,i-offcenter,col=12,lwd=lw)
-		segments(Nfifth,i+offcenter,Nfifth,i-offcenter,col=12,lwd=lw)
-		segments(Fiftyith,i - MM,Fiftyith,i + MM,
-			lwd=lw,col="darkorange1")
-		segments(Mean,i - MM,Mean,i + MM,lwd=lw,col="red3")
-
+		if (sbox) scatterbox(i,Fifth,Fiftyith,Mean,Nfifth,
+			maximum,minimum)
+		if (stext) scattertext(stats,prec,tpos,i,Fifth,
+			Fiftyith,Mean,Nfifth)
 	}
 
 	if (!missing(lpos)) {
@@ -192,6 +185,29 @@ scatterbar2 <- function(file,X,logaxis,rmarg,xnotation,stats,prec,
 			lwd=c(2,2,2,2),
 			col=c(gray(.3),"darkorange1","red3","blue"))
 	}
+}
+
+
+# front-end to the plotting routine scatterbar2
+# more WYSIWYG than scatterbar2
+scatterbar <- function(plotname="plot.tiff",envir=parent.frame(),
+	rmarg=8,filter, stats=c(2,0,2,2),prec=2,maintitle,
+	legendpos,units="Probability", xscale="log",
+	xnotation=sciNotation,xmarks,range,lst)
+{
+	if (missing(filter)) filter <- ".*"
+	else class(filter) <- attr(envir,"wildcardclass")
+	modelname <- attr(envir,"modelname")
+	N <- attr(envir,"N")
+	if (missing(maintitle)) maintitle <-
+		paste(modelname,": Monte Carlo Results (",N," Iterations)",
+			sep="")
+	logaxis <- switch(xscale,log="x",linear="")
+	if (VerboseLevel >= 2) print(paste("Creating scatterbar plot:",
+				plotname))
+	scatterbar2(file=plotname,envir,filter=torx(filter),lst,logaxis,
+		rmarg,xnotation,prec,maintitle=maintitle,lpos=legendpos,
+		units=units,sbox=TRUE,stext=TRUE,stats=stats)
 	junk <- dev.off()
-	if (VerboseLevel > 0) print(paste("scatterbar() completed:",file))
+	if (VerboseLevel > 0) print(paste("scatterbar() completed:",plotname))
 }

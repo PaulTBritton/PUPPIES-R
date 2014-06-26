@@ -1,4 +1,4 @@
-metadata(name="Easy Model",iterations=1700,seed=2)
+setattr(name="Easy Model",iterations=700,seed=1)
 #print("easymodel.p")
 #print(ls(parent.frame()))
 E5 <- unifD(4,6)
