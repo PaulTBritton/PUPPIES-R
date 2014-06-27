@@ -100,11 +100,12 @@ scattertext <- function(stats,prec,tpos,i,Fifth,Fiftyith,Mean,Nfifth) {
 }
 
 # the scatterbar drawing routine
-scatterbar <- function(file,envir,filter,lst,logaxis,rmarg,xnotation,
-		prec,stats,tsize,tpos,maintitle,lpos,units="Probability",
-		xmarks,range,sbox=FALSE,stext=FALSE)
+scatterbar <- function(file="scatterbar.tiff",envir=parent.env(),filter=".*",
+		lst=ls(envir,pattern=filter),logaxis="",rmarg=8,
+		xnotation=sciNotation,prec=2,stats=c(2,2,2,2),maintitle,lpos,
+		units="Probability",sbox=FALSE,stext=FALSE,tsize,tpos,xmarks,
+		range)
 {
-	if (missing(lst)) lst <- ls(envir,pattern=torx(filter))
 	X <- setnames(lst,envir)
 	ULX <- unlist(X)
 	rightm <- (max(ULX))
