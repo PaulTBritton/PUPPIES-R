@@ -16,7 +16,7 @@ library(commoncause)
 
 # samples from Vehicle systems, Engine Parameters,
 # and Alpha Factor distributions
-X <- superevalp(name="Many Models",iterations=3000,seed=1,filter="[VEA].pp")
+X <- superevalp(name="Many Models",iterations=1000,seed=1,filter="[VEA].pp")
 print("X")
 # propagate uncertainty into a vehicle fault tree model
 Y <- spawnp(p=X,model="INPUTS/V.pf")

@@ -38,7 +38,7 @@ setnames <- function(lst,envir) {
 
 
 calcxmarks <- function(leftm,rightm,logaxis) {
-	if (VerboseLevel >= 2) print("Determining x-axis marks")
+#	if (VerboseLevel >= 2) print("Determining x-axis marks")
 	xmarks <- switch(logaxis,x= {
 		if (leftm <= 0) stop("Can't plot zero's on a log scale")
 		10^seq(floor(log10(leftm))-1,
@@ -48,7 +48,7 @@ calcxmarks <- function(leftm,rightm,logaxis) {
 }
 
 calcrange <- function(leftm,rightm,logaxis) {
-	if (VerboseLevel >= 2) print("Determining x-axis range")
+#	if (VerboseLevel >= 2) print("Determining x-axis range")
 	pad <- (0.1)*(rightm - leftm)
 	range <- switch(logaxis,x= {
 		if (leftm <= 0) stop("Can't plot zero's on a log scale")
@@ -100,7 +100,7 @@ scattertext <- function(stats,prec,tpos,i,Fifth,Fiftyith,Mean,Nfifth) {
 }
 
 # the scatterbar drawing routine
-scatterbar <- function(file="scatterbar.tiff",envir=parent.env(),filter=".*",
+scatterbar <- function(file="scatterbar.tiff",envir=parent.frame(),filter=".*",
 		lst=ls(envir,pattern=filter),logaxis="",rmarg=8,
 		xnotation=sciNotation,prec=2,stats=c(2,2,2,2),maintitle,lpos,
 		units="Probability",sbox=FALSE,stext=FALSE,tsize,tpos,xmarks,
@@ -117,15 +117,15 @@ scatterbar <- function(file="scatterbar.tiff",envir=parent.env(),filter=".*",
 	if(missing(tsize)) tsize <- switch(T,1,.87,.75)
 	if(missing(tpos)) tpos <- switch(T,c(.3,.45),c(.33,.48),c(.35,.55))
 
-	if(VerboseLevel == 3) {
-		print(paste("Calculated Right Margin =",rightm))
-		print(paste("Calculated Left Margin =",leftm))
-	}
+#	if(VerboseLevel == 3) {
+#		print(paste("Calculated Right Margin =",rightm))
+#		print(paste("Calculated Left Margin =",leftm))
+#	}
 	# xmarks: need to test the linear scale case
 	if (missing(xmarks)) xmarks <- calcxmarks(leftm,rightm,logaxis)
 	if (missing(range)) range <- calcrange(leftm,rightm,logaxis)
 
-	if (VerboseLevel > 0) print(paste("scatterbar() opening:",file))
+#	if (VerboseLevel > 0) print(paste("scatterbar() opening:",file))
 	tiff(file,width=11,height=8,units="in",bg="white",res=300)
 	par(mar=c(6,2,2,rmarg))
 	plot.new()

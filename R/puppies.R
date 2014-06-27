@@ -28,7 +28,7 @@ source("fileio.R")
 #source("numform.R")
 source("udfs.R")
 source("evalp.R")
-source("scatterbar.R")
+#source("scatterbar.R")
 source("plots.R")
 
 #####################################################
