@@ -18,7 +18,9 @@
 #	}
 #	if (!missing(wildcard)) m$wildcardclass <- wildcard
 #}
-setattr <- function(p=parent.frame(),name,iterations,seed,wildcard,verbose) {
+puppiesenv$setattr <- function(p=parent.frame(),name,iterations,seed,wildcard,
+			verbose)
+{
 	if (!missing(name)) attr(p,"modelname") <- name
 	if (!missing(iterations)) attr(p,"N") <- iterations
 	if (!missing(seed)) {

@@ -23,13 +23,13 @@
 #####################################################
 #load code modules
 #print(getwd())
-source("filter.R")
-source("fileio.R")
+#source("filter.R")
+#source("fileio.R")
 #source("numform.R")
-source("udfs.R")
-source("evalp.R")
+#source("udfs.R")
+#source("evalp.R")
 #source("scatterbar.R")
-source("plots.R")
+#source("plots.R")
 
 #####################################################
 # define global configuration arguments
@@ -62,6 +62,6 @@ source("plots.R")
 #seed <- NULL
 
 puppiesenv <- new.env()
-sys.source("setattr.R",envir=puppiesenv)
-sys.source("boolean.R",envir=puppiesenv)
-sys.source("distributions.R",envir=puppiesenv)
+#sys.source("setattr.R",envir=puppiesenv)
+#sys.source("boolean.R",envir=puppiesenv)
+#sys.source("distributions.R",envir=puppiesenv)

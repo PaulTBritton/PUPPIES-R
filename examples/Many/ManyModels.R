@@ -8,9 +8,14 @@
 rm(list=ls())			# removes all objects from the current
 				# R workspace/environment
 
-source("../../R/puppies.R",chdir=TRUE)
-source("cram.R")
+#source("../../R/puppies.R",chdir=TRUE)
+library(pradist)
+library(numform)
+library(scatterbar)
+library(puppies)
 library(commoncause)
+
+source("cram.R")
 
 #VerboseLevel <- 3	# default = 1, choose from 0 to 3
 

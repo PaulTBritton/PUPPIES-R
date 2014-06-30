@@ -6,7 +6,6 @@
 #
 ###################################
 
-source("filter.R")
 
 # initialize meta data environment for
 # PUPPIES models

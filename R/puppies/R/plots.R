@@ -1,7 +1,6 @@
 library(numform)
 library(scatterbar)
 
-source("filter.R")
 
 # puppies front-end to the plotting routine scatterbar
 pplot <- function(plotname="pplot.tiff",envir=parent.frame(),

@@ -5,15 +5,15 @@ Version: 1.0
 Date: 2014-06-29
 Imports: numform, pradist, scatterbar
 Collate:
+	filter.R
+	udfs.R
+	fileio.R
+	evalp.R
+	plots.R
 	puppies.R
 	setattr.R
 	boolean.R
 	distributions.R
-	filter.R
-	fileio.R
-	udfs.R
-	evalp.R
-	plots.R
 Author: Paul Thomas Britton
 Maintainer: Paul Thomas Britton <paul.t.britton@nasa.gov>
 Description: Programmable Uncertain Parameter Propagation Into Equations Software

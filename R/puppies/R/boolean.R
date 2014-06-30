@@ -6,29 +6,28 @@
 #
 ###################################
 
-source("filter.R")
 
 #################
 # Logical operations for vectors of probabilities
 #
 
-NOT <- function(X) (1-X)
+puppiesenv$NOT <- function(X) (1-X)
 
 #ORgate <- function(...) {
-'|' <- function(...) {
+puppiesenv$'|' <- function(...) {
 	dots <- list(...)
 	X <- simplify2array(dots)
 	return(1-apply(1-X,1,prod))
 }
 
 #ANDgate <- function(...) {
-'&' <- function(...) {
+puppiesenv$'&' <- function(...) {
 	dots <- list(...)
 	X <- simplify2array(dots)
 	return(apply(X,1,prod))
 }
 
-MN <- function(M,N,X) {
+puppiesenv$MN <- function(M,N,X) {
 	return(pbinom(N-M,N,1-X))
 }
 
@@ -37,7 +36,7 @@ MN <- function(M,N,X) {
 #
 
 # logical OR operation filter for probabilities
-OR <- function(filter) {
+puppiesenv$OR <- function(filter) {
 	e <- parent.frame(1)
 	Z <- as.data.frame(as.list(e))
 #	class(filter) <- get("wildcardclass",e)
@@ -47,7 +46,7 @@ OR <- function(filter) {
 }
 
 # logical AND operation filter for probabilities
-AND <- function(filter) {
+puppiesenv$AND <- function(filter) {
 	e <- parent.frame(1)
 	Z <- as.data.frame(as.list(e))
 #	class(filter) <- get("wildcardclass",e)

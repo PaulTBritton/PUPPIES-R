@@ -12,7 +12,7 @@ library(pradist)
 #
 
 # uniform distribution
-unifD <- function(a=0,b=1) {
+puppiesenv$unifD <- function(a=0,b=1) {
 #	N <- get("N",parent.frame())
 	N <- attr(parent.frame(),"N")
 	return(runif(N,a,b))
@@ -22,27 +22,27 @@ unifD <- function(a=0,b=1) {
 # a = min
 # b = mode
 # c = max
-triaD <- function(a,b,c) {
+puppiesenv$triaD <- function(a,b,c) {
 #	N <- get("N",parent.frame())
 	N <- attr(parent.frame(),"N")
 	return(triadist(N,a,b,c))
 }
 
 # N beta samples
-betaD <- function(alpha,beta) {
+puppiesenv$betaD <- function(alpha,beta) {
 #	N <- get("N",parent.frame())
 	N <- attr(parent.frame(),"N")
 	return(rbeta(N,alpha,beta))
 }
 
 # N gamma samples
-gammD <- function(shape,rate) {
+puppiesenv$gammD <- function(shape,rate) {
 #	N <- get("N",parent.frame())
 	N <- attr(parent.frame(),"N")
 	return(rgamma(N,shape,rate))
 }
 
-lognD <- function(...) {
+puppiesenv$lognD <- function(...) {
 #	N <- get("N",parent.frame())
 	N <- attr(parent.frame(),"N")
 	return(logndist(N,...))
@@ -51,7 +51,7 @@ lognD <- function(...) {
 ####################################################
 # create a vector of N samples based on an emperical distribution
 # (first fit a cdf based on data then spline fit the inverse cdf)
-empeD <- function(empfile) {
+puppiesenv$empeD <- function(empfile) {
 #	N <- get("N",parent.frame())
 	N <- attr(parent.frame(),"N")
 	VerboseLevel <- attr(parent.frame(),"VerboseLevel")
@@ -72,7 +72,7 @@ empeD <- function(empfile) {
 # returns an array of k vectors of size N
 # each of the k vectors corresponds to the margins of
 # the dirichlet distribution
-diriD <- function(...) {
+puppiesenv$diriD <- function(...) {
 #	N <- get("N",parent.frame())
 	N <- attr(parent.frame(),"N")
 	return(dirichlet(N,...))
