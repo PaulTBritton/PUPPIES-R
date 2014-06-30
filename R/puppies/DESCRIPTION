@@ -1,0 +1,10 @@
+Package: puppies
+Type: Package
+Title: Programmable Uncertain Parameter Propagation Into Equations Software
+Version: 1.0
+Date: 2014-06-29
+Imports: numform, pradist, scatterbar
+Author: Paul Thomas Britton
+Maintainer: Paul Thomas Britton <paul.t.britton@nasa.gov>
+Description: Programmable Uncertain Parameter Propagation Into Equations Software
+License: GPL-2
