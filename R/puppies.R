@@ -48,7 +48,7 @@ source("plots.R")
 #
 
 # set default VerboseLevel
-VerboseLevel <- 1
+#VerboseLevel <- 1
 
 #
 # set default wildcardclass
@@ -62,6 +62,6 @@ VerboseLevel <- 1
 #seed <- NULL
 
 puppiesenv <- new.env()
-sys.source("metadata.R",envir=puppiesenv)
+sys.source("setattr.R",envir=puppiesenv)
 sys.source("boolean.R",envir=puppiesenv)
 sys.source("distributions.R",envir=puppiesenv)

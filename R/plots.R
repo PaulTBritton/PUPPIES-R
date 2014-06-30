@@ -11,6 +11,7 @@ pplot <- function(plotname="pplot.tiff",envir=parent.frame(),
 	else class(filter) <- attr(envir,"wildcardclass")
 	modelname <- attr(envir,"modelname")
 	N <- attr(envir,"N")
+	VerboseLevel <- attr(envir,"VerboseLevel")
 	if (missing(maintitle)) maintitle <-
 		paste(modelname,": Monte Carlo Results (",N," Iterations)",
 			sep="")

@@ -54,6 +54,7 @@ lognD <- function(...) {
 empeD <- function(empfile) {
 #	N <- get("N",parent.frame())
 	N <- attr(parent.frame(),"N")
+	VerboseLevel <- attr(parent.frame(),"VerboseLevel")
 	if (VerboseLevel >= 2) print(paste("Loading Emperical Data:",empfile))
 	res <- 10*N + 1
 	X <- seq(0,1,length.out=res)

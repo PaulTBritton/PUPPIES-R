@@ -21,9 +21,10 @@
 # evaluate a PUPPIES model with N random iterations
 # return the model results p
 evalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
-		wildcard="aglob",model="")
+		wildcard="aglob",model="",verbose=1)
 {
 	p <- new.env(parent=puppiesenv)
+	attr(p,"VerboseLevel") <- verbose
 	attr(p,"modelname") <- name
 	attr(p,"N") <- iterations
 	attr(p,"saveseed") <- seed
@@ -32,8 +33,9 @@ evalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
 	eval(pexpr,p)
 #	y <- get("modelname",p)
 	y <- attr(p,"modelname")
+	z <- attr(p,"VerboseLevel")
 	class(p) <- c("environment","puppies")
-	if (VerboseLevel >= 2) print(paste("evalp() complete on:",y))
+	if (z >= 2) print(paste("evalp() complete on:",y))
 	return(p)
 }
 
@@ -60,6 +62,7 @@ clonep <- function(p=parent.frame(),name="Copy Model") {
 	attr(e,"N") <- attr(p,"N")
 	attr(e,"saveseed") <- attr(p,"saveseed")
 	attr(e,"wildcardclass") <- attr(p,"wildcardclass")
+	attr(e,"VerboseLevel") <- attr(p,"VerboseLevel")
 	return(e)
 }
 
@@ -77,14 +80,15 @@ spawnp <- function(p,name="PUPPIES Model",model="") {
 # with N random iteration by appending them into one set of results
 # return a list containing the model name and the (combine) model results
 superevalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
-		wildcard="aglob",filter="")
+		wildcard="aglob",verbose=1,filter="")
 {
+	VerboseLevel <- verbose
 	if (VerboseLevel > 0) print(paste("superevalp() matching:",filter))
 	class(filter) <- wildcard
 	LF <- list.files(pattern=torx(filter),recursive=TRUE,full.names=TRUE)
 	if (VerboseLevel > 0) print(paste("superevalp() found:",LF[1]))
 	x <- evalp(name=name,iterations=iterations,seed=seed,
-		wildcard=wildcard,model=LF[1])
+		wildcard=wildcard,verbose=verbose,model=LF[1])
 	for (i in LF[-1]) {
 		if (VerboseLevel > 0) print(paste("superevalp() found:",i))
 		appendp(p=x,model=i)
@@ -96,6 +100,7 @@ superevalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
 # propagate results x from one PUPPIES model into several other
 # PUPPIES models (described by filter) and append the new results to x
 superappendp <- function(p,filter="") {
+	VerboseLevel <- attr(p,"VerboseLevel")
 	if (VerboseLevel > 0) print(paste("superappendp() matching:",filter))
 #	wildcardclass <- get("wildcardclass",p)
 	wildcardclass <- attr(p,"wildcardclass")

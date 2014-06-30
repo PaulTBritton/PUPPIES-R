@@ -18,7 +18,7 @@
 #	}
 #	if (!missing(wildcard)) m$wildcardclass <- wildcard
 #}
-setattr <- function(p=parent.frame(),name,iterations,seed,wildcard) {
+setattr <- function(p=parent.frame(),name,iterations,seed,wildcard,verbose) {
 	if (!missing(name)) attr(p,"modelname") <- name
 	if (!missing(iterations)) attr(p,"N") <- iterations
 	if (!missing(seed)) {
@@ -26,4 +26,5 @@ setattr <- function(p=parent.frame(),name,iterations,seed,wildcard) {
 		if (!is.null(seed)) set.seed(seed)
 	}
 	if (!missing(wildcard)) attr(p,"wildcardclass") <- wildcard
+	if (!missing(verbose)) attr(p,"VerboseLevel") <- verbose
 }

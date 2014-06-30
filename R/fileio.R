@@ -10,7 +10,7 @@
 # Model input functions
 #
 
-ft2eqn <- function(filename) {
+ft2eqn <- function(filename,VerboseLevel=1) {
 	if (file.access(filename,mode=4)) {
 		stop(paste("File access error:",filename))
 	}
