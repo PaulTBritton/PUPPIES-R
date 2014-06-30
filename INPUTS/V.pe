@@ -1,3 +1,0 @@
-index;expression
-AVE_LOC;(V1_LOC+V2_LOC+V3_LOC)/3
-AVE_Engine;(V1_Total_Engine+V2_Total_Engine+V3_Total_Engine)/3
