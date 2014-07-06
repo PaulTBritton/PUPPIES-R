@@ -1,8 +1,8 @@
 diri4 <- diriD(3400,48,29,17)
-a_1_4 <- diri4$a1
-a_2_4 <- diri4$a2
-a_3_4 <- diri4$a3
-a_4_4 <- diri4$a4
+a_1_4 <- diri4$b1
+a_2_4 <- diri4$b2
+a_3_4 <- diri4$b3
+a_4_4 <- diri4$b4
 pplot(plotname="OUTPUTS/alphaxof4a.tiff",plist=plotlist("a1 desc"=a_1_4,a_2_4))
 pplot(plotname="OUTPUTS/alphaxof4b.tiff",filter="a_?_4")
 
@@ -14,9 +14,9 @@ pplot(plotname="OUTPUTS/globalalphaxof4.tiff",filter="ga_?_4")
 XYZ <- c(2600,46,28)
 #diri3 <- diriD(2600,46,28)
 diri3 <- diriD(c(2600,46,28))
-a_1_3 <- diri3$a1
-a_2_3 <- diri3$a2
-a_3_3 <- diri3$a3
+a_1_3 <- diri3$b1
+a_2_3 <- diri3$b2
+a_3_3 <- diri3$b3
 pplot(plotname="OUTPUTS/alphaxof3.tiff",filter="a_?_3")
 
 ga_2_3 <- GlobalAlpha(2,diri3)
