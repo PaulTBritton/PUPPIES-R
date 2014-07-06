@@ -22,5 +22,5 @@ X <- evalp(model="EasyModel.p")
 
 # propagate uncertainty from X into another model
 appendp(p=X,model="append.p")
-pplot(plotname="appendplot.tiff",envir=X,lst=plotlist("Single V4"=V4))
+pplot(plotname="appendplot.tiff",envir=X,plist=plotlist("Single V4"=V4))
 
