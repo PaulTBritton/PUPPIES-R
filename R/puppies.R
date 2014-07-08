@@ -20,16 +20,22 @@
 
 #options(warn=-1)
 
+puppiesenv <- new.env()
+
 #####################################################
 #load code modules
 #print(getwd())
 #source("filter.R")
 #source("fileio.R")
-#source("numform.R")
 #source("udfs.R")
 #source("evalp.R")
-#source("scatterbar.R")
 #source("plots.R")
+#source("setattr.R")
+#source("boolean.R")
+#source("distributions.R")
+#print("sourced code")
+#source("scatterbar.R")
+#source("numform.R")
 
 #####################################################
 # define global configuration arguments
@@ -61,7 +67,3 @@
 # NULL means rely on the CPU clock for seed generation
 #seed <- NULL
 
-puppiesenv <- new.env()
-#sys.source("setattr.R",envir=puppiesenv)
-#sys.source("boolean.R",envir=puppiesenv)
-#sys.source("distributions.R",envir=puppiesenv)

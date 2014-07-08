@@ -35,7 +35,7 @@ evalp <- function(name="PUPPIES Model",iterations=10,seed=NULL,
 #	y <- get("modelname",p)
 	y <- attr(p,"modelname")
 	z <- attr(p,"VerboseLevel")
-	class(p) <- c("environment","puppies")
+#	class(p) <- c("puppies","environment")
 	if (z >= 2) print(paste("evalp() complete on:",y))
 	return(p)
 }

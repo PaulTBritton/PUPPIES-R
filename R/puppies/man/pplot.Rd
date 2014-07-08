@@ -9,7 +9,9 @@ generate scatterbar plot from puppies results
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-pplot(plotname = "pplot.tiff", envir = parent.frame(), rmarg = 8, stats = c(2, 0, 2, 2), prec = 2, legendpos, units = "Probability", xscale = "log", xnotation = sciNotation, xmarks, range, filter, plist, maintitle)
+pplot(plotname = "pplot.tiff", envir = parent.frame(), rmarg = 8,
+	stats = c(2, 0, 2, 2), prec = 2, legendpos, units = "Probability",
+	xscale = "log", xnotation = sciNotation, filter, plist, maintitle)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -49,14 +51,14 @@ log or linear scale for x-axis
 number format for x-axis
 %%     ~~Describe \code{xnotation} here~~
 }
-  \item{xmarks}{
-number vector containing location of x-axis tick marks
+%%  \item{xmarks}{
+%%number vector containing location of x-axis tick marks
 %%     ~~Describe \code{xmarks} here~~
-}
-  \item{range}{
-number vector describing the range of the x-axis
+%%}
+%%  \item{range}{
+%%number vector describing the range of the x-axis
 %%     ~~Describe \code{range} here~~
-}
+%%}
   \item{filter}{
 wildcard filter for which objects to plot
 %%     ~~Describe \code{filter} here~~
@@ -111,6 +113,7 @@ pplot(plotname="Simpleplot.tiff",envir=Y)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
+\keyword{ setattr }
 \keyword{ puppies }
 \keyword{ pplot }
 \keyword{ evalp }

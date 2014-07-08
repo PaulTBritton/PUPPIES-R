@@ -18,7 +18,8 @@
 #	}
 #	if (!missing(wildcard)) m$wildcardclass <- wildcard
 #}
-puppiesenv$setattr <- function(p=parent.frame(),name,iterations,seed,wildcard,
+#puppiesenv$setattr <- function(p=parent.frame(),name,iterations,seed,wildcard,
+setattr <- function(p=parent.frame(),name,iterations,seed,wildcard,
 			verbose)
 {
 	if (!missing(name)) attr(p,"modelname") <- name

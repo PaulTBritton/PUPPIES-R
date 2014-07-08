@@ -12,9 +12,9 @@ library(pradist)
 #
 
 # uniform distribution
-puppiesenv$unifD <- function(a=0,b=1) {
+puppiesenv$unifD <- function(N=attr(parent.frame(),"N"),a=0,b=1) {
 #	N <- get("N",parent.frame())
-	N <- attr(parent.frame(),"N")
+	
 	return(runif(N,a,b))
 }
 
@@ -22,38 +22,38 @@ puppiesenv$unifD <- function(a=0,b=1) {
 # a = min
 # b = mode
 # c = max
-puppiesenv$triaD <- function(a,b,c) {
+puppiesenv$triaD <- function(N=attr(parent.frame(),"N"),a,b,c) {
 #	N <- get("N",parent.frame())
-	N <- attr(parent.frame(),"N")
+#	N <- attr(parent.frame(),"N")
 	return(triadist(N,a,b,c))
 }
 
 # N beta samples
-puppiesenv$betaD <- function(alpha,beta) {
+puppiesenv$betaD <- function(N=attr(parent.frame(),"N"),alpha,beta) {
 #	N <- get("N",parent.frame())
-	N <- attr(parent.frame(),"N")
+#	N <- attr(parent.frame(),"N")
 	return(rbeta(N,alpha,beta))
 }
 
 # N gamma samples
-puppiesenv$gammD <- function(shape,rate) {
+puppiesenv$gammD <- function(N=attr(parent.frame(),"N"),shape,rate) {
 #	N <- get("N",parent.frame())
-	N <- attr(parent.frame(),"N")
+#	N <- attr(parent.frame(),"N")
 	return(rgamma(N,shape,rate))
 }
 
-puppiesenv$lognD <- function(...) {
+puppiesenv$lognD <- function(N=attr(parent.frame(),"N"),...) {
 #	N <- get("N",parent.frame())
-	N <- attr(parent.frame(),"N")
+#	N <- attr(parent.frame(),"N")
 	return(logndist(N,...))
 }
 
 ####################################################
 # create a vector of N samples based on an emperical distribution
 # (first fit a cdf based on data then spline fit the inverse cdf)
-puppiesenv$empeD <- function(empfile) {
+puppiesenv$empeD <- function(N=attr(parent.frame(),"N"),empfile=NULL) {
 #	N <- get("N",parent.frame())
-	N <- attr(parent.frame(),"N")
+#	N <- attr(parent.frame(),"N")
 	VerboseLevel <- attr(parent.frame(),"VerboseLevel")
 	if (VerboseLevel >= 2) print(paste("Loading Emperical Data:",empfile))
 	res <- 10*N + 1
@@ -72,8 +72,8 @@ puppiesenv$empeD <- function(empfile) {
 # returns an array of k vectors of size N
 # each of the k vectors corresponds to the margins of
 # the dirichlet distribution
-puppiesenv$diriD <- function(...) {
+puppiesenv$diriD <- function(N=attr(parent.frame(),"N"),...) {
 #	N <- get("N",parent.frame())
-	N <- attr(parent.frame(),"N")
+#	N <- attr(parent.frame(),"N")
 	return(dirichlet(N,...))
 }

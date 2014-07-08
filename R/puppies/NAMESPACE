@@ -1,5 +1,5 @@
 import(numform)
 import(pradist)
 import(scatterbar)
-export(evalp,appendp,clonep,spawnp,superevalp,superappendp)
+export(setattr,evalp,appendp,clonep,spawnp,superevalp,superappendp)
 export(pplot)
