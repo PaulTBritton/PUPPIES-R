@@ -77,7 +77,7 @@ Paul Thomas Britton
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{puppies}}, \code{\link{pradist}}, \code{\link{numform}}, \code{\link{scatterbar}}, \code{\link{commoncause}}
+\code{\link{puppies}}, \code{\link{pradist}}, \code{\link{numform}}, \code{\link{scatterbar}}
 }
 \examples{
 library(pradist)
