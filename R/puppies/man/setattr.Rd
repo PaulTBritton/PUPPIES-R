@@ -12,11 +12,9 @@ setattr(p=parent.frame(), name, iterations, seed, wildcard, verbose)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{filter}{
-%%     ~~Describe \code{filter} here~~
-}
   \item{p}{
-%%     ~~Describe \code{p} here~~
+PUPPIES results environment
+%%     ~~Describe \code{filter} here~~
 }
   \item{name}{
 Model Name
@@ -33,10 +31,6 @@ Seed value for the simulation.
   \item{wildcard}{
 Type of wildcard pattern matching
 %%     ~~Describe \code{wildcard} here~~
-}
-  \item{model}{
-an object of class "expression"
-%%     ~~Describe \code{model} here~~
 }
   \item{verbose}{
 level of printed feedback
